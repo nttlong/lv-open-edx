@@ -80,3 +80,9 @@ CAU HINH SERVICE:
         |---------------------------------------------------------------------------|
         | url(r'^web_services/$', 'lv_ws.views.web_services', name="web_services"), |
         |___________________________________________________________________________|
+
+DOI TRANG LOGIN:
+    1- Vao file lms/url.py tim "url(r'^login$', 'student_account.views.login_and_registration_form',"
+        Comment lai va them url(r'^login$', 'Login_lv.views.signin',name="signin_user"),
+    2- Vao file lms/url.py tim "url(r'^login$', 'student.views.signin_user', name="signin_user")" comment lai (dung dau # de comment)
+        them url(r'^login$', 'Login_lv.views.signin',name="signin_user"),
