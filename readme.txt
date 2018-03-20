@@ -35,7 +35,43 @@ CAU HINH DATABASE:
             AUTH_TOKENS.get("DATABASES").get("student_module_history").update({"PORT": AUTH_TOKENS.get("MYSQL_CONFIG").get("PORT")});
             AUTH_TOKENS.get("DATABASES").get("student_module_history").update({"USER": AUTH_TOKENS.get("MYSQL_CONFIG").get("USER")});
             AUTH_TOKENS.get("DATABASES").get("student_module_history").update({"PASSWORD": AUTH_TOKENS.get("MYSQL_CONFIG").get("PASSWORD")});
+             /**Luu y: danh phim tab cung dong */
+    3- Trong file cms.auth.json them duoi cung cac dong sau;
+           "MYSQL_CONFIG":{
+        "HOST":"172.16.11.217",
+        "PORT":"3306",
+        "NAME":"bitnami_edxapp",
+        "USER":"root",
+        "PASSWORD":"123456"
+        },
+        "MONGODB_CONFIG":{
+            "HOST":"172.16.11.217",
+            "PORT":"27018",
+            "NAME":"bitnami_edxapp",
+            "USER":"",
+            "PASSWORD":""
+        }
+    4- Trong file cms/evns/aws.py tim
+            with open(CONFIG_ROOT / CONFIG_PREFIX + "auth.json") as auth_file:
+            AUTH_TOKENS = json.load(auth_file)
+            Them o duoi cac dong sau:
+            AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG").update({"db":"bitnami_edxapp"})
+            AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG").update({"host": "172.16.11.217"})
+            AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG").update({"user": ""})
+            AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG").update({"password": ""})
+            AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG").update({"port": "27018"})
 
+            AUTH_TOKENS.get("DOC_STORE_CONFIG").update({"db": AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")})
+            AUTH_TOKENS.get("DOC_STORE_CONFIG").update({"host": AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST")})
+            AUTH_TOKENS.get("DOC_STORE_CONFIG").update({"user": AUTH_TOKENS.get("MONGODB_CONFIG").get("USER")})
+            AUTH_TOKENS.get("DOC_STORE_CONFIG").update({"password": AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD")})
+            AUTH_TOKENS.get("DOC_STORE_CONFIG").update({"port":AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT")})
+
+            AUTH_TOKENS.get("DATABASES").get("default").update({"NAME": AUTH_TOKENS.get("MYSQL_CONFIG").get("NAME")})
+            AUTH_TOKENS.get("DATABASES").get("default").update({"HOST": AUTH_TOKENS.get("MYSQL_CONFIG").get("HOST")})
+            AUTH_TOKENS.get("DATABASES").get("default").update({"USER": AUTH_TOKENS.get("MYSQL_CONFIG").get("USER")})
+            AUTH_TOKENS.get("DATABASES").get("default").update({"PASSWORD": AUTH_TOKENS.get("MYSQL_CONFIG").get("PASSWORD")})
+            AUTH_TOKENS.get("DATABASES").get("default").update({"PORT": AUTH_TOKENS.get("MYSQL_CONFIG").get("PORT")})
 
             /**Luu y: danh phim tab cung dong */
 
