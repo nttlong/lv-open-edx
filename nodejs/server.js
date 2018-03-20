@@ -1,7 +1,8 @@
 var req =require("./modules/ws");
 req.set_url('http://0.0.0.0:8000/web_services/');
 req.call("lv@get_user_db",{
-            username: "test1"
+            username: "nttlong",
+            email:"nttlong@lacviet.com"
         }).then(res=>{
     console.log(res);
 }).catch(ex=>{
