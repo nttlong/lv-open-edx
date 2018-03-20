@@ -56,54 +56,70 @@ CAU HINH DATABASE:
             AUTH_TOKENS = json.load(auth_file)
             Them o duoi cac dong sau:
             # begin-------------------------------
-        mongo_host=AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST")
-        mongo_user=AUTH_TOKENS.get("MONGODB_CONFIG").get("USER")
-        mongo_password=AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD")
-        mongo_port=AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT")
-        mongo_db_name=AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")
+            mongo_host = AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST")
+            mongo_user = AUTH_TOKENS.get("MONGODB_CONFIG").get("USER")
+            mongo_password = AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD")
+            mongo_port = AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT")
+            mongo_db_name = AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")
 
-        _config_=AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
-        _config_.update({"host":mongo_host})
-        _config_.update({"user":mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port":mongo_port})
 
-        _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
+            _config_=AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
 
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
+            _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
 
-        _config_=AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[0]
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
+            _config_ = AUTH_TOKENS.get("DATABASES").get("default")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
 
-        _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[1]
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
+            _config_ = AUTH_TOKENAMENS.get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
 
-        _config_=AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
+            ########
 
-        _config_ = AUTH_TOKENS.get("DOC_STORE_CONFIG")
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
 
-        _config_ = AUTH_TOKENS.get("DATABASES").get("default")
-        _config_.update({"host": mongo_host})
-        _config_.update({"user": mongo_user})
-        _config_.update({"password": mongo_password})
-        _config_.update({"port": mongo_port})
+
+            _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[0].get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
+
+            _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[1].get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
+
+
+
+
+
+
+
+            _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
+
+            _config_ = AUTH_TOKENS.get("DOC_STORE_CONFIG")
+            _config_.update({"host": mongo_host})
+            _config_.update({"user": mongo_user})
+            _config_.update({"password": mongo_password})
+            _config_.update({"port": mongo_port})
 
             /**Luu y: danh phim tab cung dong */
 
@@ -112,9 +128,3 @@ CAU HINH SERVICE:
         |---------------------------------------------------------------------------|
         | url(r'^web_services/$', 'lv_ws.views.web_services', name="web_services"), |
         |___________________________________________________________________________|
-
-DOI TRANG LOGIN:
-    1- Vao file lms/url.py tim "url(r'^login$', 'student_account.views.login_and_registration_form',"
-        Comment lai va them url(r'^login$', 'Login_lv.views.signin',name="signin_user"),
-    2- Vao file lms/url.py tim "url(r'^login$', 'student.views.signin_user', name="signin_user")" comment lai (dung dau # de comment)
-        them url(r'^login$', 'Login_lv.views.signin',name="signin_user"),
