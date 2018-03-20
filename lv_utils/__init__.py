@@ -21,13 +21,13 @@ def mongo_db():
             # AUTH_TOKENS.get("DATABASES").get("default").update(
             #     {"PASSWORD": AUTH_TOKENS.get("MYSQL_CONFIG").get("PASSWORD")})
             # AUTH_TOKENS.get("DATABASES").get("default").update({"PORT": AUTH_TOKENS.get("MYSQL_CONFIG").get("PORT")})
-            client = MongoClient({
-                "host":AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST"),
-                "port":AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT"),
-                "user": AUTH_TOKENS.get("MONGODB_CONFIG").get("USER"),
-                "password": AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD")
-            })
-            current_db=client(AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME"))
+            client = MongoClient(
+                AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST"),
+                int(AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT"))
+            )
+            if(AUTH_TOKENS.get("MONGODB_CONFIG").get("USER") != ""):
+                client[AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")].authenticate(AUTH_TOKENS.get("MONGODB_CONFIG").get("USER"), AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD"))
+            current_db=client[AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")]
 
     return current_db
 
