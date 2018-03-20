@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/deasync": "^0.1.0",
     "@types/request": "^2.47.0",
+    "deasync": "^0.1.12",
     "request": "^2.85.0"
   }
 }
