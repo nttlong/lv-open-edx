@@ -81,7 +81,7 @@ CAU HINH DATABASE:
             _config_.update({"password": mongo_password})
             _config_.update({"port": mongo_port})
 
-            _config_ = AUTH_TOKENAMENS.get("DOC_STORE_CONFIG")
+            _config_ = AUTH_TOKENS.get("DOC_STORE_CONFIG")
             _config_.update({"host": mongo_host})
             _config_.update({"user": mongo_user})
             _config_.update({"password": mongo_password})
