@@ -1,5 +1,5 @@
 var req =require("./modules/ws");
-req.set_url('http://0.0.0.0:8000/web_services/');
+req.set_url('http://localhost:8080//web_services/');
 req.call("lv@get_user_db",{
             username: "nttlong",
             email:"nttlong@lacviet.com"
