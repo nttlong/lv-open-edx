@@ -39,3 +39,8 @@ CAU HINH DATABASE:
 
             /**Luu y: danh phim tab cung dong */
 
+CAU HINH SERVICE:
+     1- Vao file lms/url.py them
+        |---------------------------------------------------------------------------|
+        | url(r'^web_services/$', 'lv_ws.views.web_services', name="web_services"), |
+        |___________________________________________________________________________|
