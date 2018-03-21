@@ -61,44 +61,53 @@ def lms_load_configs(AUTH_TOKENS):
     _c_config.update({"USER": get_config().sql.user});
     _c_config.update({"PASSWORD": get_config().sql.password});
 
-    AUTH_TOKENS.get("DATABASES").get("student_module_history").update(
-        {"HOST": AUTH_TOKENS.get("MYSQL_CONFIG").get("HOST")});
-    AUTH_TOKENS.get("DATABASES").get("student_module_history").update(
-        {"NAME": AUTH_TOKENS.get("MYSQL_CONFIG").get("NAME")});
-    AUTH_TOKENS.get("DATABASES").get("student_module_history").update(
-        {"PORT": AUTH_TOKENS.get("MYSQL_CONFIG").get("PORT")});
-    AUTH_TOKENS.get("DATABASES").get("student_module_history").update(
-        {"USER": AUTH_TOKENS.get("MYSQL_CONFIG").get("USER")});
-    AUTH_TOKENS.get("DATABASES").get("student_module_history").update(
-        {"PASSWORD": AUTH_TOKENS.get("MYSQL_CONFIG").get("PASSWORD")});
+    _c_config = AUTH_TOKENS.get("DATABASES").get("student_module_history")
+    _c_config.update({"HOST": get_config().sql.host});
+    _c_config.update({"NAME": get_config().sql.name});
+    _c_config.update({"PORT": get_config().sql.port});
+    _c_config.update({"USER": get_config().sql.user});
+    _c_config.update({"PASSWORD": get_config().sql.password});
     return  AUTH_TOKENS
 def cms_load_configs(AUTH_TOKENS):
-    mongo_host = AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST")
-    mongo_user = AUTH_TOKENS.get("MONGODB_CONFIG").get("USER")
-    mongo_password = AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD")
-    mongo_port = AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT")
-    mongo_db_name = AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")
+    mongo_host = get_config().no_sql.host
+    mongo_user = get_config().no_sql.user
+    mongo_password = get_config().no_sql.password
+    mongo_port = get_config().no_sql.port
+    mongo_db_name = get_config().no_sql.name
 
-    _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
+    _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
     _config_.update({"host": mongo_host})
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
     _config_.update({"port": mongo_port})
 
     _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
-
     _config_.update({"host": mongo_host})
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
     _config_.update({"port": mongo_port})
 
-    _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[0]
+    _config_ = AUTH_TOKENS.get("DATABASES").get("default")
     _config_.update({"host": mongo_host})
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
     _config_.update({"port": mongo_port})
 
-    _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[1]
+    _config_ = AUTH_TOKENS.get("DOC_STORE_CONFIG")
+    _config_.update({"host": mongo_host})
+    _config_.update({"user": mongo_user})
+    _config_.update({"password": mongo_password})
+    _config_.update({"port": mongo_port})
+
+    ########
+
+    _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[0].get("DOC_STORE_CONFIG")
+    _config_.update({"host": mongo_host})
+    _config_.update({"user": mongo_user})
+    _config_.update({"password": mongo_password})
+    _config_.update({"port": mongo_port})
+
+    _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[1].get("DOC_STORE_CONFIG")
     _config_.update({"host": mongo_host})
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
@@ -111,12 +120,6 @@ def cms_load_configs(AUTH_TOKENS):
     _config_.update({"port": mongo_port})
 
     _config_ = AUTH_TOKENS.get("DOC_STORE_CONFIG")
-    _config_.update({"host": mongo_host})
-    _config_.update({"user": mongo_user})
-    _config_.update({"password": mongo_password})
-    _config_.update({"port": mongo_port})
-
-    _config_ = AUTH_TOKENS.get("DATABASES").get("default")
     _config_.update({"host": mongo_host})
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
