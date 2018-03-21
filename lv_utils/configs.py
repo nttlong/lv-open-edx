@@ -23,7 +23,36 @@ class custom_config:
         self.no_sql=custom_no_sql_config()
         self.host_url=""
         self.login_url=""
-
+class features:
+    def __init__(self):
+        self.AUTH_USE_OPENID_PROVIDER= True
+        self.AUTOMATIC_AUTH_FOR_TESTING= True
+        self.CUSTOM_COURSES_EDX= True
+        self.ENABLE_COMBINED_LOGIN_REGISTRATION= True
+        self.ENABLE_CORS_HEADERS= True
+        self.ENABLE_COUNTRY_ACCESS=True
+        self.ENABLE_CREDIT_API= True
+        self.ENABLE_CREDIT_ELIGIBILITY= True
+        self.ENABLE_CROSS_DOMAIN_CSRF_COOKIE= True
+        self.ENABLE_CSMH_EXTENDED=True
+        self.ENABLE_DISCUSSION_HOME_PANEL= True
+        self.ENABLE_DISCUSSION_SERVICE= True
+        self.ENABLE_EDXNOTES=True
+        self.ENABLE_GRADE_DOWNLOADS= True
+        self.ENABLE_INSTRUCTOR_ANALYTICS= True
+        self.ENABLE_MKTG_SITE=True
+        self.ENABLE_MOBILE_REST_API= True
+        self.ENABLE_OAUTH2_PROVIDER= True
+        self.ENABLE_ONLOAD_BEACON=True
+        self.ENABLE_READING_FROM_MULTIPLE_HISTORY_TABLES= True
+        self.ENABLE_SPECIAL_EXAMS= True
+        self.ENABLE_SYSADMIN_DASHBOARD= True
+        self.ENABLE_THIRD_PARTY_AUTH= True
+        self.ENABLE_VIDEO_BEACON= True
+        self.ENABLE_VIDEO_UPLOAD_PIPELINE= True
+        self.PREVIEW_LMS_BASE= "preview.localhost:18000"
+        self.SHOW_FOOTER_LANGUAGE_SELECTOR= True
+        self.SHOW_HEADER_LANGUAGE_SELECTOR= True
 _config_=None
 def get_config():
     global _config_
@@ -66,6 +95,8 @@ def lms_load_configs(AUTH_TOKENS):
     _c_config.update({"PORT": get_config().sql.port});
     _c_config.update({"USER": get_config().sql.user});
     _c_config.update({"PASSWORD": get_config().sql.password});
+
+    lms_load_features(AUTH_TOKENS)
     return  AUTH_TOKENS
 def cms_load_configs(AUTH_TOKENS):
     mongo_host = get_config().no_sql.host
@@ -153,3 +184,8 @@ def cms_load_configs(AUTH_TOKENS):
     _config_.update({"USER": sql_user})
 
     return AUTH_TOKENS
+def lms_load_features(AUTH_TOKENS):
+    _f_=AUTH_TOKENS.get("FEATURES")
+    fx=features()
+    for key, value in _f_.iteritems():
+        _f_.update({key:getattr(fx,key)})

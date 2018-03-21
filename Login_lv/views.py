@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse
 from django.http import *
 import lv_utils
 from lv_utils import configs
+__cache__authenticate={}
 def signin(request):
     token=None
     next = None
@@ -15,11 +16,13 @@ def signin(request):
         else:
             return HttpResponseRedirect(configs.get_login_url() + "?source=open-edx")
 
+
     if(request._get_request().has_key("next")):
         next=request.GET["next"]
     user_lg = lv_utils.mongo_db()["hcs_users"].find_one({"token": token})
     if user_lg != None:
         user = authenticate(username=user_lg["username"], password=user_lg["password"])
+        __cache__authenticate.update({token:user})
         if user is not None:
             login(request, user)
             if next != None:
