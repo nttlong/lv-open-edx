@@ -54,6 +54,7 @@ class features:
         self.SHOW_FOOTER_LANGUAGE_SELECTOR= True
         self.SHOW_HEADER_LANGUAGE_SELECTOR= True
 _config_=None
+_features=None
 def get_config():
     global _config_
     if _config_==None:
@@ -96,7 +97,7 @@ def lms_load_configs(AUTH_TOKENS):
     _c_config.update({"USER": get_config().sql.user});
     _c_config.update({"PASSWORD": get_config().sql.password});
 
-    lms_load_features(AUTH_TOKENS)
+
     return  AUTH_TOKENS
 def cms_load_configs(AUTH_TOKENS):
     mongo_host = get_config().no_sql.host
@@ -184,8 +185,24 @@ def cms_load_configs(AUTH_TOKENS):
     _config_.update({"USER": sql_user})
 
     return AUTH_TOKENS
-def lms_load_features(AUTH_TOKENS):
-    _f_=AUTH_TOKENS.get("FEATURES")
-    fx=features()
-    for key, value in _f_.iteritems():
-        _f_.update({key:getattr(fx,key)})
+def lms_load_envs(EVNS):
+    PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
+    # FEATURES.update({"ENABLE_COURSEWARE_SEARCH":False})
+    # FEATURES.update({"ENABLE_DASHBOARD_SEARCH": False})
+    # FEATURES.update({"ENABLE_COURSE_DISCOVERY": False})
+    # FEATURES.update({"COURSE_DISCOVERY_FILTERS":False})
+    if _features==None:
+        with open(PROJECT_ROOT + "/features.json") as config_file:
+            ret_config = json.load(config_file)
+    for key in ret_config.keys():
+        EVNS.get("FEATURES").update({key:ret_config.get(key)})
+
+    return
+def lms_load_features(F):
+    PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
+    if _features==None:
+        with open(PROJECT_ROOT + "/features.json") as config_file:
+            ret_config = json.load(config_file)
+    for key in ret_config.keys():
+        F.update({key:ret_config.get(key)})
+    return

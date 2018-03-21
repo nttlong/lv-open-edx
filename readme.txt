@@ -38,6 +38,9 @@ CAU HINH DATABASE:
                 configs.lms_load_configs(AUTH_TOKENS)
 
              /**Luu y: danh phim tab cung dong */
+        tim de dong ENV_TOKENS = json.load(env_file)
+            from lv_utils import configs
+            configs.lms_load_envs(ENV_TOKENS)
     4- Trong file cms/evns/aws.py tim
             with open(CONFIG_ROOT / CONFIG_PREFIX + "auth.json") as auth_file:
             AUTH_TOKENS = json.load(auth_file)
