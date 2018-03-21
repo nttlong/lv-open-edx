@@ -6,27 +6,22 @@ import MySQLdb
 import os
 import json
 import  sys
-sys.setrecursionlimit(1500)
+from lv_utils import  configs
+
 current_db=None
 db_config=None
 def mongo_db():
     global current_db
     if(current_db==None):
-        PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/cms
-        REPO_ROOT = PROJECT_ROOT.dirname()
-        ENV_ROOT = REPO_ROOT.dirname()
-        SERVICE_VARIANT = os.environ.get('SERVICE_VARIANT', None)
-        CONFIG_PREFIX = SERVICE_VARIANT + "." if SERVICE_VARIANT else ""
-        CONFIG_ROOT = path(os.environ.get('CONFIG_ROOT', ENV_ROOT))
-        with open(CONFIG_ROOT / CONFIG_PREFIX + "auth.json") as auth_file:
-            AUTH_TOKENS = json.load(auth_file)
-            client = MongoClient(
-                AUTH_TOKENS.get("MONGODB_CONFIG").get("HOST"),
-                int(AUTH_TOKENS.get("MONGODB_CONFIG").get("PORT"))
-            )
-            if(AUTH_TOKENS.get("MONGODB_CONFIG").get("USER") != ""):
-                client[AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")].authenticate(AUTH_TOKENS.get("MONGODB_CONFIG").get("USER"), AUTH_TOKENS.get("MONGODB_CONFIG").get("PASSWORD"))
-            current_db=client[AUTH_TOKENS.get("MONGODB_CONFIG").get("NAME")]
+        client = MongoClient(
+            configs.get_config().no_sql.host,
+            configs.get_config().no_sql.port
+        )
+        if (configs.get_config().no_sql.user != ""):
+            client[configs.get_config().no_sql.name].authenticate(configs.get_config().no_sql.user,
+                                                                  configs.get_config().no_sql.password)
+        current_db = client[configs.get_config().no_sql.name]
+
 
     return current_db
 def sql_db():

@@ -21,6 +21,8 @@ class custom_config:
     def __init__(self):
         self.sql=custom_sql_config()
         self.no_sql=custom_no_sql_config()
+        self.host_url=""
+        self.login_url=""
 
 _config_=None
 def get_config():
@@ -42,17 +44,13 @@ def get_config():
             _config_.no_sql.user = ret_config.get("NO_SQL").get("USER")
             _config_.no_sql.password = ret_config.get("NO_SQL").get("PASSWORD")
             _config_.no_sql.name = ret_config.get("SQL").get("NAME")
+            _config_.host_url=ret_config.get("HOST_URL")
+            _config_.login_url = ret_config.get("LOGIN_URL")
     return  _config_
 def get_host_url():
-    PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/lms
-    REPO_ROOT = PROJECT_ROOT.dirname()
-    ENV_ROOT = REPO_ROOT.dirname()
-    CONFIG_ROOT = path(os.environ.get('CONFIG_ROOT', ENV_ROOT))
-    SERVICE_VARIANT = os.environ.get('SERVICE_VARIANT', None)
-    CONFIG_PREFIX = SERVICE_VARIANT + "." if SERVICE_VARIANT else ""
-    with open(CONFIG_ROOT / CONFIG_PREFIX + "auth.json") as auth_file:
-        AUTH_TOKENS = json.load(auth_file)
-    return  AUTH_TOKENS.get("HOST_URL")
+    return  get_config().host_url
+def get_login_url():
+    return get_config().login_url
 def lms_load_configs(AUTH_TOKENS):
 
     _c_config=AUTH_TOKENS.get("DATABASES").get("default")
