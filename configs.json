@@ -1,6 +1,6 @@
 {
   "SQL":{
-    "HOST":"zzzz",
+    "HOST":"11111",
     "NAME":"bitnami_edxapp",
     "USER":"root",
     "PASSWORD":"123456",
