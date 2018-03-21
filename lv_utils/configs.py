@@ -1,5 +1,6 @@
 import json
 from path import Path as path
+import sys
 import os
 class custom_sql_config:
     "datat base host"
@@ -9,7 +10,7 @@ class custom_sql_config:
         self.port=""
         self.user=""
         self.password=""
-class custome_no_sql_config:
+class custom_no_sql_config:
     def __init__(self):
         self.host=""
         self.port=27017
@@ -18,8 +19,8 @@ class custome_no_sql_config:
         self.password=""
 class custom_config:
     def __init__(self):
-        self.sql=custom_config()
-        self.no_sql=custom_sql_config()
+        self.sql=custom_sql_config()
+        self.no_sql=custom_no_sql_config()
 
 _config_=None
 def get_config():
@@ -28,7 +29,7 @@ def get_config():
         _config_=custom_config()
         PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/lms
         REPO_ROOT = PROJECT_ROOT.dirname()
-        with open(PROJECT_ROOT + "configs/conf.json") as config_file:
+        with open(PROJECT_ROOT + "/configs.json") as config_file:
             ret_config = json.load(config_file)
             _config_.sql.host=ret_config.get("SQL").get("HOST")
             _config_.sql.port = ret_config.get("SQL").get("PORT")

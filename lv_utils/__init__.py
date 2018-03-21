@@ -1,9 +1,12 @@
 import pymongo
 from pymongo import MongoClient
 from path import Path as path
+import  configs
 import MySQLdb
 import os
 import json
+import  sys
+sys.setrecursionlimit(1500)
 current_db=None
 db_config=None
 def mongo_db():
@@ -43,6 +46,7 @@ def sql_db():
                 "user": AUTH_TOKENS.get("MYSQL_CONFIG").get("USER"),
                 "password": AUTH_TOKENS.get("MYSQL_CONFIG").get("PASSWORD")
             }
-
+def configuration():
+    return  configs()
 
 
