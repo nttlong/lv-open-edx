@@ -75,6 +75,12 @@ def cms_load_configs(AUTH_TOKENS):
     mongo_password = get_config().no_sql.password
     mongo_port = get_config().no_sql.port
     mongo_db_name = get_config().no_sql.name
+    sql_host=get_config().sql.host
+    sql_port = get_config().sql.port
+    sql_password = get_config().sql.password
+    sql_user = get_config().sql.user
+    sql_name= get_config().sql.name
+
 
     _config_ = AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
     _config_.update({"host": mongo_host})
@@ -125,4 +131,27 @@ def cms_load_configs(AUTH_TOKENS):
     _config_.update({"user": mongo_user})
     _config_.update({"password": mongo_password})
     _config_.update({"port": mongo_port})
+
+    #---------------my-sql-----------------
+    _config_=AUTH_TOKENS.get("DATABASES").get("default")
+    _config_.update({"HOST":sql_host})
+    _config_.update({"NAME": sql_name})
+    _config_.update({"PASSWORD": sql_password})
+    _config_.update({"PORT": sql_port})
+    _config_.update({"USER": sql_user})
+
+    _config_ = AUTH_TOKENS.get("DATABASES").get("read_replica")
+    _config_.update({"HOST": sql_host})
+    _config_.update({"NAME": sql_name + "_csmh"})
+    _config_.update({"PASSWORD": sql_password})
+    _config_.update({"PORT": sql_port})
+    _config_.update({"USER": sql_user})
+
+    _config_=AUTH_TOKENS.get("DATABASES").get("student_module_history")
+    _config_.update({"HOST": sql_host})
+    _config_.update({"NAME": sql_name+"_csmh"})
+    _config_.update({"PASSWORD": sql_password})
+    _config_.update({"PORT": sql_port})
+    _config_.update({"USER": sql_user})
+
     return AUTH_TOKENS

@@ -1,17 +1,17 @@
 {
   "SQL":{
-    "HOST":"11111",
+    "HOST":"172.16.11.217",
+    "PORT":"3306",
     "NAME":"bitnami_edxapp",
     "USER":"root",
-    "PASSWORD":"123456",
-    "PORT":"3306"
+    "PASSWORD":"123456"
   },
   "NO_SQL":{
-    "HOST":"zzzz",
+    "HOST":"172.16.11.217",
+    "PORT":27018,
     "NAME":"bitnami_edxapp",
-    "USER":"root",
-    "PASSWORD":"123456",
-    "PORT":"27018"
+    "USER":"bn_edx",
+    "PASSWORD":"2790d44ae0"
   },
   "HOST_URL":"http://0.0.0.0:8000.1dsada"
 }
