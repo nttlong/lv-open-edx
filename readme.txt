@@ -6,7 +6,7 @@ De python dinh vi duoc cac package trong thu muc "lv-packages" lam cac buoc sau:
     1- vao file lsm/evn/common.py tim dong sys.path.append(REPO_ROOT)
     chen them dong sys.path.append(REPO_ROOT+"/lv-packages")
 
- * Tich hop phan Login:
+ * Tich hop phan Login (tuy chon):
     1- Vao trang  lms/url.py:
         - Them "from Login_lv import *"
         - urlpatterns them "url(r'^signin/(?P<username>[\w\-]+)/$', 'Login_lv.views.signin', name="signin"),"
@@ -46,6 +46,13 @@ CAU HINH DATABASE:
             AUTH_TOKENS = json.load(auth_file)
             from lv_utils import  configs
                 configs.cms_load_configs(AUTH_TOKENS)
+    5- Cau hinh X module:
+            Trong file "edx_platform/common/lib/xmodule/xmodule/modulestore/django.py"
+            Tim den dong 'return disabled_xblock_types'
+            Them;
+
+            from lv_utils import configs
+            configs.apply_no_sql_db_config(doc_store_config)
 
 CAU HINH SERVICE:
      1- Vao file lms/url.py them

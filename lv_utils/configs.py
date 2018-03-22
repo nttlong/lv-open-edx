@@ -96,7 +96,44 @@ def lms_load_configs(AUTH_TOKENS):
     _c_config.update({"NAME": get_config().sql.name});
     _c_config.update({"PORT": get_config().sql.port});
     _c_config.update({"USER": get_config().sql.user});
-    _c_config.update({"PASSWORD": get_config().sql.password});
+    _c_config.update({"PASSWORD": get_config().sql.password})
+
+
+    _c_config = AUTH_TOKENS.get("CONTENTSTORE").get("DOC_STORE_CONFIG")
+    _c_config.update({"db":get_config().no_sql.name})
+    _c_config.update({"host": get_config().no_sql.host})
+    _c_config.update({"password": get_config().no_sql.password})
+    _c_config.update({"port": get_config().no_sql.port})
+    _c_config.update({"user": get_config().no_sql.user})
+
+    _c_config = AUTH_TOKENS.get("CONTENTSTORE").get("OPTIONS")
+    _c_config.update({"db": get_config().no_sql.name})
+    _c_config.update({"host": get_config().no_sql.host})
+    _c_config.update({"password": get_config().no_sql.password})
+    _c_config.update({"port": get_config().no_sql.port})
+    _c_config.update({"user": get_config().no_sql.user})
+
+    _c_config = AUTH_TOKENS.get("DOC_STORE_CONFIG")
+    _c_config.update({"db": get_config().no_sql.name})
+    _c_config.update({"host": get_config().no_sql.host})
+    _c_config.update({"password": get_config().no_sql.password})
+    _c_config.update({"port": get_config().no_sql.port})
+    _c_config.update({"user": get_config().no_sql.user})
+
+    _config_=AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[0].get("DOC_STORE_CONFIG")
+    _c_config.update({"db": get_config().no_sql.name})
+    _c_config.update({"host": get_config().no_sql.host})
+    _c_config.update({"password": get_config().no_sql.password})
+    _c_config.update({"port": get_config().no_sql.port})
+    _c_config.update({"user": get_config().no_sql.user})
+
+    _config_ = AUTH_TOKENS.get("MODULESTORE").get("default").get("OPTIONS").get("stores")[1].get("DOC_STORE_CONFIG")
+    _c_config.update({"db": get_config().no_sql.name})
+    _c_config.update({"host": get_config().no_sql.host})
+    _c_config.update({"password": get_config().no_sql.password})
+    _c_config.update({"port": get_config().no_sql.port})
+    _c_config.update({"user": get_config().no_sql.user})
+
 
 
     return  AUTH_TOKENS
@@ -210,7 +247,16 @@ def lms_load_envs(EVNS):
         with open(PROJECT_ROOT + "/site.json") as site_config_file:
             ret_config = json.load(site_config_file)
     for key in ret_config.keys():
-        EVNS.update({key:ret_config.get(key)})
+        if(key=="COMPREHENSIVE_THEME_DIRS"):
+            thems=[]
+            for skey in ret_config.get(key).keys():
+                thems.append(str(PROJECT_ROOT+"/themes/"+ ret_config.get(key).get(skey).get("name")))
+            EVNS.update({key:thems})
+        else:
+            if(key=="COMPREHENSIVE_THEME_DIR"):
+                EVNS.update({key: str(PROJECT_ROOT+"/themes/"+ ret_config.get(key))})
+            else:
+                EVNS.update({key:ret_config.get(key)})
     return
 def lms_load_features(F):
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
@@ -221,3 +267,29 @@ def lms_load_features(F):
         F.update({key:ret_config.get(key)})
 
     return
+def lms_load_db_config_of_module_store(settings):
+    # _c_config={}
+    # _c_config.update({"db": get_config().no_sql.name})
+    # _c_config.update({"host": get_config().no_sql.host})
+    # _c_config.update({"password": get_config().no_sql.password})
+    # _c_config.update({"port": get_config().no_sql.port})
+    # _c_config.update({"user": get_config().no_sql.user})
+    #
+    # settings.MODULESTORE['default'].update({'DOC_STORE_CONFIG':_c_config})
+    # settings.MODULESTORE['default'].update({'OPTIONS': _c_config})
+    # settings.CONTENTSTORE.update({'DOC_STORE_CONFIG':_c_config})
+    # settings.CONTENTSTORE['ADDITIONAL_OPTIONS'].update({'default': _c_config})
+
+
+    return
+def apply_no_sql_db_config(options):
+    if(options==None):
+        options={}
+
+    options.update({"db": get_config().no_sql.name})
+    options.update({"host": get_config().no_sql.host})
+    options.update({"password": get_config().no_sql.password})
+    options.update({"port": get_config().no_sql.port})
+    options.update({"user": get_config().no_sql.user})
+    return  options
+
