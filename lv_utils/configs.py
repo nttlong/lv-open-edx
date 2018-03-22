@@ -86,17 +86,17 @@ def get_login_url():
 def lms_load_configs(AUTH_TOKENS):
 
     _c_config=AUTH_TOKENS.get("DATABASES").get("default")
-    _c_config.update({"HOST": get_config().sql.host});
-    _c_config.update({"NAME": get_config().sql.name});
-    _c_config.update({"PORT": get_config().sql.port});
-    _c_config.update({"USER": get_config().sql.user});
-    _c_config.update({"PASSWORD": get_config().sql.password});
+    _c_config.update({"HOST": get_config().sql.host})
+    _c_config.update({"NAME": get_config().sql.name})
+    _c_config.update({"PORT": get_config().sql.port})
+    _c_config.update({"USER": get_config().sql.user})
+    _c_config.update({"PASSWORD": get_config().sql.password})
 
     _c_config = AUTH_TOKENS.get("DATABASES").get("student_module_history")
-    _c_config.update({"HOST": get_config().sql.host});
-    _c_config.update({"NAME": get_config().sql.name});
-    _c_config.update({"PORT": get_config().sql.port});
-    _c_config.update({"USER": get_config().sql.user});
+    _c_config.update({"HOST": get_config().sql.host})
+    _c_config.update({"NAME": get_config().sql.name})
+    _c_config.update({"PORT": get_config().sql.port})
+    _c_config.update({"USER": get_config().sql.user})
     _c_config.update({"PASSWORD": get_config().sql.password})
 
 
@@ -244,17 +244,21 @@ def lms_load_envs(EVNS):
     if _site_configs==None:
         with open(PROJECT_ROOT + "/site.json") as site_config_file:
             ret_config = json.load(site_config_file)
+
     for key in ret_config.keys():
-        if(key=="COMPREHENSIVE_THEME_DIRS"):
+        if key=="COMPREHENSIVE_THEME_DIRS" or key=="COMPREHENSIVE_THEME_LOCALE_PATHS":
             thems=[]
             for skey in ret_config.get(key).keys():
-                thems.append(str(PROJECT_ROOT+"/themes/"+ ret_config.get(key).get(skey).get("name")))
+                thems.append(str(PROJECT_ROOT+"/"+ ret_config.get(key).get(skey).get("name")))
             EVNS.update({key:thems})
         else:
-            if(key=="COMPREHENSIVE_THEME_DIR"):
-                EVNS.update({key: str(PROJECT_ROOT+"/themes/"+ ret_config.get(key))})
+            if(key=="COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):
+                EVNS.update({key: str(PROJECT_ROOT+"/"+ ret_config.get(key))})
             else:
-                EVNS.update({key:ret_config.get(key)})
+                if(key=="DEFAULT_SITE_THEME"):
+                    EVNS.update({key: str(ret_config.get(key))})
+                else:
+                    EVNS.update({key:ret_config.get(key)})
     return
 def cms_load_envs(EVNS):
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
@@ -268,16 +272,19 @@ def cms_load_envs(EVNS):
         with open(PROJECT_ROOT + "/site_cms.json") as site_config_file:
             ret_config = json.load(site_config_file)
     for key in ret_config.keys():
-        if (key == "COMPREHENSIVE_THEME_DIRS"):
+        if key == "COMPREHENSIVE_THEME_DIRS" or key == "COMPREHENSIVE_THEME_LOCALE_PATHS":
             thems = []
             for skey in ret_config.get(key).keys():
                 thems.append(str(PROJECT_ROOT + "/themes/" + ret_config.get(key).get(skey).get("name")))
             EVNS.update({key: thems})
         else:
-            if (key == "COMPREHENSIVE_THEME_DIR"):
+            if (key == "COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):
                 EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
             else:
-                EVNS.update({key: ret_config.get(key)})
+                if (key == "DEFAULT_SITE_THEME" ):
+                    EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
+                else:
+                    EVNS.update({key: ret_config.get(key)})
     return
 def lms_load_db_config_of_module_store(settings):
     # _c_config={}

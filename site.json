@@ -1,12 +1,19 @@
 {
   "PLATFORM_NAME":"Lac viet LMS",
-  "COMPREHENSIVE_THEME_DIR":"lv",
+  "COMPREHENSIVE_THEME_DIR":"themes",
   "COMPREHENSIVE_THEME_DIRS":{
     "lv":{
-      "name":"lv",
+      "name":"themes",
       "description":"Themse lacviet"
     }
   },
-  "DEFAULT_SITE_THEME":"lv",
-  "ENABLE_COMPREHENSIVE_THEMING":true
+  "COMPREHENSIVE_THEME_LOCALE_PATHS":{
+    "lv":{
+      "name":"themes",
+      "description":"Themse lacviet"
+    }
+  },
+  "DEFAULT_SITE_THEME":"bs",
+  "ENABLE_COMPREHENSIVE_THEMING":true,
+  "STATIC_ROOT_BASE_1": "lv/staticfiles"
 }

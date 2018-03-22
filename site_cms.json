@@ -3,8 +3,8 @@
   "COMPREHENSIVE_THEME_DIR":"lv",
   "COMPREHENSIVE_THEME_DIRS":{
     "lv":{
-      "name":"lv",
-      "description":"Themse lacviet"
+      "name":"themes",
+      "description":"Themse"
     }
   },
   "DEFAULT_SITE_THEME":"lv",
