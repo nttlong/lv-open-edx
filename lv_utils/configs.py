@@ -55,6 +55,7 @@ class features:
         self.SHOW_HEADER_LANGUAGE_SELECTOR= True
 _config_=None
 _features=None
+_site_configs=None
 def get_config():
     global _config_
     if _config_==None:
@@ -205,7 +206,11 @@ def lms_load_envs(EVNS):
             ret_config = json.load(config_file)
     for key in ret_config.keys():
         EVNS.get("FEATURES").update({key:ret_config.get(key)})
-
+    if _site_configs==None:
+        with open(PROJECT_ROOT + "/site.json") as site_config_file:
+            ret_config = json.load(site_config_file)
+    for key in ret_config.keys():
+        EVNS.update({key:ret_config.get(key)})
     return
 def lms_load_features(F):
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
@@ -214,4 +219,5 @@ def lms_load_features(F):
             ret_config = json.load(config_file)
     for key in ret_config.keys():
         F.update({key:ret_config.get(key)})
+
     return
