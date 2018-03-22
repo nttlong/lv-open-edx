@@ -26,7 +26,11 @@ function createApp(name, options) {
     return ret;
 }
 exports.createApp = createApp;
+var _apps = [];
+function find_app(url) {
+}
 function host(app, hostDir, appDir) {
+    _apps.push(app);
     appDir = appDir || "apps";
     var appViewDir = appDir + "/" + app.name + "/" + app.tempatePath;
     if (app.name != "default") {
@@ -43,7 +47,7 @@ function host(app, hostDir, appDir) {
     E.set('views', "./apps");
     if (app.name != "default") {
         E.get("/" + (hostDir || app.name), function (req, res) {
-            console.log(req.url);
+            var _app = find_app(req.url);
             var x = Consolidate;
             console.log(app.viewEngine);
             x[app.viewEngine.name]("apps/" + app.name + "/" + app.tempatePath + "/index." + app.viewEngine.ext, {
