@@ -55,6 +55,7 @@ class features:
         self.SHOW_HEADER_LANGUAGE_SELECTOR= True
 _config_=None
 _features=None
+_cms_features=None
 _site_configs=None
 def get_config():
     global _config_
@@ -234,10 +235,7 @@ def cms_load_configs(AUTH_TOKENS):
     return AUTH_TOKENS
 def lms_load_envs(EVNS):
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
-    # FEATURES.update({"ENABLE_COURSEWARE_SEARCH":False})
-    # FEATURES.update({"ENABLE_DASHBOARD_SEARCH": False})
-    # FEATURES.update({"ENABLE_COURSE_DISCOVERY": False})
-    # FEATURES.update({"COURSE_DISCOVERY_FILTERS":False})
+
     if _features==None:
         with open(PROJECT_ROOT + "/features.json") as config_file:
             ret_config = json.load(config_file)
@@ -258,14 +256,28 @@ def lms_load_envs(EVNS):
             else:
                 EVNS.update({key:ret_config.get(key)})
     return
-def lms_load_features(F):
+def cms_load_envs(EVNS):
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
-    if _features==None:
-        with open(PROJECT_ROOT + "/features.json") as config_file:
+
+    if _cms_features == None:
+        with open(PROJECT_ROOT + "/features_cms.json") as config_file:
             ret_config = json.load(config_file)
     for key in ret_config.keys():
-        F.update({key:ret_config.get(key)})
-
+        EVNS.get("FEATURES").update({key: ret_config.get(key)})
+    if _site_configs == None:
+        with open(PROJECT_ROOT + "/site_cms.json") as site_config_file:
+            ret_config = json.load(site_config_file)
+    for key in ret_config.keys():
+        if (key == "COMPREHENSIVE_THEME_DIRS"):
+            thems = []
+            for skey in ret_config.get(key).keys():
+                thems.append(str(PROJECT_ROOT + "/themes/" + ret_config.get(key).get(skey).get("name")))
+            EVNS.update({key: thems})
+        else:
+            if (key == "COMPREHENSIVE_THEME_DIR"):
+                EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
+            else:
+                EVNS.update({key: ret_config.get(key)})
     return
 def lms_load_db_config_of_module_store(settings):
     # _c_config={}

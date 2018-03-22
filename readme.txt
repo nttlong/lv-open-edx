@@ -38,7 +38,7 @@ CAU HINH DATABASE:
                 configs.lms_load_configs(AUTH_TOKENS)
 
              /**Luu y: danh phim tab cung dong */
-        tim de dong ENV_TOKENS = json.load(env_file)
+        tim den dong ENV_TOKENS = json.load(env_file) them cac dong sau
             from lv_utils import configs
             configs.lms_load_envs(ENV_TOKENS)
     4- Trong file cms/evns/aws.py tim
@@ -46,6 +46,10 @@ CAU HINH DATABASE:
             AUTH_TOKENS = json.load(auth_file)
             from lv_utils import  configs
                 configs.cms_load_configs(AUTH_TOKENS)
+       Tim den dong ENV_TOKENS = json.load(env_file) them cac dong sau:
+            from lv_utils import  configs
+            configs.cms_load_envs(ENV_TOKENS)
+
     5- Cau hinh X module:
             Trong file "edx_platform/common/lib/xmodule/xmodule/modulestore/django.py"
             Tim den dong 'return disabled_xblock_types'
