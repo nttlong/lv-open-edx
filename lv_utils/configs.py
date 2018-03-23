@@ -275,7 +275,7 @@ def cms_load_envs(EVNS):
         if key == "COMPREHENSIVE_THEME_DIRS" or key == "COMPREHENSIVE_THEME_LOCALE_PATHS":
             thems = []
             for skey in ret_config.get(key).keys():
-                thems.append(str(PROJECT_ROOT + "/themes/" + ret_config.get(key).get(skey).get("name")))
+                thems.append(str(PROJECT_ROOT + "/" + ret_config.get(key).get(skey).get("name")))
             EVNS.update({key: thems})
         else:
             if (key == "COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):

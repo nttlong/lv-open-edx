@@ -22,7 +22,10 @@ def signin(request):
     user_lg = lv_utils.mongo_db()["hcs_users"].find_one({"token": token})
     if user_lg != None:
         user = authenticate(username=user_lg["username"], password=user_lg["password"])
-        __cache__authenticate.update({token:user})
+        __cache__authenticate.update({token:{
+            "hcs_user":user_lg,
+            "user":user
+        }})
         if user is not None:
             login(request, user)
             if next != None:

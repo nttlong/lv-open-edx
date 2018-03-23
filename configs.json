@@ -1,18 +1,18 @@
 {
   "SQL":{
-    "HOST":"172.16.11.217",
-    "PORT":"3306",
+    "HOST":"192.168.33.1",
+    "PORT":"3307",
     "NAME":"bitnami_edxapp",
     "USER":"root",
     "PASSWORD":"123456"
   },
   "NO_SQL":{
-    "HOST":"172.16.11.217",
+    "HOST":"192.168.33.1",
     "PORT":27018,
     "NAME":"bitnami_edxapp",
     "USER":"bn_edx",
-    "PASSWORD":"2790d44ae0"
+    "PASSWORD":"dab2a2c135"
   },
   "HOST_URL":"http://0.0.0.0:8000",
-  "LOGIN_URL":"http://surehcs.com.vn"
+  "LOGIN_URL":"http://0.0.0.0:8000/login"
 }

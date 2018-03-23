@@ -1,5 +1,5 @@
 var req =require("./modules/ws");
-req.set_url('http://0.0.0.0:8001/web_services/');
+req.set_url('http://0.0.0.0:8000/search/course_discovery');
 req.call("lv@create_course_manage",{
             org: "3333",
             course:"3333",
