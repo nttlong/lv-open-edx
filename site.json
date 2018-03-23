@@ -15,5 +15,8 @@
   },
   "DEFAULT_SITE_THEME":"lv",
   "ENABLE_COMPREHENSIVE_THEMING":true,
-  "STATIC_ROOT_BASE_1": "lv/staticfiles"
+  "STATIC_ROOT_BASE_1": "lv/staticfiles",
+  "EMAIL_HOST": "localhost",
+  "EMAIL_PORT": 25,
+  "EMAIL_USE_TLS": false
 }
