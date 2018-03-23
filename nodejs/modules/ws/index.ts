@@ -63,11 +63,11 @@ export var sync=<T>(fn:any, args:Array<any>, cb?:(error:any,ret:any)=>void):T=> 
 
 };
 var _url:string;
-function fn_error(cb,reject,ex){
+function fn_error(cb:any,reject:any,ex:any){
     if(cb) cb(ex);
     else reject(ex);
 }
-function fn_res(cb,resolve,res){
+function fn_res(cb:any,resolve:any,res:any){
     if(cb) cb(null,res);
     else resolve(res);
 }
@@ -102,7 +102,7 @@ export function call(path:string,data?:any,cb?:(error?:any,result?:any)=>void):P
     })
 }
 export function callSync(path:string,data?:any):any{
-    function run(cb){
+    function run(cb:any){
         call(path,data).then(res=>{
             cb(null,res);
         }).catch(ex=>{

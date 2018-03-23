@@ -234,6 +234,7 @@ def cms_load_configs(AUTH_TOKENS):
 
     return AUTH_TOKENS
 def lms_load_envs(EVNS):
+    import configs_info
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
 
     if _features==None:
@@ -259,8 +260,18 @@ def lms_load_envs(EVNS):
                     EVNS.update({key: str(ret_config.get(key))})
                 else:
                     EVNS.update({key:ret_config.get(key)})
+    _inf=configs_info._configs_info.get("themes").get("lms",{})
+    _inf.update({"COMPREHENSIVE_THEME_DIRS":EVNS.get("COMPREHENSIVE_THEME_DIRS")})
+    _inf.update({"COMPREHENSIVE_THEME_LOCALE_PATHS": EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS")})
+    _inf.update({"COMPREHENSIVE_THEME_DIR": EVNS.get("COMPREHENSIVE_THEME_DIR")})
+    configs_info._configs_info.get("features").update({"lms": EVNS.get("FEATURES")})
+
+
+
     return
 def cms_load_envs(EVNS):
+    import  configs_info
+
     PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
 
     if _cms_features == None:
@@ -285,6 +296,11 @@ def cms_load_envs(EVNS):
                     EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
                 else:
                     EVNS.update({key: ret_config.get(key)})
+    _inf = configs_info._configs_info.get("themes").get("cms", {})
+    _inf.update({"COMPREHENSIVE_THEME_DIRS": EVNS.get("COMPREHENSIVE_THEME_DIRS")})
+    _inf.update({"COMPREHENSIVE_THEME_LOCALE_PATHS": EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS")})
+    _inf.update({"COMPREHENSIVE_THEME_DIR": EVNS.get("COMPREHENSIVE_THEME_DIR")})
+    configs_info._configs_info.get("features").update({"cms": EVNS.get("FEATURES")})
     return
 def lms_load_db_config_of_module_store(settings):
     # _c_config={}

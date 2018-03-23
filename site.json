@@ -13,7 +13,7 @@
       "description":"Themse lacviet"
     }
   },
-  "DEFAULT_SITE_THEME":"bs",
+  "DEFAULT_SITE_THEME":"lv",
   "ENABLE_COMPREHENSIVE_THEMING":true,
   "STATIC_ROOT_BASE_1": "lv/staticfiles"
 }
