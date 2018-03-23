@@ -1,0 +1,10 @@
+div.mask {
+    background-image: (url("ajax-loader.gif"));
+    position:fixed;
+    left: 0px;
+    top:0;
+    bottom: 0;
+    right:0;
+    border :solid 4px red;
+    z-index: 20000;
+}

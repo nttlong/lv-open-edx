@@ -1,0 +1,43 @@
+<div>
+    <ul>
+        <li ng-repeat="p in getKeys(data)">
+         <span>{{p}}</span> <span ng-if="!isObject(data[p])">:{{data[p]}}</span>
+            <ul ng-if="isObject(data[p])">
+                <li ng-repeat="x in getKeys(data[p])">
+                     <span>{{x}}</span><span ng-if="!isObject(data[p][x])">:{{data[p][x]}}</span>
+                     <ul ng-if="isObject(data[p][x])">
+                            <li ng-repeat="x1 in getKeys(data[p][x])">
+                                <span>{{x1}}</span><span ng-if="!isObject(data[p][x][x1])">:{{data[p][x][x1]}}</span>
+                            </li>
+                     </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    {{data}}
+</div>
+<script>
+    (function(scope){
+        scope.load=function(){
+            ws_call("configs_info@get_info",function(ex,res){
+                if(ex) console.log(ex);
+                else {
+                    scope.data=res;
+                    scope.$applyAsync();
+                }
+            })
+        }
+        scope.isObject=function(item){
+            return angular.isObject(item);
+        }
+        scope.getKeys=function(){
+            if(scope.data){
+                return Object.keys(scope.data)
+            }
+            else {
+                return []
+            }
+        }
+        scope.load();
+    })
+</script>

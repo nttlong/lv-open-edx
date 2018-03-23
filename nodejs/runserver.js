@@ -13,7 +13,7 @@ function create_sender(req,res){
     }
 }
 app.get('/', function (req, res) {
-    req.url
+    
     var m=require(path.join(__dirname,"apps/controllers/index.js"))
     if(m){
         var retModel= sync.sync(m.load,[create_sender(req,res)])
@@ -25,17 +25,14 @@ app.get('/', function (req, res) {
         res.render('index',dataModel);
     }
 })
-app.get('/config', function (req, res) {
+app.get('/pages/:page',function(req,res){
+    var pagePath=req.url.substring(1,req.url.length)
+    var dataModel=sync.sync(utils.generateModel,[{req:req,res:res,model:{}}])
+    res.render(path.join(process.cwd(),"apps/views",pagePath),dataModel);
     
-    try {
-        var ret=req_ws.callSync("configs_info@get_info")
-        res.end(JSON.stringify(ret))
-    } catch (ex) {
-        res.end(ex.message||ex);
-        
-    }
-    
+
 })
+
 app.use("/static", express.static("apps/static"));
 app.engine("ejs", cons.ejs);
 app.set('view engine', 'ejs');

@@ -290,7 +290,7 @@ def cms_load_envs(EVNS):
             EVNS.update({key: thems})
         else:
             if (key == "COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):
-                EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
+                EVNS.update({key: str(PROJECT_ROOT + "/" + ret_config.get(key))})
             else:
                 if (key == "DEFAULT_SITE_THEME" ):
                     EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})

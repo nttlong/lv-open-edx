@@ -19,7 +19,7 @@ export function generateModel(params:{req:Request,res:Response,model:any},cb:(ex
     var ret:any={
         rootUrl:_rootUrl
     }
-    ret.static=function(url){
+    ret.static=function(url:string){
         return ret.rootUrl+"/static"+url
     }
     ret.model=params.model
