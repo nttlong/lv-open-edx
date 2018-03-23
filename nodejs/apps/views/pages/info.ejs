@@ -1,19 +1,26 @@
 <div>
-    <ul>
-        <li ng-repeat="p in getKeys(data)">
-         <span>{{p}}</span> <span ng-if="!isObject(data[p])">:{{data[p]}}</span>
-            <ul ng-if="isObject(data[p])">
-                <li ng-repeat="x in getKeys(data[p])">
-                     <span>{{x}}</span><span ng-if="!isObject(data[p][x])">:{{data[p][x]}}</span>
-                     <ul ng-if="isObject(data[p][x])">
-                            <li ng-repeat="x1 in getKeys(data[p][x])">
-                                <span>{{x1}}</span><span ng-if="!isObject(data[p][x][x1])">:{{data[p][x][x1]}}</span>
-                            </li>
-                     </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
+    <fieldset>
+        <legend>themes</legend>
+            <table class="table">
+                <thead>
+                <tr>
+                <th>Key</th><th>Value</th>
+                
+                </tr>
+                
+                </thead>
+                <tbody>
+                    <tr>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        <fieldset>
+         <legend>cms</legend>
+        </fieldset>
+
+    </fieldset>
     {{data}}
 </div>
 <script>

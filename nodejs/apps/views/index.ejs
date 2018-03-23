@@ -5,8 +5,16 @@
     </head>
     <body ng-controller="app">
         <%- include("navbar")%>   
-        <div sub-page url="<%=rootUrl%>/pages/{{$root.navData.view}}" ng-if="$root.navData && $root.navData.view">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                        <div sub-page url="<%=rootUrl%>/pages/{{$root.navData.view}}" ng-if="$root.navData && $root.navData.view">
+                            </div>
+                </div>
+            </div>
+
         </div>
+        
         <script>
             var mdl=angular.module("app",["argo-ui"])
             var controller=mdl.controller("app",["$history","$scope",function($history,$scope){

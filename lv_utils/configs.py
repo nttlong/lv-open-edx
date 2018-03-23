@@ -264,6 +264,7 @@ def lms_load_envs(EVNS):
     _inf.update({"COMPREHENSIVE_THEME_DIRS":EVNS.get("COMPREHENSIVE_THEME_DIRS")})
     _inf.update({"COMPREHENSIVE_THEME_LOCALE_PATHS": EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS")})
     _inf.update({"COMPREHENSIVE_THEME_DIR": EVNS.get("COMPREHENSIVE_THEME_DIR")})
+    _inf.update({"DEFAULT_SITE_THEME": EVNS.get("DEFAULT_SITE_THEME")})
     configs_info._configs_info.get("features").update({"lms": EVNS.get("FEATURES")})
 
 
