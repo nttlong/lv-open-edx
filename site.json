@@ -15,11 +15,10 @@
   },
   "DEFAULT_SITE_THEME":"lv",
   "ENABLE_COMPREHENSIVE_THEMING":true,
-  "STATIC_ROOT_BASE": "lv/staticfiles",
-  "EMAIL_HOST": "localhost",
-  "EMAIL_PORT": 25,
-  "EMAIL_USE_TLS": false,
-  "STATICFILES_DIRS":[
-    "/home/nngocsang/Desktop/edx/lv-packages/themes/lv"
-  ]
+  "STATIC_ROOT_BASE_1": "lv/staticfiles",
+  "SESSION_EXPIRE_AT_BROWSER_CLOSE":true,
+  "SESSION_COOKIE_AGE":10,
+  "SESSION_SAVE_EVERY_REQUEST":true,
+
+  "THEME_NAME": "lv"
 }
