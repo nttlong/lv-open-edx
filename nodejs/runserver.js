@@ -5,7 +5,7 @@ var cons = require('consolidate');
 var req_ws =require("./modules/ws");
 var sync=require("./modules/sync")
 var path=require("path")
-req_ws.set_url('http://0.0.0.0:8000/web_services/');
+req_ws.set_url('http://0.0.0.0:8001/web_services/');
 function create_sender(req,res){
     return {
         req:req,
@@ -13,7 +13,7 @@ function create_sender(req,res){
     }
 }
 app.get('/', function (req, res) {
-    
+
     var m=require(path.join(__dirname,"apps/controllers/index.js"))
     if(m){
         var retModel= sync.sync(m.load,[create_sender(req,res)])
@@ -29,7 +29,7 @@ app.get('/pages/:page',function(req,res){
     var pagePath=req.url.substring(1,req.url.length)
     var dataModel=sync.sync(utils.generateModel,[{req:req,res:res,model:{}}])
     res.render(path.join(process.cwd(),"apps/views",pagePath),dataModel);
-    
+
 
 })
 

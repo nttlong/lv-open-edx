@@ -59,7 +59,7 @@ CAU HINH DATABASE:
             configs.apply_no_sql_db_config(doc_store_config)
 
 CAU HINH SERVICE:
-     1- Vao file lms/url.py them
+     1- Vao file cms/url.py them
         |---------------------------------------------------------------------------|
         | url(r'^web_services/$', 'lv_ws.views.web_services', name="web_services"), |
         |___________________________________________________________________________|
