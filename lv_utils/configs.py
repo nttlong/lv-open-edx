@@ -2,6 +2,11 @@ import json
 from path import Path as path
 import sys
 import os
+from django.utils.translation import get_language
+def test():
+    a = get_language()
+    b = 2 + a
+    return b
 class custom_sql_config:
     "datat base host"
     def __init__(self):

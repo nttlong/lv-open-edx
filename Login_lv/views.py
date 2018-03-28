@@ -5,9 +5,17 @@ from django.http import *
 import lv_utils
 from lv_utils import configs
 __cache__authenticate={}
+
+"API function: sigin system with token"
+"Method: POST"
+"Parameter: token, next link"
 def signin(request):
     token=None
     next = None
+    #userInsert = User.objects.create_user("user001", "user001@gmail.com", "user001")
+    #userInsert.is_staff = 1
+    #userInsert.save()
+    #check token have request
     if (request._get_request().has_key("token")):
         token = request.GET["token"]
     else:
