@@ -4,7 +4,7 @@ import sys
 import os
 from django.utils.translation import get_language
 def test():
-    a = get_language()
+    a = 1#get_language()
     b = 2 + a
     return b
 class custom_sql_config:
