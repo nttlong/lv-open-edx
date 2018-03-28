@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ssh://edxapp@127.0.0.1:2222/edx/app/edxapp/venvs/edxapp/bin/python" name="ssh://edxapp@127.0.0.1:2222/edx/app/edxapp/venvs/edxapp/bin/python" url="http://127.0.0.1">
+        <fileTransfer host="127.0.0.1" port="2222" accessType="SFTP">
+          <option name="port" value="2222" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
