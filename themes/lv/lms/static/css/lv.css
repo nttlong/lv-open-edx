@@ -1,0 +1,12 @@
+body{
+    font-family: Segoe UI !important;
+}
+label {
+  display: block;
+}
+.home>header{
+     background-image: url("http://jobs.surehcs.vn/photo/banner/5a0bac80d5b52917b8cc7a12.png") !important;
+}
+h1{
+    font:normal 2em/1.4em "Open Sans",Verdana,Geneva,sans-serif,Segoe UI !important;
+}

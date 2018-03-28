@@ -1,3 +1,0 @@
-eia
-loncapa
-verifiers

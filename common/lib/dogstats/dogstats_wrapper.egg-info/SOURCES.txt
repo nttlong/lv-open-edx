@@ -1,7 +1,0 @@
-dogstats_wrapper/__init__.py
-dogstats_wrapper/wrapper.py
-dogstats_wrapper.egg-info/PKG-INFO
-dogstats_wrapper.egg-info/SOURCES.txt
-dogstats_wrapper.egg-info/dependency_links.txt
-dogstats_wrapper.egg-info/requires.txt
-dogstats_wrapper.egg-info/top_level.txt
