@@ -10,3 +10,15 @@ label {
 h1{
     font:normal 2em/1.4em "Open Sans",Verdana,Geneva,sans-serif,Segoe UI !important;
 }
+.flag-icon-vn{
+    background-image:url(../images/flags/4x3/vn.svg) !important;
+}
+.flag-icon-vn.flag-icon-squared{
+    background-image:url(../images/flags/1x1/vn.svg) !important;
+}
+.flag-icon-au{
+    background-image:url(../images/flags/4x3/au.svg) !important;
+}
+.flag-icon-au.flag-icon-squared{
+    background-image:url(../images/flags/1x1/au.svg) !important;
+}
