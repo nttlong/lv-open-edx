@@ -99,22 +99,22 @@ from pipeline_mako import render_require_js_path_overrides
   <script type="text/javascript" src="${static.url('js/bootstrap/bootstrap-select.min.js')}"></script>
   <script type="text/javascript" src="${static.url('js/bootstrap/bootstrap.min.js')}"></script>
 
-    <script>
-         debugger;
-           $.ajax({
-            async:false,
-            url: "/web_services",
-            contentType: 'application/json',
-            dataType: 'json',
-            type: 'GET'
-        }).done(function(data) {
-          debugger
-               localStorage.setItem("data", data);
-        }).fail(function(error) {
-          debugger;
-            deferred.reject();
-        });
-    </script>
+##     <script>
+##          debugger;
+##            $.ajax({
+##             async:false,
+##             url: "/web_services",
+##             contentType: 'application/json',
+##             dataType: 'json',
+##             type: 'GET'
+##         }).done(function(data) {
+##           debugger
+##                localStorage.setItem("data", data);
+##         }).fail(function(error) {
+##           debugger;
+##             deferred.reject();
+##         });
+##     </script>
 
   <%block name="js_overrides">
     ${render_require_js_path_overrides(settings.REQUIRE_JS_PATH_OVERRIDES) | n, decode.utf8}
