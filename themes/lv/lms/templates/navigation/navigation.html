@@ -10,7 +10,6 @@ from django.utils.translation import ugettext as _
 
 from lms.djangoapps.ccx.overrides import get_current_ccx
 from openedx.core.djangolib.markup import HTML, Text
-from lv_utils.configs import test
 # App that handles subdomain specific branding
 from branding import api as branding_api
 # app that handles site status messages
@@ -84,7 +83,6 @@ site_status_msg = get_site_status_msg(course_id)
                 % else:
                   <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
                 % endif
-                  <% test() %>
                 <label><span class="sr">${_("Choose Language")}</span>
 ##                   <select class="input select language-selector" id="settings-language-value" name="language">
 ##                     % for language in languages:

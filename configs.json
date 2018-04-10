@@ -1,17 +1,17 @@
 {
   "SQL":{
-    "HOST":"192.168.33.1",
-    "PORT":"3307",
-    "NAME":"bitnami_edxapp",
+    "HOST":"172.16.7.63",
+    "PORT":"3306",
+    "NAME":"lv_lms",
     "USER":"root",
     "PASSWORD":"123456"
   },
   "NO_SQL":{
-    "HOST":"192.168.33.1",
-    "PORT":27018,
-    "NAME":"bitnami_edxapp",
-    "USER":"bn_edx",
-    "PASSWORD":"dab2a2c135"
+    "HOST":"172.16.7.63",
+    "PORT":27017,
+    "NAME":"lv_lms",
+    "USER":"root",
+    "PASSWORD":"123456"
   },
   "HOST_URL":"http://0.0.0.0:8000",
   "LOGIN_URL":"http://0.0.0.0:8000/login"

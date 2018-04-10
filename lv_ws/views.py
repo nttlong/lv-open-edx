@@ -10,6 +10,9 @@ import  importlib
 @csrf_exempt
 def web_services(request):
     post_data=json.loads(request.body)
+
+
+
     if(post_data.get("path")==None):
         HttpResponse(json.dumps({
             "error":"true",

@@ -1,0 +1,17 @@
+<%inherit file="main.html" />
+<%namespace name='static' file='static_content.html'/>
+
+<%block name="title">
+ <script src="${static.url('script/angular.min.js')}"></script>
+    <script>
+         var module = angular.module("lacviet",[])
+         module.controller("lacviet",["$scope",function(scope){
+             alert(scope.$id);
+         }])
+        ##  alert("sad");
+    </script>
+  </%block>
+
+<%block name="bodyclass">
+
+</%block>

@@ -1,13 +1,11 @@
 var req =require("./modules/ws");
 
-req.set_url('http://0.0.0.0:8001/web_services/');
+req.set_url('http://0.0.0.0:8000/search/');
 
-req.call("lv@create_course_manage",{
-            org: "3333",
-            course:"3333",
-            display_name: "3333",
-            run: "3333",
-            codeteacher:"rootsang1"
+req.call("course_discovery",{
+            search_string:"sangtest",
+            page_size:20,
+            page_index:0
         }).then(res=>{
     console.log(res);
 }).catch(ex=>{
