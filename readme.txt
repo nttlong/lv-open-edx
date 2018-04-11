@@ -63,3 +63,8 @@ CAU HINH SERVICE:
         |---------------------------------------------------------------------------|
         | url(r'^web_services/$', 'lv_ws.views.web_services', name="web_services"), |
         |___________________________________________________________________________|
+FIX LOI SEARCH:
+    vao file lms/urls.py:
+    thay:
+    #url(r'^search/', include('search.urls')),
+    url(r'^search/', include('searchdata_lv.urls'), name='course_discovery')
