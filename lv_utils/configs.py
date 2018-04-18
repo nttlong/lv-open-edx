@@ -2,11 +2,8 @@ import json
 from path import Path as path
 import sys
 import os
-from django.utils.translation import get_language
-def test():
-    a = 1#get_language()
-    b = 2 + a
-    return b
+import logging
+logger = logging.getLogger(__name__)
 class custom_sql_config:
     "datat base host"
     def __init__(self):
@@ -70,6 +67,9 @@ def get_config():
         REPO_ROOT = PROJECT_ROOT.dirname()
         with open(PROJECT_ROOT + "/configs.json") as config_file:
             ret_config = json.load(config_file)
+            logger.error("load config")
+            logger.error(json.dumps(ret_config))
+
             _config_.sql.host=ret_config.get("SQL").get("HOST")
             _config_.sql.port = ret_config.get("SQL").get("PORT")
             _config_.sql.user = ret_config.get("SQL").get("USER")
@@ -245,6 +245,8 @@ def lms_load_envs(EVNS):
     if _features==None:
         with open(PROJECT_ROOT + "/features.json") as config_file:
             ret_config = json.load(config_file)
+            logger.error("load lms feature")
+            logger.error(json.dumps(ret_config))
     for key in ret_config.keys():
         EVNS.get("FEATURES").update({key:ret_config.get(key)})
     if _site_configs==None:
@@ -258,10 +260,10 @@ def lms_load_envs(EVNS):
                 thems.append(str(PROJECT_ROOT+"/"+ ret_config.get(key).get(skey).get("name")))
             EVNS.update({key:thems})
         else:
-            if(key=="COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):
-                EVNS.update({key: str(PROJECT_ROOT+"/"+ ret_config.get(key))})
+            if(key=="COMPREHENSIVE_THEME_DIR"):
+		EVNS.update({key: str(PROJECT_ROOT+"/"+ ret_config.get(key))})
             else:
-                if(key=="DEFAULT_SITE_THEME"):
+                if key=="DEFAULT_SITE_THEME" or key=="THEME_NAME" :
                     EVNS.update({key: str(ret_config.get(key))})
                 else:
                     EVNS.update({key:ret_config.get(key)})
@@ -272,7 +274,14 @@ def lms_load_envs(EVNS):
     _inf.update({"DEFAULT_SITE_THEME": EVNS.get("DEFAULT_SITE_THEME")})
     configs_info._configs_info.get("features").update({"lms": EVNS.get("FEATURES")})
 
-
+    logger.error("load lms themes")
+    logger.error(json.dumps({
+        "COMPREHENSIVE_THEME_DIRS":EVNS.get("COMPREHENSIVE_THEME_DIRS"),
+        "COMPREHENSIVE_THEME_LOCALE_PATHS":EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS"),
+        "COMPREHENSIVE_THEME_DIR":EVNS.get("COMPREHENSIVE_THEME_DIR"),
+        "THEME_NAME":EVNS.get("THEME_NAME"),
+        "DEFAULT_SITE_THEME": EVNS.get("DEFAULT_SITE_THEME")
+    }))
 
     return
 def cms_load_envs(EVNS):
@@ -283,6 +292,8 @@ def cms_load_envs(EVNS):
     if _cms_features == None:
         with open(PROJECT_ROOT + "/features_cms.json") as config_file:
             ret_config = json.load(config_file)
+            logger.error("load cms feature")
+            logger.error(json.dumps(ret_config))
     for key in ret_config.keys():
         EVNS.get("FEATURES").update({key: ret_config.get(key)})
     if _site_configs == None:
@@ -293,12 +304,14 @@ def cms_load_envs(EVNS):
             thems = []
             for skey in ret_config.get(key).keys():
                 thems.append(str(PROJECT_ROOT + "/" + ret_config.get(key).get(skey).get("name")))
+                print("Create themes")
+                print(str(PROJECT_ROOT + "/" + ret_config.get(key).get(skey).get("name")))
             EVNS.update({key: thems})
         else:
             if (key == "COMPREHENSIVE_THEME_DIR" or key=="STATIC_ROOT_BASE"):
                 EVNS.update({key: str(PROJECT_ROOT + "/" + ret_config.get(key))})
             else:
-                if (key == "DEFAULT_SITE_THEME" ):
+                if key == "DEFAULT_SITE_THEME" or key=="THEME_NAME":
                     EVNS.update({key: str(PROJECT_ROOT + "/themes/" + ret_config.get(key))})
                 else:
                     EVNS.update({key: ret_config.get(key)})
@@ -307,6 +320,16 @@ def cms_load_envs(EVNS):
     _inf.update({"COMPREHENSIVE_THEME_LOCALE_PATHS": EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS")})
     _inf.update({"COMPREHENSIVE_THEME_DIR": EVNS.get("COMPREHENSIVE_THEME_DIR")})
     configs_info._configs_info.get("features").update({"cms": EVNS.get("FEATURES")})
+
+    logger.error("load lms themes")
+    logger.error(json.dumps({
+        "COMPREHENSIVE_THEME_DIRS": EVNS.get("COMPREHENSIVE_THEME_DIRS"),
+        "COMPREHENSIVE_THEME_LOCALE_PATHS": EVNS.get("COMPREHENSIVE_THEME_LOCALE_PATHS"),
+        "COMPREHENSIVE_THEME_DIR": EVNS.get("COMPREHENSIVE_THEME_DIR"),
+        "THEME_NAME": EVNS.get("THEME_NAME"),
+        "DEFAULT_SITE_THEME": EVNS.get("DEFAULT_SITE_THEME")
+    }))
+
     return
 def lms_load_db_config_of_module_store(settings):
     # _c_config={}
