@@ -63,7 +63,7 @@ msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2017-08-18 20:38+0000\n"
-"PO-Revision-Date: 2018-04-13 18:05+0700\n"
+"PO-Revision-Date: 2018-04-18 15:50+0700\n"
 "Last-Translator: Hoà Lê Thanh <hoa.lethanh@gmail.com>, 2017\n"
 "Language-Team: Vietnamese (https://www.transifex.com/open-edx/teams/6205/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -1959,64 +1959,64 @@ msgstr "bỏ qua hình ảnh"
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "there is currently {numVotes} vote"
 msgid_plural "there are currently {numVotes} votes"
-msgstr[0] ""
+msgstr[0] "hiện tại có {numVotes} bình chọn"
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "{numVotes} Vote"
 msgid_plural "{numVotes} Votes"
-msgstr[0] ""
+msgstr[0] "{numVotes} Bình chọn"
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "You could not be subscribed to this post. Refresh the page and try again."
-msgstr "Bạn không thể gửi bài này. Làm mới lại trang và thử lại."
+msgstr "Bạn không thể đăng ký theo dõi bài này. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "You could not be unsubscribed from this post. Refresh the page and try again."
-msgstr "Bạn không thể hủy bài này. Làm mới lại trang và thử lại."
+msgstr "Bạn không thể hủy theo dõi bài này. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This response could not be marked as an answer. Refresh the page and try again."
-msgstr "Phản hồi này không thể đánh dấu là một câu trả lời. Làm mới lại trang và thử lại."
+msgstr "Phản hồi này không thể được đánh dấu là một câu trả lời. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This response could not be unmarked as an answer. Refresh the page and try again."
-msgstr "Câu trả lời này không thể bỏ đánh dấu là câu trả lời. Làm mới lại trang và thử lại."
+msgstr "Phản hồi này không thể bỏ đánh dấu là câu trả lời. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This response could not be marked as endorsed. Refresh the page and try again."
-msgstr "Phản hồi này không thể đánh dấu là xác nhận. Làm mới lại trang và thử lại."
+msgstr "Phản hồi này không thể đánh dấu là xác nhận. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This response could not be unendorsed. Refresh the page and try again."
-msgstr "Phản hồi này không thể bỏ đánh dấu là xác nhận. Làm mới lại trang và thử lại."
+msgstr "Phản hồi này không thể bỏ đánh dấu là xác nhận. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This vote could not be processed. Refresh the page and try again."
-msgstr "Việc bầu chọn này không được xử lý. Làm mới lại trang và thử lại."
+msgstr "Việc bầu chọn này không được xử lý. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be pinned. Refresh the page and try again."
-msgstr "Bài này chưa được ghim lại. Làm mới lại trang và thử lại."
+msgstr "Bài này chưa được ghim lại. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be unpinned. Refresh the page and try again."
-msgstr "Bài này chưa được bỏ ghim. Làm mới lại trang và thử lại."
+msgstr "Bài này chưa được bỏ ghim. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be flagged for abuse. Refresh the page and try again."
-msgstr "Bài này không thể bị gắn cờ vi phạm. Làm mới lại trang và thử lại."
+msgstr "Bài này không thể bị gắn cờ vi phạm. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be unflagged for abuse. Refresh the page and try again."
-msgstr "Bài này không thể gỡ bỏ cờ vi phạm. Làm mới lại trang và thử lại."
+msgstr "Bài này không thể gỡ bỏ cờ vi phạm. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be closed. Refresh the page and try again."
-msgstr "Không thể đóng bài này. Làm mới lại trang và thử lại."
+msgstr "Không thể đóng bài này. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_content_view.js
 msgid "This post could not be reopened. Refresh the page and try again."
-msgstr "Bài này không thể mở lại. Làm mới lại trang và thử lại."
+msgstr "Bài này không thể mở lại. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_inline_view.js
 msgid "Hide Discussion"
@@ -2024,7 +2024,7 @@ msgstr "Ẩn thảo luận"
 
 #: common/static/common/js/discussion/views/discussion_inline_view.js
 msgid "This discussion could not be loaded. Refresh the page and try again."
-msgstr "Không mở được cuộc thảo luận này. Làm mới lại trang và thử lại."
+msgstr "Không mở được cuộc thảo luận này. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_inline_view.js
 msgid "Show Discussion"
@@ -2036,7 +2036,7 @@ msgstr "Đang tải thêm chủ đề"
 
 #: common/static/common/js/discussion/views/discussion_thread_list_view.js
 msgid "Additional posts could not be loaded. Refresh the page and try again."
-msgstr "Không thể mở những bài kèm theo. Làm mới lại trang và thử lại."
+msgstr "Không thể mở những bài kèm theo. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_thread_list_view.js
 msgid "Current conversation"
@@ -2056,7 +2056,7 @@ msgstr "Không có bài nào khớp với tìm kiếm của bạn."
 
 #: common/static/common/js/discussion/views/discussion_thread_list_view.js
 msgid "Show posts by {username}."
-msgstr "Những bài của {username}."
+msgstr "Hiển thị những bài của {username}."
 
 #: common/static/common/js/discussion/views/discussion_thread_view.js
 msgid "The post you selected has been deleted."
@@ -2064,11 +2064,11 @@ msgstr "Bài bạn chọn đã bị xóa."
 
 #: common/static/common/js/discussion/views/discussion_thread_view.js
 msgid "Responses could not be loaded. Refresh the page and try again."
-msgstr "Không thể tải những bài phúc đáp. Làm mới lại trang và thử lại."
+msgstr "Không thể tải các phản hồi. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_thread_view.js
 msgid "Additional responses could not be loaded. Refresh the page and try again."
-msgstr "Không thể tải câu trả lời kèm theo. Làm mới lại trang và thử lại."
+msgstr "Không thể tải thêm các phản hồi. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/discussion_thread_view.js
 msgid "{numResponses} other response"
@@ -2117,7 +2117,7 @@ msgstr "Bạn chắc chắn muốn xóa bình luận này?"
 
 #: common/static/common/js/discussion/views/response_comment_view.js
 msgid "This comment could not be deleted. Refresh the page and try again."
-msgstr "Không thể xóa nhận xét này. Làm mới lại trang và thử lại."
+msgstr "Không thể xóa nhận xét này. Vui lòng làm mới lại trang và thử lại."
 
 #: common/static/common/js/discussion/views/thread_response_view.js
 msgid "Are you sure you want to delete this response?"
@@ -2345,7 +2345,7 @@ msgstr "Tất cả các cờ đã bị gỡ bỏ. Để hoàn tác, nhấp chu�
 
 #: common/static/js/vendor/ova/flagging-annotator.js
 msgid "You have already reported this annotation."
-msgstr "Bạn đã báo cáo về giải thích này rồi."
+msgstr "Bạn đã báo cáo chú thích này rồi."
 
 #: common/static/js/vendor/ova/flagging-annotator.js
 msgid "Report annotation as inappropriate or offensive."
@@ -2401,7 +2401,7 @@ msgstr "số lượng nhóm"
 
 #: lms/djangoapps/teams/static/teams/js/teams_tab_factory.js lms/djangoapps/teams/static/teams/js/views/teams_tab.js
 msgid "Teams"
-msgstr "Những nhóm"
+msgstr "Các nhóm"
 
 #: lms/djangoapps/teams/static/teams/js/views/edit_team.js cms/templates/js/certificate-editor.underscore
 #: cms/templates/js/content-group-editor.underscore cms/templates/js/group-configuration-editor.underscore
@@ -2476,7 +2476,7 @@ msgstr "Giới thiệu nhóm không thể có trên 300 ký tự."
 
 #: lms/djangoapps/teams/static/teams/js/views/edit_team_members.js
 msgid "An error occurred while removing the member from the team. Try again."
-msgstr "Có lỗi xảy ra trong lúc xóa thành viên khỏi nhóm. Xin thử lại."
+msgstr "Có lỗi xảy ra trong lúc xóa thành viên khỏi nhóm. Vui lòng thử lại."
 
 #: lms/djangoapps/teams/static/teams/js/views/edit_team_members.js
 msgid "This team does not have any members."
@@ -2500,7 +2500,7 @@ msgstr "Xóa thành viên này?"
 
 #: lms/djangoapps/teams/static/teams/js/views/edit_team_members.js
 msgid "This learner will be removed from the team, allowing another learner to take the available spot."
-msgstr "Người học này sẽ bị xóa khỏi nhóm để nhường chỗ cho một người học khác."
+msgstr "Học viên này sẽ bị xóa khỏi nhóm để nhường chỗ cho một học viên khác."
 
 #: lms/djangoapps/teams/static/teams/js/views/instructor_tools.js
 msgid "Delete this team?"
@@ -2552,7 +2552,7 @@ msgid ""
 "If you leave, you can no longer post in this team's discussions. Your place will be available to another learner."
 msgstr ""
 "Nếu bạn rời nhóm, bạn sẽ không thể tham gia vào thảo luận nhóm nữa. Chỗ của bạn trong nhóm sẽ có thể được thay "
-"bằng người học khác."
+"bằng học viên khác."
 
 #: lms/djangoapps/teams/static/teams/js/views/team_profile.js lms/static/js/verify_student/views/reverify_view.js
 #: lms/templates/verify_student/review_photos_step.underscore
@@ -2847,7 +2847,7 @@ msgstr "chữ in đậm"
 
 #: lms/static/js/Markdown.Editor.js
 msgid "emphasized text"
-msgstr "nhấn mạnh chữ"
+msgstr "chữ nhấn mạnh"
 
 #: lms/static/js/Markdown.Editor.js
 msgid "enter link description here"
@@ -2879,7 +2879,7 @@ msgstr "Xem trước truy vấn này"
 
 #: lms/static/js/ccx/schedule.js
 msgid "All subsections"
-msgstr "Toàn bộ các phần bài học"
+msgstr "Toàn bộ các tiểu mục"
 
 #: lms/static/js/ccx/schedule.js
 msgid "All units"
@@ -4578,7 +4578,7 @@ msgstr "Là học viên hoặc người dùng bản thử nghiệm, bạn không
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
 msgid "%(num_students)s student opened Subsection"
 msgid_plural "%(num_students)s students opened Subsection"
-msgstr[0] ""
+msgstr[0] "%(num_students)s học viên đã mở Tiểu mục"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
 msgid "%(num_students)s student"
@@ -5054,7 +5054,7 @@ msgstr "Xảy ra lỗi khi xuất tệp."
 #: cms/static/js/views/group_configuration_details.js
 msgid "Contains {count} group"
 msgid_plural "Contains {count} groups"
-msgstr[0] ""
+msgstr[0] "Bao gồm {count} nhóm"
 
 #: cms/static/js/views/group_configuration_details.js cms/static/js/views/partition_group_details.js
 msgid "Not in Use"
@@ -5065,7 +5065,7 @@ msgstr "Không khả dụng"
 #: cms/static/js/views/group_configuration_details.js cms/static/js/views/partition_group_details.js
 msgid "Used in {count} unit"
 msgid_plural "Used in {count} units"
-msgstr[0] ""
+msgstr[0] "Đã sử dung trong {count} bài học"
 
 #. Translators: this refers to a collection of groups.
 #: cms/static/js/views/group_configuration_item.js cms/static/js/views/group_configurations_list.js
@@ -5110,7 +5110,7 @@ msgstr "Phiên bản"
 
 #: cms/static/js/views/license.js
 msgid "Attribution"
-msgstr "Attribution"
+msgstr ""
 
 #: cms/static/js/views/license.js
 msgid ""
@@ -5122,7 +5122,7 @@ msgstr ""
 
 #: cms/static/js/views/license.js
 msgid "Noncommercial"
-msgstr "Noncommercial"
+msgstr "Phi thương mại"
 
 #: cms/static/js/views/license.js
 msgid ""
@@ -5216,7 +5216,7 @@ msgstr "{display_name} Thiết lập"
 
 #: cms/static/js/views/modals/course_outline_modals.js
 msgid "Change the settings for {display_name}"
-msgstr ""
+msgstr "Thay đổi cài đặt cho {display_name}"
 
 #: cms/static/js/views/modals/course_outline_modals.js
 msgid "Publish {display_name}"
@@ -5278,7 +5278,7 @@ msgstr "Phần"
 
 #: cms/static/js/views/move_xblock_list.js
 msgid "Subsections"
-msgstr "Phần con"
+msgstr "Các tiểu mục"
 
 #: cms/static/js/views/move_xblock_list.js
 msgid "Units"
@@ -5299,7 +5299,7 @@ msgstr "Chủ đề {parentCategory} này không có {childCategory}"
 #: cms/static/js/views/move_xblock_list.js cms/templates/js/group-configuration-details.underscore
 #: cms/templates/js/partition-group-details.underscore
 msgid "Course Outline"
-msgstr "Phác Thảo Khóa Học"
+msgstr "Dàn ý khóa học"
 
 #: cms/static/js/views/paged_container.js
 msgid "Date added"
@@ -5347,7 +5347,7 @@ msgid ""
 "If the unit was previously published and released to students, any changes you made to the unit when it was "
 "hidden will now be visible to students. Do you want to proceed?"
 msgstr ""
-"Nếu đơn vị này đã được xuất bản và phát hành cho học viên, các thay đổi mà bạn đã thực hiện trên đơn vị khi nó "
+"Nếu bài học này đã được xuất bản và phát hành cho học viên, các thay đổi mà bạn đã thực hiện trên đơn vị khi nó "
 "được ẩn sẽ được hiện lên đối với học viên. Bạn có muốn tiếp tục?"
 
 #: cms/static/js/views/pages/container_subviews.js
@@ -5459,7 +5459,7 @@ msgstr ""
 
 #: cms/static/js/views/settings/grader.js
 msgid "For grading to work, you must change all {oldName} subsections to {newName}."
-msgstr "Để phân loại làm việc, bạn phải thay đổi tất cả các mục con {oldName} thành {newName}."
+msgstr "Để tiến hành chấm điểm, bạn phải thay đổi tất cả các tiểu mục {oldName} thành {newName}."
 
 #: cms/static/js/views/settings/main.js
 msgid "Course Credit Requirements"
@@ -5579,15 +5579,15 @@ msgstr "Xoá {xblock_type}?"
 
 #: cms/static/js/views/utils/xblock_utils.js
 msgid "section"
-msgstr "phần"
+msgstr "chương"
 
 #: cms/static/js/views/utils/xblock_utils.js
 msgid "subsection"
-msgstr "phần con"
+msgstr "tiểu mục"
 
 #: cms/static/js/views/utils/xblock_utils.js
 msgid "unit"
-msgstr "đơn vị"
+msgstr "bài học"
 
 #: cms/static/js/views/validation.js
 msgid "You've made some changes"
@@ -5966,7 +5966,7 @@ msgstr "tán thành vào lúc %(time_ago)s"
 #, python-format
 msgid "Show Comment (%(num_comments)s)"
 msgid_plural "Show Comments (%(num_comments)s)"
-msgstr[0] ""
+msgstr[0] "Hiển thị bình luận (%(num_comments)s)"
 
 #: common/static/common/templates/discussion/thread-response.underscore
 msgid "Add a comment"
@@ -6351,7 +6351,7 @@ msgstr "chuyển trạng thái chương %(displayName)s"
 
 #: lms/templates/ccx/schedule.underscore
 msgid "Section"
-msgstr "Mục"
+msgstr "Chương"
 
 #: lms/templates/ccx/schedule.underscore
 #, python-format
@@ -6365,21 +6365,21 @@ msgstr "bỏ"
 #: lms/templates/ccx/schedule.underscore
 #, python-format
 msgid "toggle subsection %(displayName)s"
-msgstr "chuyển trạng thái mục con %(displayName)s"
+msgstr "chuyển trạng thái tiểu mục %(displayName)s"
 
 #: lms/templates/ccx/schedule.underscore
 msgid "Subsection"
-msgstr "Phần"
+msgstr "Tiểu mục"
 
 #: lms/templates/ccx/schedule.underscore
 #, python-format
 msgid "Remove subsection %(subsectionDisplayName)s"
-msgstr "Xóa mục con %(subsectionDisplayName)s"
+msgstr "Xóa tiểu mục %(subsectionDisplayName)s"
 
 #: lms/templates/ccx/schedule.underscore
 #, python-format
 msgid "Remove unit %(unitName)s"
-msgstr "Xoá đơn vị %(unitName)s"
+msgstr "Xoá bài học %(unitName)s"
 
 #: lms/templates/commerce/provider.underscore
 #, python-format
@@ -7728,12 +7728,12 @@ msgstr ""
 #: openedx/features/course_search/static/course_search/templates/dashboard_search_results.underscore
 msgid "Load next {num_items} result"
 msgid_plural "Load next {num_items} results"
-msgstr[0] ""
+msgstr[0] "Tải {num_items} kết quả tiếp theo"
 
 #: openedx/features/course_search/static/course_search/templates/course_search_results.underscore
 #: openedx/features/course_search/static/course_search/templates/dashboard_search_results.underscore
 msgid "Sorry, no results were found."
-msgstr "Xin lỗi, không có kết quả nào được tìm thấy"
+msgstr "Xin lỗi, không có kết quả nào được tìm thấy."
 
 #: openedx/features/course_search/static/course_search/templates/dashboard_search_results.underscore
 msgid "Back to Dashboard"
@@ -7745,11 +7745,11 @@ msgstr "Giới hạn truy cập"
 
 #: cms/templates/js/access-editor.underscore
 msgid "Select a prerequisite subsection and enter a minimum score percentage to limit access to this subsection."
-msgstr "Chọn một tiểu mục bắt buộc và nhập phần trăm điểm tối thiếu để giới hạn truy cập tới tiểu mục này"
+msgstr "Chọn một tiểu mục bắt buộc và nhập phần trăm điểm tối thiếu để giới hạn truy cập tới tiểu mục này."
 
 #: cms/templates/js/access-editor.underscore
 msgid "Prerequisite:"
-msgstr "Điều kiện bắt buộc"
+msgstr "Điều kiện bắt buộc:"
 
 #: cms/templates/js/access-editor.underscore
 msgid "No prerequisite"
@@ -7757,7 +7757,7 @@ msgstr "Không bắt buộc"
 
 #: cms/templates/js/access-editor.underscore
 msgid "Minimum Score:"
-msgstr "Điểm tối thiểu"
+msgstr "Điểm tối thiểu:"
 
 #: cms/templates/js/access-editor.underscore
 msgid "The minimum score percentage must be a whole number between 0 and 100."
@@ -7769,11 +7769,11 @@ msgstr "Sử dụng như yêu cầu băt buộc"
 
 #: cms/templates/js/access-editor.underscore
 msgid "Make this subsection available as a prerequisite to other content"
-msgstr "Bắt buộc phải thức hiện tiểu mục nếu muốn truy cập các nội dung khác"
+msgstr "Bắt buộc phải hoàn thành tiểu mục này nếu muốn truy cập các nội dung khác"
 
 #: cms/templates/js/active-video-upload-list.underscore
 msgid "Drag and drop or click here to upload video files."
-msgstr "Kéo thả hoặc nhấn vào đây để đăng tải"
+msgstr "Kéo và thả hoặc nhấn vào đây để tải lên tệp video."
 
 #: cms/templates/js/active-video-upload-list.underscore
 msgid "Active Uploads"
@@ -7832,7 +7832,7 @@ msgstr "Đã lỗi thời"
 
 #: cms/templates/js/asset-library.underscore
 msgid "List of uploaded files and assets in this course"
-msgstr "Danh sách các tập tin tải lên và tài sản trong khóa học này"
+msgstr "Danh sách các tập tin và tài liệu tải lên trong khóa học này"
 
 #: cms/templates/js/asset-library.underscore
 msgid "- Sortable"
@@ -7848,15 +7848,15 @@ msgstr "Lựa chọn khác"
 
 #: cms/templates/js/asset-library.underscore
 msgid "You haven't added any assets to this course yet."
-msgstr "Bạn chưa thêm bất cứ tài nguyên nào cho khóa học này."
+msgstr "Bạn chưa thêm bất cứ tài liệu nào cho khóa học này."
 
 #: cms/templates/js/asset-library.underscore
 msgid "Upload your first asset"
-msgstr "Tải lên tài nguyên đầu tiên của bạn."
+msgstr "Tải lên tài liệu đầu tiên của bạn"
 
 #: cms/templates/js/asset-upload-modal.underscore
 msgid "close"
-msgstr "Đóng lại"
+msgstr "đóng lại"
 
 #: cms/templates/js/asset.underscore
 msgid "No description available"
@@ -7864,7 +7864,7 @@ msgstr "Chưa có thông tin"
 
 #: cms/templates/js/asset.underscore
 msgid "Open/download this file"
-msgstr "Mở/tải về file này"
+msgstr "Mở/tải về tệp tin này"
 
 #: cms/templates/js/asset.underscore
 msgid "Studio:"
@@ -7884,7 +7884,7 @@ msgstr "Khoá thành phần này"
 
 #: cms/templates/js/asset.underscore
 msgid "Lock/unlock file"
-msgstr "Khóa/mở khóa file này"
+msgstr "Khóa/mở khóa tệp tin này"
 
 #: cms/templates/js/certificate-details.underscore cms/templates/js/group-configuration-details.underscore
 #: cms/templates/js/partition-group-details.underscore
@@ -7920,8 +7920,8 @@ msgid ""
 "It is strongly recommended that you include four or fewer signatories. If you include additional signatories, "
 "preview the certificate in Print View to ensure the certificate will print correctly on one page."
 msgstr ""
-"Chúng tôi đề nghị có bốn hoặc ít hơn người ký tên. Nếu bạn có chữ ký bổ sung, hãy xem trước chứng chỉ trong Chế "
-"độ xem In để đảm bảo chứng chỉ sẽ in chính xác trên một trang."
+"Chúng tôi đề nghị có bốn hoặc ít hơn chữ ký. Nếu bạn có chữ ký bổ sung, hãy xem trước chứng chỉ trong Chế độ xem "
+"In để đảm bảo chứng chỉ sẽ in chính xác trên một trang."
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Certificate Information"
@@ -7948,15 +7948,16 @@ msgid ""
 "Specify an alternative to the official course title to display on certificates. Leave blank to use the official "
 "course title."
 msgstr ""
-"Cho một tiêu đề thay thế để hiển thị trên giấy chứng nhận. Để trống để sử dụng tiêu đề chính thức của khóa học."
+"Xác định một tiêu đề thay thế để hiển thị trên giấy chứng nhận. Để trống để sử dụng tiêu đề chính thức của khóa "
+"học."
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Add Additional Signatory"
-msgstr "Thêm Người ký"
+msgstr "Thêm chữ ký"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "(Add signatories for a certificate)"
-msgstr "(Thêm người ký cho chứng chỉ)"
+msgstr "(Thêm chữ ký cho chứng chỉ)"
 
 #: cms/templates/js/certificate-web-preview.underscore
 msgid "Choose mode"
@@ -7979,8 +7980,8 @@ msgid ""
 "Caution: The last published version of this unit is live. By publishing changes you will change the student "
 "experience."
 msgstr ""
-"Chú ý: Phiên bản được xuất bản lần cuối của đơn vị này đang cung cấp cho người học. Bằng cách xuất bản những thay "
-"đổi, bạn sẽ thay đổi trải nghiệm của sinh viên."
+"Chú ý: Phiên bản được xuất bản lần cuối của bài học này đang hiển thị cho học viên. Bằng cách xuất bản những thay "
+"đổi, bạn sẽ thay đổi trải nghiệm của học viên."
 
 #: cms/templates/js/content-group-editor.underscore
 msgid "Content Group Name"
@@ -8000,19 +8001,19 @@ msgstr "Nhóm nội dung này được sử dụng trong một hoặc nhiều đ
 
 #: cms/templates/js/content-group-editor.underscore cms/templates/js/partition-group-details.underscore
 msgid "Cannot delete when in use by a unit"
-msgstr "Không thể xóa khi được sử dụng bởi một đơn vị"
+msgstr "Không thể xóa khi được sử dụng bởi một bài học"
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid "Subsection Visibility"
-msgstr "Hiển thị Mục con"
+msgstr "Hiển thị Tiểu mục"
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid "Show entire subsection"
-msgstr "Hiện toàn bộ mục con"
+msgstr "Hiện toàn bộ tiểu mục"
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid "Learners see the published subsection and can access its content."
-msgstr "Học viên nhìn thấy mục con đã xuất bản và có thể truy cập nội dung của nó."
+msgstr "Học viên nhìn thấy tiểu mục đã xuất bản và có thể truy cập nội dung của nó."
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid "Hide content after course end date"
@@ -8027,25 +8028,26 @@ msgid ""
 "After the course\\'s end date has passed, learners can no longer access subsection content. The subsection "
 "remains included in grade calculations."
 msgstr ""
-"Sau ngày kết thúc khoá học, người học không còn có thể truy cập vào mục con nữa. Các mục con vẫn được bao gồm "
-"trong tính điểm."
+"Sau ngày kết thúc khoá học, học viên không còn có thể truy cập vào nội dung của tiểu mục nữa. Các tiểu mục vẫn "
+"được bao gồm trong phần tính điểm."
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid ""
 "After the subsection\\'s due date has passed, learners can no longer access its content. The subsection remains "
 "included in grade calculations."
 msgstr ""
-"Sau khi mục con hết hạn, người học không còn có thể truy cập nội dung của nó. Mục con vẫn được bao gồm trong tính "
-"điểm."
+"Sau khi tiểu mục hết hạn, người học không còn có thể truy cập nội dung của nó. Mục con vẫn được bao gồm trong "
+"phần tính điểm."
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid "Hide entire subsection"
-msgstr "Ẩn toàn bộ mục con"
+msgstr "Ẩn toàn bộ tiểu mục"
 
 #: cms/templates/js/content-visibility-editor.underscore
 msgid ""
 "Learners do not see the subsection in the course outline. The subsection is not included in grade calculations."
-msgstr "Người học không nhìn thấy mục con trong đề cương khoá học. Các mục con không được bao gồm trong tính điểm."
+msgstr ""
+"Học viên không nhìn thấy tiểu mục trong đề cương khoá học. Các tiểu mục không được bao gồm trong phần tính điểm."
 
 #: cms/templates/js/content-visibility-editor.underscore
 #, python-format
@@ -8053,8 +8055,8 @@ msgid ""
 "If you select an option other than \"%(hide_label)s\", published units in this subsection become available to "
 "learners unless they are explicitly hidden."
 msgstr ""
-"Nếu bạn chọn một tùy chọn khác với \"%(hide_label)s\", những đơn vị đã xuất bản trong mục con này sẽ suất hiện "
-"cho người học trừ khi chúng được ẩn một cách rõ ràng."
+"Nếu bạn chọn một tùy chọn khác với \"%(hide_label)s\", các bài học đã xuất bản trong tiểu mục này sẽ hiển thị cho "
+"học viên trừ khi chúng được ẩn một cách rõ ràng."
 
 #: cms/templates/js/course-instructor-details.underscore
 msgid "Instructor Name"
@@ -8139,7 +8141,7 @@ msgstr "Những thay đổi về nội dung chưa xuất bản sẽ phát hành 
 
 #: cms/templates/js/course-outline.underscore
 msgid "Access to some content in this unit is restricted to specific groups of learners"
-msgstr "Truy cập vào một số nội dung trong đơn vị này bị hạn chế đối với một số nhóm người học cụ thể"
+msgstr "Truy cập vào một số nội dung trong bài học này bị hạn chế đối với một số nhóm học viên cụ thể"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Ungraded"
@@ -8201,11 +8203,11 @@ msgstr "Hạn chót:"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Subsection is hidden after course end date"
-msgstr "Phần bài học được ẩn sau ngày kết thúc khóa học"
+msgstr "Tiểu mục được ẩn sau ngày kết thúc khóa học"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Subsection is hidden after due date"
-msgstr "Phần bài học được ẩn sau ngày đến hạn"
+msgstr "Tiểu mục được ẩn sau ngày đến hạn"
 
 #: cms/templates/js/course-outline.underscore cms/templates/js/xblock-outline.underscore
 msgid "You haven't added any content to this course yet."
@@ -8265,7 +8267,7 @@ msgstr "Tổng số"
 
 #: cms/templates/js/course_grade_policy.underscore
 msgid "The number of subsections in the course that contain problems of this assignment type."
-msgstr "Số phần bài học trong khóa học chứa các câu hỏi của loại bài tập này."
+msgstr "Số tiểu mục trong khóa học chứa các câu hỏi của loại bài tập này."
 
 #: cms/templates/js/course_grade_policy.underscore
 msgid "Number of Droppable"
@@ -8310,7 +8312,7 @@ msgstr "Giờ đến hạn theo UTC:"
 
 #: cms/templates/js/due-date-editor.underscore
 msgid "Clear Grading Due Date"
-msgstr "Xoá Hạn Chấm bải:"
+msgstr "Xoá Hạn Chấm bải"
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "Chapter Name"
@@ -8449,7 +8451,7 @@ msgstr ""
 
 #: cms/templates/js/group-edit.underscore
 msgid "delete group"
-msgstr "Xoá nhóm"
+msgstr "xoá nhóm"
 
 #: cms/templates/js/license-selector.underscore
 msgid "License Type"
@@ -8481,7 +8483,7 @@ msgstr "Nội dung được cấp phép của Creative Commons, có các điều
 
 #: cms/templates/js/license-selector.underscore
 msgid "Some Rights Reserved"
-msgstr "Some Rights Reserved."
+msgstr "Một số quyền được bảo lưu"
 
 #: cms/templates/js/list.underscore
 #, python-format
@@ -8532,7 +8534,7 @@ msgstr "Hiện đã chọn"
 
 #: cms/templates/js/no-textbooks.underscore
 msgid "You haven't added any textbooks to this course yet."
-msgstr "Bạn chưa thêm bất cứ tài nguyên nào cho khóa học này."
+msgstr "Bạn chưa thêm bất cứ tài liệu nào cho khóa học này."
 
 #: cms/templates/js/no-textbooks.underscore
 msgid "Add your first textbook"
@@ -8601,7 +8603,7 @@ msgstr "Đã xuất bản (chưa phát hành)"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Draft (Unpublished changes)"
-msgstr "Bản nháp (Thay đổi chưa được công bố)"
+msgstr "Bản nháp (Thay đổi chưa được xuất bản)"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Release:"
@@ -8704,7 +8706,7 @@ msgstr ""
 
 #: cms/templates/js/show-correctness-editor.underscore
 msgid "Show assessment results when subsection is past due"
-msgstr "Hiển thị kết quả bài tập khi phần bài học quá hạn"
+msgstr "Hiển thị kết quả bài tập khi tiểu mục quá hạn"
 
 #: cms/templates/js/show-correctness-editor.underscore
 msgid ""
@@ -8726,14 +8728,14 @@ msgid ""
 "after the due date for the subsection has passed."
 msgstr ""
 "Học viên không nhìn thấy câu trả lời của họ cho các bài tập là đúng hay sai, cũng như số điểm nhận được, cho đến "
-"khi ngày hết hạn của phần bài học đã trôi qua."
+"khi ngày hết hạn của tiểu mục đã trôi qua."
 
 #: cms/templates/js/show-correctness-editor.underscore
 msgid ""
 "If the subsection does not have a due date, learners always see their scores when they submit answers to "
 "assessments."
 msgstr ""
-"Nếu phần bài học không có ngày đến hạn, học viên sẽ luôn thấy điểm của họ khi họ nộp câu trả lời cho các bài tập."
+"Nếu tiểu mục không có ngày đến hạn, học viên sẽ luôn thấy điểm của họ khi họ nộp câu trả lời cho các bài tập."
 
 #: cms/templates/js/show-textbook.underscore
 msgid "View Live"
@@ -8873,9 +8875,9 @@ msgid ""
 "answers before the time expires. You can allow additional time for individual learners through the Instructor "
 "Dashboard."
 msgstr ""
-"Sử dụng bài thi có tính thời gian để giới hạn thời gian học viên làm bài trong phần này. Học viên phải nộp câu "
-"trả lời trước khi hết hạn. Bạn có thể cho phép thêm thời gian cho từng học viên thông qua Bảng thông tin Giảng "
-"viên."
+"Sử dụng bài thi có tính thời gian để giới hạn thời gian học viên làm bài trong tiểu mục này. Học viên phải nộp "
+"câu trả lời trước khi hết hạn. Bạn có thể cho phép thêm thời gian cho từng học viên thông qua Bảng thông tin "
+"Giảng viên."
 
 #: cms/templates/js/timed-examination-preference-editor.underscore
 msgid "Proctored"

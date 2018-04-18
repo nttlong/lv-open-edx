@@ -3,4 +3,6 @@ lms/djangoapps/courseware/views/views.py@course_info
 openedx/features/course_experience/views/course_home.py:
 - CourseHomeView
 - CourseTabView/get
-lms/djangoapps/courseware/views/index.pyc
+lms/djangoapps/courseware/views/index.pycet
+Giám sát từng trang:
+apps/edx/edx-platform/lms/djangoapps/courseware/views/index.py@_g

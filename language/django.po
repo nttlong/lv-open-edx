@@ -73,7 +73,7 @@ msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2017-08-18 20:39+0000\n"
-"PO-Revision-Date: 2018-04-16 18:04+0700\n"
+"PO-Revision-Date: 2018-04-18 15:49+0700\n"
 "Last-Translator: Hoà Lê Thanh <hoa.lethanh@gmail.com>, 2017\n"
 "Language-Team: Vietnamese (https://www.transifex.com/open-edx/teams/6205/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -261,6 +261,8 @@ msgid ""
 "Welcome, {username}! You are about to enroll in {course_name}, from {partner_names}, sponsored by {enterprise_name}. Please select your enrollment "
 "information below."
 msgstr ""
+"Chào mừng, {username}! Bạn sắp đăng ký {course_name}, từ {partner_names}, được tài trợ bởi {enterprise_name}. Vui lòng chọn thông tin đăng ký của bạn "
+"dưới đây."
 
 #: common/djangoapps/course_modes/views.py
 msgid "Enrollment is closed"
@@ -288,7 +290,7 @@ msgstr "Điều Hành viên"
 
 #: common/djangoapps/django_comment_common/models.py
 msgid "Community TA"
-msgstr "Cộng Đồng Trợ Giảng"
+msgstr "Trợ Giảng Cộng Đồng "
 
 #: common/djangoapps/django_comment_common/models.py lms/djangoapps/instructor/paidcourse_enrollment_report.py
 msgid "Student"
@@ -2578,7 +2580,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Course About Page Image"
-msgstr "Tất nhiên Về trang ảnh"
+msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
@@ -2780,7 +2782,7 @@ msgstr "Cả hai"
 #: themes/red-theme/lms/templates/footer.html themes/stanford-style/lms/templates/footer.html
 #: themes/stanford-style/lms/templates/static_templates/about.html
 msgid "About"
-msgstr "Về "
+msgstr "Giới thiệu"
 
 #: common/lib/xmodule/xmodule/course_module.py cms/templates/settings.html
 msgid "None"
@@ -2827,8 +2829,6 @@ msgid ""
 "If dashboard social sharing and custom course URLs are enabled, you can provide a URL (such as the URL to a course About page) that social media sites "
 "can link to. URLs must be fully qualified. For example: http://www.edx.org/course/Introduction-to-MOOCs-ITM001"
 msgstr ""
-"If dashboard social sharing and custom course URLs are enabled, you can provide a URL (such as the URL to a course About page) that social media sites "
-"can link to. URLs must be fully qualified. For example: http://www.edx.org/course/Introduction-to-MOOCs-ITM001"
 
 #: common/lib/xmodule/xmodule/course_module.py cms/templates/settings.html
 msgid "Course Language"
@@ -4523,13 +4523,13 @@ msgstr "Chứng nhận chứng chỉ"
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
 msgid "About {platform_name} Accomplishments"
-msgstr "Về thành tựu của {platform_name}"
+msgstr "Các thành tựu của {platform_name}"
 
 #. Translators:  This line appears on the page just before the generation date
 #. for the certificate
 #: lms/djangoapps/certificates/views/webview.py
 msgid "Issued On:"
-msgstr "Ban hành ngày:"
+msgstr "Phát hành ngày:"
 
 #. Translators:  The Certificate ID Number is an alphanumeric value unique to
 #. each individual certificate
@@ -4685,7 +4685,7 @@ msgstr "Điểm"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
 msgid "problems"
-msgstr "vấn đề"
+msgstr "các câu hỏi"
 
 #: lms/djangoapps/commerce/api/v1/serializers.py
 #, python-brace-format
@@ -4924,7 +4924,7 @@ msgstr "{currency_symbol}{price}"
 #. course costs nothing so it is free.
 #: lms/djangoapps/courseware/views/views.py
 msgid "Free"
-msgstr "Tự do"
+msgstr "Miễn phí"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your enrollment: Audit track"
@@ -4975,7 +4975,7 @@ msgstr "Chúc mừng, bạn đã đạt đủ điều kiện để nhận chứn
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Invalid location."
-msgstr "Địa chỉ không hoạt động."
+msgstr "Địa chỉ không khả dụng."
 
 #: lms/djangoapps/courseware/views/views.py
 #, python-brace-format
@@ -4989,7 +4989,7 @@ msgstr "Bạn phải đăng nhập vào {platform_name} để tạo ra một gi�
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Course is not valid"
-msgstr "khoá học không hợp lệ"
+msgstr "Khoá học không hợp lệ"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your certificate will be available when you pass the course."
@@ -9642,11 +9642,11 @@ msgstr "Mã khóa học"
 
 #: cms/templates/course_info.html openedx/features/course_experience/templates/course_experience/course-updates-fragment.html
 msgid "Course Updates"
-msgstr "Cập Nhật Khóa Học"
+msgstr "Cập nhật khóa học"
 
 #: cms/templates/course_outline.html openedx/features/course_experience/templates/course_experience/course-home-fragment.html
 msgid "Course Outline"
-msgstr "Phác Thảo Khóa Học"
+msgstr "Dàn bài khóa học"
 
 #: cms/templates/course_outline.html cms/templates/index.html openedx/features/course_experience/templates/course_experience/welcome-message-fragment.html
 msgid "Dismiss"
@@ -9748,7 +9748,7 @@ msgstr "Xem"
 #: cms/templates/darklang/preview_lang.html lms/templates/darklang/preview_lang.html
 #: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
 msgid "Preview Language Setting"
-msgstr "Xem lai thiết lập ngôn ngữ"
+msgstr "Xem lại thiết lập ngôn ngữ"
 
 #: cms/templates/maintenance/_force_publish_course.html lms/templates/problem.html lms/templates/shoppingcart/shopping_cart.html
 #: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
@@ -9757,7 +9757,7 @@ msgstr "Thiết lập lại"
 
 #: cms/templates/widgets/footer.html lms/templates/footer.html themes/edx.org/lms/templates/footer.html themes/red-theme/lms/templates/footer.html
 msgid "Legal"
-msgstr "Luật"
+msgstr "Hợp pháp"
 
 #: cms/templates/widgets/header.html lms/templates/navigation/navigation.html lms/templates/widgets/footer-language-selector.html
 msgid "Choose Language"
@@ -9798,7 +9798,7 @@ msgstr "Ghi danh vào khóa học edX101: Tổng quan tạo khóa học trên ed
 
 #: cms/templates/widgets/sock.html themes/edx.org/cms/templates/widgets/sock.html
 msgid "Enroll in edX101"
-msgstr "Ghi danh trong edX101"
+msgstr "Ghi danh vào khóa học edX101"
 
 #: cms/templates/widgets/sock.html themes/edx.org/cms/templates/widgets/sock.html
 msgid "Enroll in StudioX: Creating a Course with edX Studio"
@@ -9822,7 +9822,7 @@ msgstr "Menu người dùng"
 
 #: cms/templates/widgets/user_dropdown.html lms/templates/user_dropdown.html
 msgid "Usermenu dropdown"
-msgstr "Menu người dùng"
+msgstr "Dropdown menu người dùng"
 
 #: cms/templates/widgets/user_dropdown.html lms/templates/user_dropdown.html themes/red-theme/lms/templates/header.html
 msgid "Sign Out"
@@ -9830,7 +9830,7 @@ msgstr "Đăng xuất"
 
 #: common/lib/capa/capa/templates/codeinput.html
 msgid "Code Editor"
-msgstr "Trình biên tập Mã"
+msgstr "Trình chỉnh sửa mã"
 
 #: common/templates/emails/contact_us_feedback_email_body.txt
 msgid "Feedback Form"
@@ -9870,7 +9870,7 @@ msgstr "Thêm bài viết"
 
 #: lms/djangoapps/discussion/templates/discussion/discussion_board_fragment.html
 msgid "Discussion thread list"
-msgstr "Danh sách luồng thảo luận"
+msgstr "Danh sách bài thảo luận"
 
 #: lms/djangoapps/discussion/templates/discussion/discussion_board_fragment.html
 msgid "New topic form"
@@ -9930,7 +9930,7 @@ msgstr "Tìm hiểu thêm"
 
 #: lms/templates/course.html
 msgid "Starts"
-msgstr "bắt đầu"
+msgstr "Bắt đầu"
 
 #: lms/templates/course.html
 msgid "Starts: {date}"
@@ -9971,7 +9971,7 @@ msgstr "Thông tin trạng thái tài khoản"
 
 #: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
 msgid "Order History"
-msgstr "Lịch sử hóa đơn"
+msgstr "Lịch sử đơn hàng"
 
 #: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
 msgid "Email Settings for {course_number}"
@@ -9992,7 +9992,7 @@ msgstr "Hủy ghi danh"
 
 #: lms/templates/edit_unit_link.html
 msgid "View Unit in Studio"
-msgstr "View Unit in Studio"
+msgstr "Xem Bài học trong Studio"
 
 #: lms/templates/email_change_failed.html lms/templates/email_exists.html
 msgid "E-mail change failed"
@@ -10109,8 +10109,8 @@ msgid ""
 "For {strong_start}questions on course lectures, homework, tools, or materials for this course{strong_end}, post in the {link_start}course discussion "
 "forum{link_end}."
 msgstr ""
-"Nếu có {strong_start}các câu hỏi về bài giảng, bài tập, công cụ hoặc tài liệu cho khóa học này{strong_end}, hãy viết lên  {link_start}diễn đàn thảo "
-"luận của khóa học{link_end}"
+"Nếu có {strong_start}các câu hỏi về bài giảng, bài tập, công cụ hoặc tài liệu cho khóa học này{strong_end}, hãy viết lên {link_start}diễn đàn thảo luận "
+"của khóa học{link_end}."
 
 #: lms/templates/help_modal.html
 msgid ""
@@ -10121,7 +10121,7 @@ msgstr ""
 
 #: lms/templates/help_modal.html
 msgid "Have a {strong_start}question about something specific{strong_end}? You can contact the {platform_name} general support team directly:"
-msgstr "Bạn có một {strong_start}câu hòi cụ thể {strong_end}? Bạn có thể liên hệ {platform_name} trực tiếp với đội ngũ hỗ trợ:"
+msgstr "Bạn có một {strong_start}câu hỏi cụ thể {strong_end}? Bạn có thể liên hệ {platform_name} trực tiếp với đội ngũ hỗ trợ:"
 
 #: lms/templates/help_modal.html
 msgid "Report a problem"
@@ -10141,7 +10141,7 @@ msgid ""
 "will be in English."
 msgstr ""
 "Xin lưu ý: Nhóm hỗ trợ trên {platform_name} dùng ngôn ngữ Tiếng Việt. Chúng tôi làm hết sức để nhận câu hỏi bằng bất cứ thứ tiếng nào nhưng chúng tôi "
-"sẽ trả lời các bạn bằng tiếng Việt. "
+"sẽ trả lời các bạn bằng tiếng Việt."
 
 #: lms/templates/help_modal.html
 msgid "Briefly describe your issue"
@@ -10156,7 +10156,8 @@ msgid ""
 "Describe what you were doing when you encountered the issue. Include any details that will help us to troubleshoot, including error messages that you "
 "saw."
 msgstr ""
-"Miêu tả những thao tác bạn đang làm cho đến khi bạn gặp lỗi. Bổ sung các thông tin chi tiết, các thông báo lỗi bạn nhìn thấy sẽ giúp chung tôi tìm lõi"
+"Miêu tả những thao tác bạn đang làm cho đến khi bạn gặp lỗi. Bổ sung các thông tin chi tiết, các thông báo lỗi bạn nhìn thấy sẽ giúp chung tôi tìm ra "
+"vấn đề."
 
 #: lms/templates/help_modal.html
 msgid "Thank You!"
@@ -10176,7 +10177,7 @@ msgstr "- Chọn -"
 
 #: lms/templates/help_modal.html
 msgid "problem"
-msgstr "vấn đề"
+msgstr "câu hỏi"
 
 #: lms/templates/help_modal.html
 msgid "Report a Problem"
@@ -10184,7 +10185,7 @@ msgstr "Báo cáo lỗi"
 
 #: lms/templates/help_modal.html
 msgid "Brief description of the problem"
-msgstr "Mô tả ngắn gọn về vấn đề"
+msgstr "Mô tả ngắn gọn về câu hỏi"
 
 #: lms/templates/help_modal.html
 msgid "Details of the problem you are encountering{asterisk}"
@@ -10204,7 +10205,7 @@ msgstr "Tóm tắt ngắn gọn đề xuất của bạn"
 
 #: lms/templates/help_modal.html
 msgid "question"
-msgstr "Câu hỏi"
+msgstr "câu hỏi"
 
 #: lms/templates/help_modal.html
 msgid "Ask a Question"
@@ -10258,7 +10259,7 @@ msgstr "Lưu ý: chỉ các giáo viên hướng dẫn được quyền chú th�
 #. untranslated. See http://open.edx.org for more information.
 #: lms/templates/index.html
 msgid "Welcome to the Open edX{registered_trademark} platform!"
-msgstr "Chào mứng bạn đến với nền tảng Open edX {registered_trademark}!"
+msgstr "Chào mừng bạn đến với nền tảng Open edX {registered_trademark}!"
 
 #. Translators: 'Open edX' is a registered trademark, please keep this
 #. untranslated. See http://open.edx.org for more information.
@@ -10475,7 +10476,7 @@ msgstr "(tải lại trang để cập nhật)"
 
 #: lms/templates/manage_user_standing.html
 msgid "working"
-msgstr "đang làm việc"
+msgstr "đang xử lý"
 
 #: lms/templates/module-error.html lms/templates/courseware/courseware-error.html
 msgid "There has been an error on the {platform_name} servers"
@@ -10597,7 +10598,7 @@ msgstr "Đăng ký qua {provider_name}"
 
 #: lms/templates/register-form.html themes/stanford-style/lms/templates/register-form.html
 msgid "Create your own {platform_name} account below"
-msgstr "Tạo tài khoản trên {platform_name} "
+msgstr "Tạo tài khoản {platform_name}"
 
 #: lms/templates/register-form.html lms/templates/register-shib.html themes/stanford-style/lms/templates/register-form.html
 #: themes/stanford-style/lms/templates/register-shib.html
@@ -10633,7 +10634,7 @@ msgstr "không thể thay đổi sau này"
 
 #: lms/templates/register-form.html themes/stanford-style/lms/templates/register-form.html
 msgid "Welcome {username}"
-msgstr "Chào {username}"
+msgstr "Chào mừng {username}"
 
 #: lms/templates/register-form.html themes/stanford-style/lms/templates/register-form.html
 msgid "Enter a Public Display Name:"
@@ -10662,7 +10663,7 @@ msgstr "Vui lòng chia sẻ lý do bạn đăng ký tham gia {platform_name}"
 #: lms/templates/register-form.html lms/templates/register-shib.html themes/stanford-style/lms/templates/register-form.html
 #: themes/stanford-style/lms/templates/register-shib.html
 msgid "Account Acknowledgements"
-msgstr "Account Acknowledgements"
+msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html lms/templates/signup_modal.html
 #: themes/stanford-style/lms/templates/register-form.html themes/stanford-style/lms/templates/register-shib.html
@@ -10770,7 +10771,7 @@ msgstr "Chào mừng!"
 
 #: lms/templates/register.html
 msgid "Register below to create your {platform_name} account"
-msgstr "Đăng ký tài khoản {platform_name} "
+msgstr "Đăng ký tài khoản {platform_name}"
 
 #: lms/templates/resubscribe.html
 msgid "Re-subscribe Successful!"
@@ -11291,7 +11292,7 @@ msgstr ""
 "chung là \" các API\"). Xin vui lòng đọc điều khoản sử dụng dịch vụ trước khi truy cập hoặc sử dụng các API. Những điều khoản sử dụng này, cùng với các "
 "tài liệu API và các chính sách hoặc hướng dẫn có hiệu lức khác mà {platform_name} cung cấp và/hoặc các cập nhật là các thỏa thuận (gọi chung là điều "
 "khoản) giữa bạn và {platform_name}. Bằng việc truy cập hoặc sử dụng các API, bạn chấp nhận và đồng ý chính thức tuân theo các điều khoản này, bất kể "
-"bạn đã đăng ký hoặc chưa đăng ký tài khoản  Nếu bạn chưa hiều hoặc không muốn bị ràng buộc bởi các điều khoản này, bạn không được sử dụng các API này."
+"bạn đã đăng ký hoặc chưa đăng ký tài khoản. Nếu bạn chưa hiều hoặc không muốn bị ràng buộc bởi các điều khoản này, bạn không được sử dụng các API này."
 
 #: lms/templates/api_admin/terms_of_service.html
 msgid "API Access"
@@ -14238,7 +14239,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "Grading Configuration"
-msgstr "Kết Cấu Điểm"
+msgstr "Cấu hình điểm số"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "Click to download a CSV of anonymized student IDs:"
@@ -19321,7 +19322,7 @@ msgstr "Định nghĩa chính sách hướng dẫn sử dụng"
 
 #: cms/templates/settings_advanced.html
 msgid "{strong_start}Warning{strong_end}: Do not modify these policies unless you are familiar with their purpose."
-msgstr "{strong start}Cảnh báo{strong and}: Không sửa đổi các chính sách này trừ khi bạn đã quen với mục đích của họ."
+msgstr "{strong_start}Cảnh báo{strong_end}: Không sửa đổi các chính sách này trừ khi bạn đã quen với mục đích của họ."
 
 #: cms/templates/settings_advanced.html
 msgid "Show Deprecated Settings"
