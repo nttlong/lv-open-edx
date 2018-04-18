@@ -2495,7 +2495,7 @@ msgstr "Enter true or false. If true, students can create discussion posts that 
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Allow Anonymous Discussion Posts to Peers"
-msgstr "Allow Anonymous Discussion Posts to Peers"
+msgstr "Cho phép đăng bài thảo luận ẩn danh"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
@@ -2640,11 +2640,11 @@ msgstr "Tên giấy chứng nhận (đầy đủ)"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Certificate Web/HTML View Enabled"
-msgstr "Certificate Web/HTML View Enabled"
+msgstr "Cho phép xem chứng chỉ trực tuyến"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "If true, certificate Web/HTML views are enabled for the course."
-msgstr "Nếu đúng như vậy, quan điểm của giấy chứng nhận Web / HTML đang kích hoạt cho khóa học."
+msgstr "Nếu giá trị này là 'true' thì cho phép xem khóa học trực tuyến."
 
 #. Translators: This field is the container for course-specific certificate
 #. configuration values
@@ -3465,7 +3465,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py cms/templates/certificates.html cms/templates/group_configurations.html
 #: cms/templates/settings.html cms/templates/settings_advanced.html cms/templates/settings_graders.html cms/templates/widgets/header.html
 msgid "Group Configurations"
-msgstr "Nhóm Configurations"
+msgstr "Cấu hình nhóm"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid "Enter the configurations that govern how students are grouped together."
