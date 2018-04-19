@@ -1,0 +1,53 @@
+body{
+    font-family: Segoe UI !important;
+}
+
+.home>header{
+     background-image: url("http://jobs.surehcs.vn/photo/banner/5a0bac80d5b52917b8cc7a12.png") !important;
+}
+
+.flag-icon-vn{
+    background-image:url(../images/flags/4x3/vn.svg) !important;
+}
+.flag-icon-vn.flag-icon-squared{
+    background-image:url(../images/flags/1x1/vn.svg) !important;
+}
+.flag-icon-au{
+    background-image:url(../images/flags/4x3/au.svg) !important;
+}
+.flag-icon-au.flag-icon-squared{
+    background-image:url(../images/flags/1x1/au.svg) !important;
+}
+.header-global.slim .course-header {
+    width: auto !important;
+}
+.btn.dropdown-toggle.selectpicker.btn-default{
+    border: none !important;
+    color:#0075b4 !important;
+    font-weight: 100 !important;
+}
+.nav-colophon>ol{
+    margin-left: 0px !important;
+}
+.header-global.slim .logo img {
+    height: 60px !important;
+    vertical-align: middle;
+}
+.header-global .wrapper-header {
+    height: 73px !important;
+
+}
+.course-header>span{
+    font-family: Segoe UI !important;
+}
+.wrapper-course-material .course-tabs {
+    padding: 0px;
+}
+.header-global .user {
+    float: right;
+    padding-left: 0;
+    margin: 0;
+}
+.enrollment-wrapper table tr td {
+    text-align: center;
+}
