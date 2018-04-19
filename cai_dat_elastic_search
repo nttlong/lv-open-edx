@@ -1,0 +1,35 @@
+#for centos or redhat please refer /var/lib/elasticsearch/ where data of elasticsearch will be stored that
+#for centos or redhat please refer //etc/elasticsearch/elasticsearch.yml where configuration of elasticsearch will be implement
+
+#each node in elasticsearch.yml will be store at the same directory name
+#allow elastich read and write data to os
+sudo chown -R elasticsearch:elasticsearch /var/lib/elasticsearch/
+#check status, you will see PID of elastic service:
+sudo service elasticsearch status
+#kill process by PID:
+kill SIGNAL PID
+
+
+#restart:
+sudo service elasticsearch restart
+# check version:
+curl -XGET 'localhost:9200' or use web browser with localhost:9200
+#shut down all node:
+sudo systemctl stop elasticsearch.service
+#start all node:
+sudo systemctl start elasticsearch.service
+# after config, the os need to be restart by "shutdown -r now"
+#reload:
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo /bin/systemctl start elasticsearch.service
+#check journal
+sudo journalctl -u elasticsearch.servicesudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo /bin/systemctl start elasticsearch.service
+#remove elasticsearch:
+sudo yum remove elasticsearch
+#install:
+sudo yum localinstall elasticsearch-1.5.2.noarch.rpm 
+#Kiem tra trang thai:
+http://localhost:9200/_cluster/health
