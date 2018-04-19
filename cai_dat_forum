@@ -1,0 +1,5 @@
+#cai dat fofum vao apps/forum/conf/httpd-forun.conf
+Dat lai duong dan database den mongodb
+restart lai apache
+#Thong tin cuc ky quan trong duoi day:
+Trong file cms.env.json muc "COMMENTS_SERVICE_KEY" copy value nay thay vao "SetEnv API_KEY <Gia tri thay vao>"
