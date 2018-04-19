@@ -31,7 +31,11 @@ django.catalog = {
     "Create an Account":"Tạo ngay 1 tài khoản để tham gia các khóa học",
     "Already have an {platformName} account?":"Đã có tài khoản tại  {platformName}?",
     "Sign in.":"Đăng nhập ngay",
-    "optional":"Tùy chọn"
+    "optional":"Tùy chọn",
+    "We couldn't sign you in.":"Thật đáng tiếc bạn không thể đăng nhập, thử lại 1 trong các cách sau:",
+    "An error has occurred. Refresh the page, and then try again.":"Lỗi đã xảy ra tại máy chủ. Nạp lại trang và đăng nhập 1 lần nữa",
+    "An error has occurred. Try refreshing the page, or check your Internet connection.":"Đã có trục trặc trong nối kết. Thử nạp lại trang, hoặc kiểm tra nối kết Internet"
+
 
 };
 

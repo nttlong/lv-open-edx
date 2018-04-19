@@ -154,8 +154,8 @@ from pipeline_mako import render_require_js_path_overrides
 
 </head>
 
-<body class="${static.dir_rtl()} <%block name='bodyclass'/> lang_${LANGUAGE_CODE}" ng-controller="lacviet">
-<div class="row">
+<body class="${static.dir_rtl()} <%block name='bodyclass'/> lang_${LANGUAGE_CODE}" ng-controller="lacviet" style="overflow-x:hidden">
+<div class="row" style="border:solid 4px red">
     <div class="col-sm-12">
 
 <%static:optional_include_mako file="body-initial.html" is_theming_enabled="True" />
