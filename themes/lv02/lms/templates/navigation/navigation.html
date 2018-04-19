@@ -1,0 +1,90 @@
+## mako
+
+<%page expression_filter="h" args="online_help_token"/>
+
+<%namespace name='static' file='../static_content.html'/>
+<%namespace file='../main.html' import="login_query"/>
+<%!
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.markup import HTML, Text
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+%>
+
+## Provide a hook for themes to inject branding on top.
+<%block name="navigation_top" />
+
+## Add UI Toolkit components if using the Pattern Library
+% if uses_pattern_library:
+    <%block name="js_extra">
+    <%static:require_module module_name="js/header_factory" class_name="HeaderFactory">
+    HeaderFactory();
+    </%static:require_module>
+    </%block>
+% endif
+
+<%block>
+<%
+try:
+    course_id = course.id
+except:
+    # can't figure out a better way to get at a possibly-defined course var
+    course_id = None
+site_status_msg = get_site_status_msg(course_id)
+%>
+% if site_status_msg:
+
+<div class="alert alert-info">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<span class="icon fa fa-warning"></span> ${site_status_msg}
+</div>
+% endif
+</%block>
+
+
+
+
+<%include file="../help_modal.html"/>
+<% languages = released_languages() %>
+<nav class="navbar navbar-default" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="/">
+             <%include file="bootstrap/navbar-logo-header.html" args="online_help_token=online_help_token"/>
+        </a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse navbar-ex1-collapse">
+		<ul class="nav navbar-nav">
+            % if not user.is_authenticated():
+                <%include file="navbar-lang-selector.html" args="online_help_token=online_help_token"/>
+            %endif
+
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+
+			% if user.is_authenticated():
+                <%include file="navbar-authenticated.html" args="online_help_token=online_help_token"/>
+            % else:
+                <%include file="navbar_sign_in.html" args="online_help_token=online_help_token"/>
+            %endif
+             % if len(languages) > 1:
+                <%include file="navbar-lang-selector.html" args="online_help_token=online_help_token"/>
+            % endif
+		</ul>
+	</div><!-- /.navbar-collapse -->
+</nav>

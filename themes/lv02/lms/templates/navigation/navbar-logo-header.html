@@ -11,11 +11,11 @@ from lms.djangoapps.ccx.overrides import get_current_ccx
 from branding import api as branding_api
 %>
 
-<h1 class="hd logo-header">
+<h1 class="hd logo-header" >
   <div class="logo">
     <a href="${marketing_link('ROOT')}">
       <%block name="navigation_logo">
-      <img src="${branding_api.get_logo_url(is_secure)}" style="width: 65%;" alt="${_("{platform_name} Home Page 1").format(platform_name=static.get_platform_name())}"/>
+      <img src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
       </%block>
     </a>
   </div>

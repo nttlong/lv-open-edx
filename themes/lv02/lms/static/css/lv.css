@@ -52,12 +52,54 @@ body{
     text-align: center;
 }
 .lv-nav{
-    width:100% !important;
+    width:auto !important;
     border:solid 4px red !important;
 }
 .lv-nav .wrapper-header{
         border:solid 4px red !important;
-        width:"100%" !important
+        max-width:none !important;
+}
+.v-scroll-body{
+    overflow-x:hidden;
+}
+.navbar{
+    border:none !important;
+    padding-left:4px !important;
+    padding-right:62px !important;
+
+}
+.navbar.navbar-default .user-image-frame{
+    padding:0 !important;
+    margin:2px !important;
+}
+.hd.logo-header {
+    margin:0 !important;
+    padding:0 !important;
+}
+.navbar-brand {
+     margin:0 !important;
+    padding:0 !important;
+}
+.navbar-brand .logo img {
+    margin-left:20px !important;
+    padding:0 !important;
+    max-height:54px !important;
+}
+.clear-margin{
+    margin:0 !important;
+}
+.clear-padding{
+    margin:0 !important;
+}
+.full {
+    width:100% !important;
+    max-width:none !important;
+    min-width:none !important;
+}
+.dashboard-search-bar.full {
+    width:100% !important;
+    max-width:none !important;
+    min-width:none !important;
 }
 .debug {
    border:solid 4px red !important

@@ -68,7 +68,7 @@ from openedx.core.djangolib.js_utils import (
     <script type="text/javascript" src="${static.url("cms/js/require-config.js")}"></script>
 
     <!-- view -->
-    <div class="wrapper wrapper-view" dir="${static.dir_rtl()}">
+    <div class="wrapper wrapper-view debug" dir="${static.dir_rtl()}">
         <% online_help_token = self.online_help_token() if hasattr(self, 'online_help_token') else None %>
         <%include file="header.html" args="online_help_token=online_help_token" />
 
