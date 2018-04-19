@@ -1,0 +1,11 @@
+#cai dat fofum vao apps/forum/conf/httpd-forun.conf
+Dat lai duong dan database den mongodb
+restart lai apache
+db.createUser({
+user:"root",
+pwd:"pwd",
+roles:[{role:"clusterAdmin",db:"admin"},
+{role:"readAnyDatabase",db:"admin"},
+"readWrite"
+]
+},{w:"majority",wtimeoute:5000 })
