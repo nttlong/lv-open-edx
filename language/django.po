@@ -16949,7 +16949,7 @@ msgstr ""
 
 #: cms/templates/certificates.html
 msgid "To view a sample certificate, choose a course mode and select {em_start}Preview Certificate{em_end}."
-msgstr "Để xem một chứng chỉ mẫu, hãy chọn một chế độ khóa học và chọn {em start} Xem trước Chứng chỉ {em_end}."
+msgstr "Để xem một chứng chỉ mẫu, hãy chọn một chế độ khóa học và chọn {em_start} Xem trước Chứng chỉ {em_end}."
 
 #: cms/templates/certificates.html
 msgid "Issuing Certificates to Learners"
