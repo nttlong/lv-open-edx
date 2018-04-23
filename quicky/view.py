@@ -22,6 +22,16 @@ def template(fn,*_path,**kwargs):
 
     app=applications.get_app_by_file(fn.func_code.co_filename)
     def exec_request(request, **kwargs):
+        is_allow=True
+        is_public=False
+        authenticate=None
+        if hasattr(app.settings, "is_public"):
+            is_public = getattr(app.settings,"is_public")
+        if hasattr(app.settings,"authenticate"):
+            authenticate=getattr(app.settings,"authenticate")
+        # if not is_public or callable(authenticate):
+
+
         extens.apply(request,_path,app)
         if not _cache_view.has_key(app.name):
             lock.acquire()
