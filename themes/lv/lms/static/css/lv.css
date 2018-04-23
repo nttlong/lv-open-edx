@@ -53,10 +53,10 @@ body{
 }
 .lv-nav{
     width:100% !important;
-    border:solid 4px red !important;
+
 }
 .lv-nav .wrapper-header{
-        border:solid 4px red !important;
+
         width:"100%" !important
 }
 .debug {
