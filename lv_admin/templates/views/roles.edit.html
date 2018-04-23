@@ -33,10 +33,10 @@
     (function(scope,params){
         scope.get_title=function(){
             if(params){
-                return "${__.get_global_res('Edit role')}"
+                return "${get_global_res('Edit role')}"
             }
             else{
-                return '${__.get_global_res("New role")}'
+                return '${get_global_res("New role")}'
             }
         }
         scope.model={};

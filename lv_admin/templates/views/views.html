@@ -5,16 +5,16 @@
                 <thead>
                 <tr>
                     <th>
-                        ${__.get_global_res("App name")}
+                        ${get_global_res("App name")}
                     </th>
                     <th>
-                        ${__.get_global_res("Name")}
+                        ${get_global_res("Name")}
                     </th>
                     <th>
-                        ${__.get_global_res("Path")}
+                        ${get_global_res("Path")}
                     </th>
                     <th>
-                        ${__.get_global_res("Description")}
+                        ${get_global_res("Description")}
                     </th>
                     <th>
 
@@ -37,7 +37,7 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary" ng-click="$root.$dialog($id).params(p).url('pages/users.new').done()">
-                            ${__.get_global_res("Add to role ...")}
+                            ${get_global_res("Add to role ...")}
                         </button>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
 
 <script>
 (function(scope){
-    scope.view_path="${__.get_view_path()}";
+    scope.view_path="${get_view_path()}";
     services=ws(scope);
     scope.doLoadData=function(){
         services.api("admin.api.views/get_list")

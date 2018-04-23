@@ -10,7 +10,7 @@
           <li class="treeview">
           <a class="app-menu__item" href="#" data-toggle="treeview">
             <i class="app-menu__icon fa fa-th-list"></i>
-            <span class="app-menu__label">${item["caption"]}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="app-menu__label">${get_app_res(item["caption"])}&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <i class="treeview-indicator fa fa-angle-right"></i>
           </a>
           <ul class="treeview-menu">
@@ -18,7 +18,7 @@
               <li>
                 <a class="treeview-item" href="#page=${sub_item['page']}">
                 <i class="icon fa fa-circle-o"></i>
-                  ${sub_item["caption"]}
+                  ${get_app_res(sub_item["caption"])}
                 </a>
               </li>
             %endfor

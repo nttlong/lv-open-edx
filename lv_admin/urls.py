@@ -8,6 +8,6 @@ app=quicky.applications.get_app_by_file(__file__)
 urlpatterns=[
     url(r'^$', views.index),
     url(r'^users$', views.index, name="users_admin"),
-    app.get_static_urls()
+    app.get_static_urls(),
+    url(r'^pages/(?P<path>.*)$', views.load_page, name='singleshop')
 ]
-            # + static("^static\/(?P<path>.*)$", document_root="/home/hcsadmin/edx-ginkgo.2-3/apps/edx/edx-platform/lv-packages/lv_admin/static")

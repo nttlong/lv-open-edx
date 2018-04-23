@@ -5,17 +5,17 @@
                 <thead>
                 <tr>
                     <th>
-                        ${__.get_global_res("Role code")}
+                        ${get_global_res("Role code")}
                     </th>
                     <th>
-                        ${__.get_global_res("Role name")}
+                        ${get_global_res("Role name")}
                     </th>
                     <th>
-                        ${__.get_global_res("Description")}
+                        ${get_global_res("Description")}
                     </th>
                     <th>
                         <button class="btn btn-primary" ng-click="$root.$dialog($id).url('pages/roles.edit').done()">
-                            ${__.get_global_res("New")}
+                            ${get_global_res("New")}
                         </button>
                     </th>
                 </tr>
@@ -33,7 +33,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary" ng-click="$root.$dialog($id).params(p).url('pages/roles.edit').done()">
-                            ${__.get_global_res("Edit")}
+                            ${get_global_res("Edit")}
                         </button>
                     </td>
                 </tr>
@@ -48,7 +48,7 @@
 
 <script>
     (function(scope){
-        scope.view_path="${__.get_view_path()}";
+        scope.view_path="${get_view_path()}";
         service=ws(scope);
         scope.$root.onSearch(function(txt){
             scope.load_data(txt);

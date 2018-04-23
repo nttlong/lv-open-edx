@@ -1,5 +1,11 @@
 from . import extens
 from . import applications
+from . import authorize
+import threading
+lock = None
+global lock
+lock=threading.Lock()
+_cache_view={}
 def template_uri(fn):
     def layer(*args, **kwargs):
         def repl(f):
@@ -17,5 +23,25 @@ def template(fn,*_path,**kwargs):
     app=applications.get_app_by_file(fn.func_code.co_filename)
     def exec_request(request, **kwargs):
         extens.apply(request,_path,app)
+        if not _cache_view.has_key(app.name):
+            lock.acquire()
+            _cache_view.update({app.name:{}})
+            lock.release()
+        if not _cache_view[app.name].has_key(request.get_view_path()):
+            try:
+                lock.acquire()
+
+                ret=authorize.register_view(
+                    app=app.name,
+                    view=request.get_view_path()
+                )
+                _cache_view[app.name].update({
+                    request.get_view_path(): ret
+                })
+                lock.release()
+            except Exception as ex:
+                lock.release()
+                raise ex
+
         return fn(request, **kwargs)
     return exec_request

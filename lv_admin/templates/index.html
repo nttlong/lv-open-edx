@@ -3,12 +3,12 @@
     <%include file="header.html"/>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    include file="sidebar.html"
+    <%include file="sidebar.html"/>
 
 
     <main class="app-content" style="margin-left:0 !important;overflow-y:auto">
 
-        <div c-template url="${__.get_abs_url()}/${__.get_app_host()}/pages/{{$root.page}}" ng-if="$root.page">
+        <div c-template url="${get_abs_url()}/${get_app_host()}/pages/{{$root.page}}" ng-if="$root.page">
 
         </div>
 
@@ -18,7 +18,7 @@
       var app=angular.module("admin",["c-ui"]);
       app.controller("admin",["$dialog","$scope",function($dialog,$scope){
           $dialog($scope)
-          ws_set_url("${__.get_abs_url()}/${__.get_app_host()}/api")
+          ws_set_url("${get_abs_url()}/${get_app_host()}/api")
           history_navigator($scope.$root);
           $scope.$root.$history.change(function(data){
              $scope._onSearch=undefined;

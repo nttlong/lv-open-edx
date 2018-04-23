@@ -5,16 +5,33 @@ import sys
 from django.http import HttpResponse
 from mako.template import Template
 from mako.lookup import TemplateLookup
-
+from . import language as lang_manager
+import threading
+lock = None
+global lock
+lock=threading.Lock()
 from datetime import date, datetime
 
 from bson.objectid import ObjectId
 import importlib
 from . import applications
+_language_cache={}
 class render_server():
     def __init__(self):
         pass
-
+def get_language_item(language,app_name,view,key,value):
+    global _language_cache
+    hash_key="language={0};app={1};view={2};key={3}".format(language,app_name,view,key).lower()
+    if not _language_cache.has_key(hash_key):
+        try:
+            lock.acquire()
+            ret=lang_manager.get_language_item(language,app_name,view,key,value)
+            _language_cache[hash_key]=ret
+            lock.release()
+        except Exception as ex:
+            lock.release()
+            raise ex
+    return _language_cache[hash_key]
 def apply(request,template_file,app):
 
     from django.core.context_processors import csrf
@@ -53,11 +70,11 @@ def apply(request,template_file,app):
     def get_user():
         return request.user
     def get_res(key):
-        return key
+        return get_language_item(get_language(),app.name,get_view_path(),key,key)
     def get_app_res(key):
-        return key
+        return get_language_item(get_language(), app.name, "-", key, key)
     def get_global_res(key):
-        return key
+        return get_language_item(get_language(), "-", "-", key, key)
     def get_static(path):
         return request.get_app_url("static")+"/"+path
     def get_abs_url():
@@ -82,29 +99,27 @@ def apply(request,template_file,app):
         fileName = template_file
         def get_csrftoken():
             return csrf(request)["csrf_token"]
-        function_packages=render_server()
 
-        setattr(function_packages, "template_file", template_file)
-        setattr(function_packages, "render", render)
-        setattr(function_packages, "get_user", get_user)
-        setattr(function_packages, "get_res", get_res)
-        setattr(function_packages, "get_app_res", get_app_res)
-        setattr(function_packages, "get_global_res", get_global_res)
-        setattr(function_packages, "get_static", get_static)
-        setattr(function_packages, "get_abs_url", get_abs_url)
-        setattr(function_packages, "get_app", get_app)
-        setattr(function_packages, "get_view_path", get_view_path)
-        setattr(function_packages, "get_app_host", get_app_host)
-        setattr(function_packages, "get_app_url", get_app_url)
-        setattr(function_packages, "get_language", get_language)
-        setattr(function_packages, "get_app_name", get_app_name)
+        render_model = {
+            "get_res": get_res,
+            "get_app_res": get_app_res,
+            "get_global_res": get_global_res,
+            "get_static": get_static,
+            "get_abs_url": get_abs_url,
+            "get_csrftoken": get_csrftoken,
+            "model": model,
+            "get_view_path": get_view_path,
+            "get_user": get_user,
+            "get_app_url": get_app_url,
+            "get_app_host": get_app_host,
+            "get_static": get_static,
+            "get_language": get_language,
+            "template_file": template_file,
+        }
 
-        if type(model) is dict:
-            model.update({
-                "__":function_packages
-            })
-        else:
-            setattr(model,"__",function_packages)
+
+
+
 
         # mylookup = TemplateLookup(directories=config._default_settings["TEMPLATES_DIRS"])
         if fileName != None:
@@ -114,7 +129,7 @@ def apply(request,template_file,app):
                                       output_encoding='utf-8',
                                       encoding_errors='replace'
                                       )
-            return HttpResponse(mylookup.get_template(fileName).render(**model))
+            return HttpResponse(mylookup.get_template(fileName).render(**render_model))
         else:
             mylookup = TemplateLookup(directories=["apps/templates"],
                                       default_filters=['decode.utf8'],
@@ -122,7 +137,7 @@ def apply(request,template_file,app):
                                       output_encoding='utf-8',
                                       encoding_errors='replace'
                                       )
-            return HttpResponse(mylookup.get_template(fileName).render(**model))
+            return HttpResponse(mylookup.get_template(fileName).render(**render_model))
 
     setattr(request,"template_file",template_file)
     setattr(request, "render", render)

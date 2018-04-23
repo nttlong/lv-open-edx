@@ -59,7 +59,7 @@
 </style>
 <div class="login-form">
     <form action="./login?next=${model['next']}" method="post">
-        <input type="hidden" name="csrfmiddlewaretoken" value="${__.get_csrftoken()}"/>
+        <input type="hidden" name="csrfmiddlewaretoken" value="${get_csrftoken()}"/>
         <h2 class="text-center">Login</h2>
         <div class="form-group has-error">
         	<input type="text" class="form-control" name="username" placeholder="${model['username']}" required="required" value="${model['username']}">
