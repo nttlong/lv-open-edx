@@ -1,6 +1,5 @@
 # coding: utf-8
-from sqlalchemy import BigInteger, Column, Date, DateTime, Float, ForeignKey, Integer, Numeric, SmallInteger, String, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy import BigInteger, Column, Date, DateTime, Float, Integer, Numeric, SmallInteger, String, Table
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -14,9 +13,7 @@ class ApiAdminApiaccessconfig(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class ApiAdminApiaccessrequest(Base):
@@ -28,14 +25,11 @@ class ApiAdminApiaccessrequest(Base):
     status = Column(String(255), nullable=False)
     website = Column(String(200), nullable=False)
     reason = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
+    user_id = Column(Integer, nullable=False)
     company_address = Column(String(255), nullable=False)
     company_name = Column(String(255), nullable=False)
     contacted = Column(Integer, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    site = relationship(u'DjangoSite')
-    user = relationship(u'AuthUser')
+    site_id = Column(Integer, nullable=False)
 
 
 class ApiAdminHistoricalapiaccessrequest(Base):
@@ -50,14 +44,12 @@ class ApiAdminHistoricalapiaccessrequest(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     user_id = Column(Integer)
     company_address = Column(String(255), nullable=False)
     company_name = Column(String(255), nullable=False)
     contacted = Column(Integer, nullable=False)
     site_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class AssessmentAiclassifier(Base):
@@ -65,11 +57,8 @@ class AssessmentAiclassifier(Base):
 
     id = Column(Integer, primary_key=True)
     classifier_data = Column(String(100), nullable=False)
-    classifier_set_id = Column(ForeignKey(u'assessment_aiclassifierset.id'), nullable=False)
-    criterion_id = Column(ForeignKey(u'assessment_criterion.id'), nullable=False)
-
-    classifier_set = relationship(u'AssessmentAiclassifierset')
-    criterion = relationship(u'AssessmentCriterion')
+    classifier_set_id = Column(Integer, nullable=False)
+    criterion_id = Column(Integer, nullable=False)
 
 
 class AssessmentAiclassifierset(Base):
@@ -80,9 +69,7 @@ class AssessmentAiclassifierset(Base):
     algorithm_id = Column(String(128), nullable=False)
     course_id = Column(String(255), nullable=False)
     item_id = Column(String(128), nullable=False)
-    rubric_id = Column(ForeignKey(u'assessment_rubric.id'), nullable=False)
-
-    rubric = relationship(u'AssessmentRubric')
+    rubric_id = Column(Integer, nullable=False)
 
 
 class AssessmentAigradingworkflow(Base):
@@ -98,13 +85,9 @@ class AssessmentAigradingworkflow(Base):
     submission_uuid = Column(String(128), nullable=False)
     essay_text = Column(String, nullable=False)
     student_id = Column(String(40), nullable=False)
-    assessment_id = Column(ForeignKey(u'assessment_assessment.id'))
-    classifier_set_id = Column(ForeignKey(u'assessment_aiclassifierset.id'))
-    rubric_id = Column(ForeignKey(u'assessment_rubric.id'), nullable=False)
-
-    assessment = relationship(u'AssessmentAssessment')
-    classifier_set = relationship(u'AssessmentAiclassifierset')
-    rubric = relationship(u'AssessmentRubric')
+    assessment_id = Column(Integer)
+    classifier_set_id = Column(Integer)
+    rubric_id = Column(Integer, nullable=False)
 
 
 class AssessmentAitrainingworkflow(Base):
@@ -117,20 +100,15 @@ class AssessmentAitrainingworkflow(Base):
     scheduled_at = Column(DateTime, nullable=False)
     completed_at = Column(DateTime)
     algorithm_id = Column(String(128), nullable=False)
-    classifier_set_id = Column(ForeignKey(u'assessment_aiclassifierset.id'))
-
-    classifier_set = relationship(u'AssessmentAiclassifierset')
+    classifier_set_id = Column(Integer)
 
 
 class AssessmentAitrainingworkflowTrainingExamples(Base):
     __tablename__ = 'assessment_aitrainingworkflow_training_examples'
 
     id = Column(Integer, primary_key=True)
-    aitrainingworkflow_id = Column(ForeignKey(u'assessment_aitrainingworkflow.id'), nullable=False)
-    trainingexample_id = Column(ForeignKey(u'assessment_trainingexample.id'), nullable=False)
-
-    aitrainingworkflow = relationship(u'AssessmentAitrainingworkflow')
-    trainingexample = relationship(u'AssessmentTrainingexample')
+    aitrainingworkflow_id = Column(Integer, nullable=False)
+    trainingexample_id = Column(Integer, nullable=False)
 
 
 class AssessmentAssessment(Base):
@@ -142,9 +120,7 @@ class AssessmentAssessment(Base):
     scorer_id = Column(String(40), nullable=False)
     score_type = Column(String(2), nullable=False)
     feedback = Column(String, nullable=False)
-    rubric_id = Column(ForeignKey(u'assessment_rubric.id'), nullable=False)
-
-    rubric = relationship(u'AssessmentRubric')
+    rubric_id = Column(Integer, nullable=False)
 
 
 class AssessmentAssessmentfeedback(Base):
@@ -159,22 +135,16 @@ class AssessmentAssessmentfeedbackAssessments(Base):
     __tablename__ = 'assessment_assessmentfeedback_assessments'
 
     id = Column(Integer, primary_key=True)
-    assessmentfeedback_id = Column(ForeignKey(u'assessment_assessmentfeedback.id'), nullable=False)
-    assessment_id = Column(ForeignKey(u'assessment_assessment.id'), nullable=False)
-
-    assessment = relationship(u'AssessmentAssessment')
-    assessmentfeedback = relationship(u'AssessmentAssessmentfeedback')
+    assessmentfeedback_id = Column(Integer, nullable=False)
+    assessment_id = Column(Integer, nullable=False)
 
 
 class AssessmentAssessmentfeedbackOptions(Base):
     __tablename__ = 'assessment_assessmentfeedback_options'
 
     id = Column(Integer, primary_key=True)
-    assessmentfeedback_id = Column(ForeignKey(u'assessment_assessmentfeedback.id'), nullable=False)
-    assessmentfeedbackoption_id = Column(ForeignKey(u'assessment_assessmentfeedbackoption.id'), nullable=False)
-
-    assessmentfeedback = relationship(u'AssessmentAssessmentfeedback')
-    assessmentfeedbackoption = relationship(u'AssessmentAssessmentfeedbackoption')
+    assessmentfeedback_id = Column(Integer, nullable=False)
+    assessmentfeedbackoption_id = Column(Integer, nullable=False)
 
 
 class AssessmentAssessmentfeedbackoption(Base):
@@ -189,13 +159,9 @@ class AssessmentAssessmentpart(Base):
 
     id = Column(Integer, primary_key=True)
     feedback = Column(String, nullable=False)
-    assessment_id = Column(ForeignKey(u'assessment_assessment.id'), nullable=False)
-    criterion_id = Column(ForeignKey(u'assessment_criterion.id'), nullable=False)
-    option_id = Column(ForeignKey(u'assessment_criterionoption.id'))
-
-    assessment = relationship(u'AssessmentAssessment')
-    criterion = relationship(u'AssessmentCriterion')
-    option = relationship(u'AssessmentCriterionoption')
+    assessment_id = Column(Integer, nullable=False)
+    criterion_id = Column(Integer, nullable=False)
+    option_id = Column(Integer)
 
 
 class AssessmentCriterion(Base):
@@ -206,9 +172,7 @@ class AssessmentCriterion(Base):
     label = Column(String(100), nullable=False)
     order_num = Column(Integer, nullable=False)
     prompt = Column(String, nullable=False)
-    rubric_id = Column(ForeignKey(u'assessment_rubric.id'), nullable=False)
-
-    rubric = relationship(u'AssessmentRubric')
+    rubric_id = Column(Integer, nullable=False)
 
 
 class AssessmentCriterionoption(Base):
@@ -220,9 +184,7 @@ class AssessmentCriterionoption(Base):
     name = Column(String(100), nullable=False)
     label = Column(String(100), nullable=False)
     explanation = Column(String, nullable=False)
-    criterion_id = Column(ForeignKey(u'assessment_criterion.id'), nullable=False)
-
-    criterion = relationship(u'AssessmentCriterion')
+    criterion_id = Column(Integer, nullable=False)
 
 
 class AssessmentPeerworkflow(Base):
@@ -246,13 +208,9 @@ class AssessmentPeerworkflowitem(Base):
     submission_uuid = Column(String(128), nullable=False)
     started_at = Column(DateTime, nullable=False)
     scored = Column(Integer, nullable=False)
-    assessment_id = Column(ForeignKey(u'assessment_assessment.id'))
-    author_id = Column(ForeignKey(u'assessment_peerworkflow.id'), nullable=False)
-    scorer_id = Column(ForeignKey(u'assessment_peerworkflow.id'), nullable=False)
-
-    assessment = relationship(u'AssessmentAssessment')
-    author = relationship(u'AssessmentPeerworkflow', primaryjoin='AssessmentPeerworkflowitem.author_id == AssessmentPeerworkflow.id')
-    scorer = relationship(u'AssessmentPeerworkflow', primaryjoin='AssessmentPeerworkflowitem.scorer_id == AssessmentPeerworkflow.id')
+    assessment_id = Column(Integer)
+    author_id = Column(Integer, nullable=False)
+    scorer_id = Column(Integer, nullable=False)
 
 
 class AssessmentRubric(Base):
@@ -295,11 +253,8 @@ class AssessmentStudenttrainingworkflowitem(Base):
     order_num = Column(Integer, nullable=False)
     started_at = Column(DateTime, nullable=False)
     completed_at = Column(DateTime)
-    training_example_id = Column(ForeignKey(u'assessment_trainingexample.id'), nullable=False)
-    workflow_id = Column(ForeignKey(u'assessment_studenttrainingworkflow.id'), nullable=False)
-
-    training_example = relationship(u'AssessmentTrainingexample')
-    workflow = relationship(u'AssessmentStudenttrainingworkflow')
+    training_example_id = Column(Integer, nullable=False)
+    workflow_id = Column(Integer, nullable=False)
 
 
 class AssessmentTrainingexample(Base):
@@ -308,20 +263,15 @@ class AssessmentTrainingexample(Base):
     id = Column(Integer, primary_key=True)
     raw_answer = Column(String, nullable=False)
     content_hash = Column(String(40), nullable=False)
-    rubric_id = Column(ForeignKey(u'assessment_rubric.id'), nullable=False)
-
-    rubric = relationship(u'AssessmentRubric')
+    rubric_id = Column(Integer, nullable=False)
 
 
 class AssessmentTrainingexampleOptionsSelected(Base):
     __tablename__ = 'assessment_trainingexample_options_selected'
 
     id = Column(Integer, primary_key=True)
-    trainingexample_id = Column(ForeignKey(u'assessment_trainingexample.id'), nullable=False)
-    criterionoption_id = Column(ForeignKey(u'assessment_criterionoption.id'), nullable=False)
-
-    criterionoption = relationship(u'AssessmentCriterionoption')
-    trainingexample = relationship(u'AssessmentTrainingexample')
+    trainingexample_id = Column(Integer, nullable=False)
+    criterionoption_id = Column(Integer, nullable=False)
 
 
 class AuthGroup(Base):
@@ -335,11 +285,8 @@ class AuthGroupPermissions(Base):
     __tablename__ = 'auth_group_permissions'
 
     id = Column(Integer, primary_key=True)
-    group_id = Column(ForeignKey(u'auth_group.id'), nullable=False)
-    permission_id = Column(ForeignKey(u'auth_permission.id'), nullable=False)
-
-    group = relationship(u'AuthGroup')
-    permission = relationship(u'AuthPermission')
+    group_id = Column(Integer, nullable=False)
+    permission_id = Column(Integer, nullable=False)
 
 
 class AuthPermission(Base):
@@ -347,10 +294,8 @@ class AuthPermission(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
-    content_type_id = Column(ForeignKey(u'django_content_type.id'), nullable=False)
+    content_type_id = Column(Integer, nullable=False)
     codename = Column(String(100), nullable=False)
-
-    content_type = relationship(u'DjangoContentType')
 
 
 class AuthRegistration(Base):
@@ -358,9 +303,7 @@ class AuthRegistration(Base):
 
     id = Column(Integer, primary_key=True)
     activation_key = Column(String(32), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class AuthUser(Base):
@@ -383,22 +326,16 @@ class AuthUserGroups(Base):
     __tablename__ = 'auth_user_groups'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    group_id = Column(ForeignKey(u'auth_group.id'), nullable=False)
-
-    group = relationship(u'AuthGroup')
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
+    group_id = Column(Integer, nullable=False)
 
 
 class AuthUserUserPermissions(Base):
     __tablename__ = 'auth_user_user_permissions'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    permission_id = Column(ForeignKey(u'auth_permission.id'), nullable=False)
-
-    permission = relationship(u'AuthPermission')
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
+    permission_id = Column(Integer, nullable=False)
 
 
 class AuthUserprofile(Base):
@@ -420,9 +357,7 @@ class AuthUserprofile(Base):
     allow_certificate = Column(Integer, nullable=False)
     bio = Column(String(3000))
     profile_image_uploaded_at = Column(DateTime)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class BadgesBadgeassertion(Base):
@@ -435,11 +370,8 @@ class BadgesBadgeassertion(Base):
     assertion_url = Column(String(200), nullable=False)
     modified = Column(DateTime, nullable=False)
     created = Column(DateTime, nullable=False)
-    badge_class_id = Column(ForeignKey(u'badges_badgeclass.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    badge_class = relationship(u'BadgesBadgeclass')
-    user = relationship(u'AuthUser')
+    badge_class_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class BadgesBadgeclass(Base):
@@ -474,9 +406,7 @@ class BadgesCourseeventbadgesconfiguration(Base):
     courses_completed = Column(String, nullable=False)
     courses_enrolled = Column(String, nullable=False)
     course_groups = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class BlockStructure(Base):
@@ -501,9 +431,7 @@ class BlockStructureConfig(Base):
     enabled = Column(Integer, nullable=False)
     num_versions_to_keep = Column(Integer)
     cache_timeout_in_seconds = Column(Integer)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class BookmarksBookmark(Base):
@@ -515,11 +443,8 @@ class BookmarksBookmark(Base):
     course_key = Column(String(255), nullable=False)
     usage_key = Column(String(255), nullable=False)
     path = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    xblock_cache_id = Column(ForeignKey(u'bookmarks_xblockcache.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
-    xblock_cache = relationship(u'BookmarksXblockcache')
+    user_id = Column(Integer, nullable=False)
+    xblock_cache_id = Column(Integer, nullable=False)
 
 
 class BookmarksXblockcache(Base):
@@ -540,9 +465,7 @@ class BrandingBrandingapiconfig(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class BrandingBrandinginfoconfig(Base):
@@ -552,9 +475,7 @@ class BrandingBrandinginfoconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     configuration = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class BulkEmailBulkemailflag(Base):
@@ -564,15 +485,13 @@ class BulkEmailBulkemailflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     require_course_email_auth = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 t_bulk_email_cohorttarget = Table(
     'bulk_email_cohorttarget', metadata,
-    Column('target_ptr_id', ForeignKey(u'bulk_email_target.id'), primary_key=True),
-    Column('cohort_id', ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
+    Column('target_ptr_id', Integer, primary_key=True),
+    Column('cohort_id', Integer, nullable=False)
 )
 
 
@@ -598,20 +517,15 @@ class BulkEmailCourseemail(Base):
     to_option = Column(String(64), nullable=False)
     template_name = Column(String(255))
     from_addr = Column(String(255))
-    sender_id = Column(ForeignKey(u'auth_user.id'))
-
-    sender = relationship(u'AuthUser')
+    sender_id = Column(Integer)
 
 
 class BulkEmailCourseemailTargets(Base):
     __tablename__ = 'bulk_email_courseemail_targets'
 
     id = Column(Integer, primary_key=True)
-    courseemail_id = Column(ForeignKey(u'bulk_email_courseemail.id'), nullable=False)
-    target_id = Column(ForeignKey(u'bulk_email_target.id'), nullable=False)
-
-    courseemail = relationship(u'BulkEmailCourseemail')
-    target = relationship(u'BulkEmailTarget')
+    courseemail_id = Column(Integer, nullable=False)
+    target_id = Column(Integer, nullable=False)
 
 
 class BulkEmailCourseemailtemplate(Base):
@@ -625,8 +539,8 @@ class BulkEmailCourseemailtemplate(Base):
 
 t_bulk_email_coursemodetarget = Table(
     'bulk_email_coursemodetarget', metadata,
-    Column('target_ptr_id', ForeignKey(u'bulk_email_target.id'), primary_key=True),
-    Column('track_id', ForeignKey(u'course_modes_coursemode.id'), nullable=False)
+    Column('target_ptr_id', Integer, primary_key=True),
+    Column('track_id', Integer, nullable=False)
 )
 
 
@@ -635,9 +549,7 @@ class BulkEmailOptout(Base):
 
     id = Column(Integer, primary_key=True)
     course_id = Column(String(255), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer)
 
 
 class BulkEmailTarget(Base):
@@ -645,8 +557,6 @@ class BulkEmailTarget(Base):
 
     id = Column(Integer, primary_key=True)
     target_type = Column(String(64), nullable=False)
-
-    tracks = relationship(u'CourseModesCoursemode', secondary='bulk_email_coursemodetarget')
 
 
 class CatalogCatalogintegration(Base):
@@ -657,11 +567,9 @@ class CatalogCatalogintegration(Base):
     enabled = Column(Integer, nullable=False)
     internal_api_url = Column(String(200), nullable=False)
     cache_ttl = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     service_username = Column(String(100), nullable=False)
     page_size = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
 
 
 class CcxCcxfieldoverride(Base):
@@ -671,9 +579,7 @@ class CcxCcxfieldoverride(Base):
     location = Column(String(255), nullable=False)
     field = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    ccx_id = Column(ForeignKey(u'ccx_customcourseforedx.id'), nullable=False)
-
-    ccx = relationship(u'CcxCustomcourseforedx')
+    ccx_id = Column(Integer, nullable=False)
 
 
 class CcxCustomcourseforedx(Base):
@@ -682,10 +588,8 @@ class CcxCustomcourseforedx(Base):
     id = Column(Integer, primary_key=True)
     course_id = Column(String(255), nullable=False)
     display_name = Column(String(255), nullable=False)
-    coach_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
+    coach_id = Column(Integer, nullable=False)
     structure_json = Column(String)
-
-    coach = relationship(u'AuthUser')
 
 
 class CcxconCcxcon(Base):
@@ -726,20 +630,15 @@ class CeleryUtilsChorddata(Base):
 
     id = Column(Integer, primary_key=True)
     serialized_callback = Column(String, nullable=False)
-    callback_result_id = Column(ForeignKey(u'celery_taskmeta.id'), nullable=False)
-
-    callback_result = relationship(u'CeleryTaskmeta')
+    callback_result_id = Column(Integer, nullable=False)
 
 
 class CeleryUtilsChorddataCompletedResults(Base):
     __tablename__ = 'celery_utils_chorddata_completed_results'
 
     id = Column(Integer, primary_key=True)
-    chorddata_id = Column(ForeignKey(u'celery_utils_chorddata.id'), nullable=False)
-    taskmeta_id = Column(ForeignKey(u'celery_taskmeta.id'), nullable=False)
-
-    chorddata = relationship(u'CeleryUtilsChorddata')
-    taskmeta = relationship(u'CeleryTaskmeta')
+    chorddata_id = Column(Integer, nullable=False)
+    taskmeta_id = Column(Integer, nullable=False)
 
 
 class CeleryUtilsFailedtask(Base):
@@ -762,9 +661,7 @@ class CertificatesCertificategenerationconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CertificatesCertificategenerationcoursesetting(Base):
@@ -785,11 +682,8 @@ class CertificatesCertificategenerationhistory(Base):
     modified = Column(DateTime, nullable=False)
     course_id = Column(String(255), nullable=False)
     is_regeneration = Column(Integer, nullable=False)
-    generated_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    instructor_task_id = Column(ForeignKey(u'instructor_task_instructortask.id'), nullable=False)
-
-    generated_by = relationship(u'AuthUser')
-    instructor_task = relationship(u'InstructorTaskInstructortask')
+    generated_by_id = Column(Integer, nullable=False)
+    instructor_task_id = Column(Integer, nullable=False)
 
 
 class CertificatesCertificatehtmlviewconfiguration(Base):
@@ -799,9 +693,7 @@ class CertificatesCertificatehtmlviewconfiguration(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     configuration = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CertificatesCertificateinvalidation(Base):
@@ -812,11 +704,8 @@ class CertificatesCertificateinvalidation(Base):
     modified = Column(DateTime, nullable=False)
     notes = Column(String)
     active = Column(Integer, nullable=False)
-    generated_certificate_id = Column(ForeignKey(u'certificates_generatedcertificate.id'), nullable=False)
-    invalidated_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    generated_certificate = relationship(u'CertificatesGeneratedcertificate')
-    invalidated_by = relationship(u'AuthUser')
+    generated_certificate_id = Column(Integer, nullable=False)
+    invalidated_by_id = Column(Integer, nullable=False)
 
 
 class CertificatesCertificatetemplate(Base):
@@ -853,9 +742,7 @@ class CertificatesCertificatewhitelist(Base):
     whitelist = Column(Integer, nullable=False)
     created = Column(DateTime, nullable=False)
     notes = Column(String)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class CertificatesExamplecertificate(Base):
@@ -872,9 +759,7 @@ class CertificatesExamplecertificate(Base):
     status = Column(String(255), nullable=False)
     error_reason = Column(String)
     download_url = Column(String(255))
-    example_cert_set_id = Column(ForeignKey(u'certificates_examplecertificateset.id'), nullable=False)
-
-    example_cert_set = relationship(u'CertificatesExamplecertificateset')
+    example_cert_set_id = Column(Integer, nullable=False)
 
 
 class CertificatesExamplecertificateset(Base):
@@ -903,9 +788,7 @@ class CertificatesGeneratedcertificate(Base):
     created_date = Column(DateTime, nullable=False)
     modified_date = Column(DateTime, nullable=False)
     error_reason = Column(String(512), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class CommerceCommerceconfiguration(Base):
@@ -916,12 +799,10 @@ class CommerceCommerceconfiguration(Base):
     enabled = Column(Integer, nullable=False)
     checkout_on_ecommerce_service = Column(Integer, nullable=False)
     single_course_checkout_page = Column(String(255), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     cache_ttl = Column(Integer, nullable=False)
     receipt_page = Column(String(255), nullable=False)
     enable_automatic_refund_approval = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
 
 
 class ContentserverCdnuseragentsconfig(Base):
@@ -931,9 +812,7 @@ class ContentserverCdnuseragentsconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     cdn_user_agents = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class ContentserverCourseassetcachettlconfig(Base):
@@ -943,9 +822,7 @@ class ContentserverCourseassetcachettlconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     cache_ttl = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class ContentstorePushnotificationconfig(Base):
@@ -954,9 +831,7 @@ class ContentstorePushnotificationconfig(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class ContentstoreVideouploadconfig(Base):
@@ -966,9 +841,7 @@ class ContentstoreVideouploadconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     profile_whitelist = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CorsCsrfXdomainproxyconfiguration(Base):
@@ -978,9 +851,7 @@ class CorsCsrfXdomainproxyconfiguration(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     whitelist = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CorsheadersCorsmodel(Base):
@@ -1003,11 +874,8 @@ class CourseActionStateCoursererunstate(Base):
     message = Column(String(1000), nullable=False)
     source_course_key = Column(String(255), nullable=False)
     display_name = Column(String(255), nullable=False)
-    created_user_id = Column(ForeignKey(u'auth_user.id'))
-    updated_user_id = Column(ForeignKey(u'auth_user.id'))
-
-    created_user = relationship(u'AuthUser', primaryjoin='CourseActionStateCoursererunstate.created_user_id == AuthUser.id')
-    updated_user = relationship(u'AuthUser', primaryjoin='CourseActionStateCoursererunstate.updated_user_id == AuthUser.id')
+    created_user_id = Column(Integer)
+    updated_user_id = Column(Integer)
 
 
 class CourseCreatorsCoursecreator(Base):
@@ -1017,9 +885,7 @@ class CourseCreatorsCoursecreator(Base):
     state_changed = Column(DateTime, nullable=False)
     state = Column(String(24), nullable=False)
     note = Column(String(512), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class CourseGroupsCohortmembership(Base):
@@ -1027,11 +893,8 @@ class CourseGroupsCohortmembership(Base):
 
     id = Column(Integer, primary_key=True)
     course_id = Column(String(255), nullable=False)
-    course_user_group_id = Column(ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    course_user_group = relationship(u'CourseGroupsCourseusergroup')
-    user = relationship(u'AuthUser')
+    course_user_group_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class CourseGroupsCoursecohort(Base):
@@ -1039,9 +902,7 @@ class CourseGroupsCoursecohort(Base):
 
     id = Column(Integer, primary_key=True)
     assignment_type = Column(String(20), nullable=False)
-    course_user_group_id = Column(ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
-
-    course_user_group = relationship(u'CourseGroupsCourseusergroup')
+    course_user_group_id = Column(Integer, nullable=False)
 
 
 class CourseGroupsCoursecohortssettings(Base):
@@ -1062,18 +923,13 @@ class CourseGroupsCourseusergroup(Base):
     course_id = Column(String(255), nullable=False)
     group_type = Column(String(20), nullable=False)
 
-    target_ptrs = relationship(u'BulkEmailTarget', secondary='bulk_email_cohorttarget')
-
 
 class CourseGroupsCourseusergroupUsers(Base):
     __tablename__ = 'course_groups_courseusergroup_users'
 
     id = Column(Integer, primary_key=True)
-    courseusergroup_id = Column(ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    courseusergroup = relationship(u'CourseGroupsCourseusergroup')
-    user = relationship(u'AuthUser')
+    courseusergroup_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class CourseGroupsCourseusergrouppartitiongroup(Base):
@@ -1084,9 +940,7 @@ class CourseGroupsCourseusergrouppartitiongroup(Base):
     group_id = Column(Integer, nullable=False)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
-    course_user_group_id = Column(ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
-
-    course_user_group = relationship(u'CourseGroupsCourseusergroup')
+    course_user_group_id = Column(Integer, nullable=False)
 
 
 class CourseGroupsUnregisteredlearnercohortassignments(Base):
@@ -1095,9 +949,7 @@ class CourseGroupsUnregisteredlearnercohortassignments(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(255), nullable=False)
     course_id = Column(String(255), nullable=False)
-    course_user_group_id = Column(ForeignKey(u'course_groups_courseusergroup.id'), nullable=False)
-
-    course_user_group = relationship(u'CourseGroupsCourseusergroup')
+    course_user_group_id = Column(Integer, nullable=False)
 
 
 class CourseModesCoursemode(Base):
@@ -1125,9 +977,7 @@ class CourseModesCoursemodeexpirationconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     verification_window = Column(BigInteger, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CourseModesCoursemodesarchive(Base):
@@ -1199,9 +1049,7 @@ class CourseOverviewsCourseoverviewimageconfig(Base):
     small_height = Column(Integer, nullable=False)
     large_width = Column(Integer, nullable=False)
     large_height = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CourseOverviewsCourseoverviewimageset(Base):
@@ -1212,9 +1060,7 @@ class CourseOverviewsCourseoverviewimageset(Base):
     modified = Column(DateTime, nullable=False)
     small_url = Column(String, nullable=False)
     large_url = Column(String, nullable=False)
-    course_overview_id = Column(ForeignKey(u'course_overviews_courseoverview.id'), nullable=False)
-
-    course_overview = relationship(u'CourseOverviewsCourseoverview')
+    course_overview_id = Column(String(255), nullable=False)
 
 
 class CourseOverviewsCourseoverviewtab(Base):
@@ -1222,9 +1068,7 @@ class CourseOverviewsCourseoverviewtab(Base):
 
     id = Column(Integer, primary_key=True)
     tab_id = Column(String(50), nullable=False)
-    course_overview_id = Column(ForeignKey(u'course_overviews_courseoverview.id'), nullable=False)
-
-    course_overview = relationship(u'CourseOverviewsCourseoverview')
+    course_overview_id = Column(String(255), nullable=False)
 
 
 class CourseStructuresCoursestructure(Base):
@@ -1246,9 +1090,7 @@ class CoursewareOfflinecomputedgrade(Base):
     created = Column(DateTime)
     updated = Column(DateTime, nullable=False)
     gradeset = Column(String)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class CoursewareOfflinecomputedgradelog(Base):
@@ -1271,9 +1113,7 @@ class CoursewareStudentfieldoverride(Base):
     location = Column(String(255), nullable=False)
     field = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    student_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    student = relationship(u'AuthUser')
+    student_id = Column(Integer, nullable=False)
 
 
 class CoursewareStudentmodule(Base):
@@ -1289,9 +1129,7 @@ class CoursewareStudentmodule(Base):
     done = Column(String(8), nullable=False)
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
-    student_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    student = relationship(u'AuthUser')
+    student_id = Column(Integer, nullable=False)
 
 
 class CoursewareStudentmodulehistory(Base):
@@ -1303,9 +1141,7 @@ class CoursewareStudentmodulehistory(Base):
     state = Column(String)
     grade = Column(Float(asdecimal=True))
     max_grade = Column(Float(asdecimal=True))
-    student_module_id = Column(ForeignKey(u'courseware_studentmodule.id'), nullable=False)
-
-    student_module = relationship(u'CoursewareStudentmodule')
+    student_module_id = Column(Integer, nullable=False)
 
 
 class CoursewareXmodulestudentinfofield(Base):
@@ -1316,9 +1152,7 @@ class CoursewareXmodulestudentinfofield(Base):
     value = Column(String, nullable=False)
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
-    student_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    student = relationship(u'AuthUser')
+    student_id = Column(Integer, nullable=False)
 
 
 class CoursewareXmodulestudentprefsfield(Base):
@@ -1330,9 +1164,7 @@ class CoursewareXmodulestudentprefsfield(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     module_type = Column(String(64), nullable=False)
-    student_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    student = relationship(u'AuthUser')
+    student_id = Column(Integer, nullable=False)
 
 
 class CoursewareXmoduleuserstatesummaryfield(Base):
@@ -1353,9 +1185,7 @@ class CrawlersCrawlersconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     known_user_agents = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CredentialsCredentialsapiconfig(Base):
@@ -1369,9 +1199,7 @@ class CredentialsCredentialsapiconfig(Base):
     enable_learner_issuance = Column(Integer, nullable=False)
     enable_studio_authoring = Column(Integer, nullable=False)
     cache_ttl = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CreditCreditconfig(Base):
@@ -1381,9 +1209,7 @@ class CreditCreditconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     cache_ttl = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class CreditCreditcourse(Base):
@@ -1402,9 +1228,7 @@ class CreditCrediteligibility(Base):
     modified = Column(DateTime, nullable=False)
     username = Column(String(255), nullable=False)
     deadline = Column(DateTime, nullable=False)
-    course_id = Column(ForeignKey(u'credit_creditcourse.id'), nullable=False)
-
-    course = relationship(u'CreditCreditcourse')
+    course_id = Column(Integer, nullable=False)
 
 
 class CreditCreditprovider(Base):
@@ -1436,11 +1260,8 @@ class CreditCreditrequest(Base):
     username = Column(String(255), nullable=False)
     parameters = Column(String, nullable=False)
     status = Column(String(255), nullable=False)
-    course_id = Column(ForeignKey(u'credit_creditcourse.id'), nullable=False)
-    provider_id = Column(ForeignKey(u'credit_creditprovider.id'), nullable=False)
-
-    course = relationship(u'CreditCreditcourse')
-    provider = relationship(u'CreditCreditprovider')
+    course_id = Column(Integer, nullable=False)
+    provider_id = Column(Integer, nullable=False)
 
 
 class CreditCreditrequirement(Base):
@@ -1455,9 +1276,7 @@ class CreditCreditrequirement(Base):
     order = Column(Integer, nullable=False)
     criteria = Column(String, nullable=False)
     active = Column(Integer, nullable=False)
-    course_id = Column(ForeignKey(u'credit_creditcourse.id'), nullable=False)
-
-    course = relationship(u'CreditCreditcourse')
+    course_id = Column(Integer, nullable=False)
 
 
 class CreditCreditrequirementstatus(Base):
@@ -1469,9 +1288,7 @@ class CreditCreditrequirementstatus(Base):
     username = Column(String(255), nullable=False)
     status = Column(String(32), nullable=False)
     reason = Column(String, nullable=False)
-    requirement_id = Column(ForeignKey(u'credit_creditrequirement.id'), nullable=False)
-
-    requirement = relationship(u'CreditCreditrequirement')
+    requirement_id = Column(Integer, nullable=False)
 
 
 class CreditHistoricalcreditrequest(Base):
@@ -1488,10 +1305,8 @@ class CreditHistoricalcreditrequest(Base):
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
     course_id = Column(Integer)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     provider_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class CreditHistoricalcreditrequirementstatus(Base):
@@ -1506,10 +1321,8 @@ class CreditHistoricalcreditrequirementstatus(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     requirement_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class DarkLangDarklangconfig(Base):
@@ -1519,9 +1332,7 @@ class DarkLangDarklangconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     released_languages = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class DjangoAdminLog(Base):
@@ -1533,11 +1344,8 @@ class DjangoAdminLog(Base):
     object_repr = Column(String(200), nullable=False)
     action_flag = Column(SmallInteger, nullable=False)
     change_message = Column(String, nullable=False)
-    content_type_id = Column(ForeignKey(u'django_content_type.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    content_type = relationship(u'DjangoContentType')
-    user = relationship(u'AuthUser')
+    content_type_id = Column(Integer)
+    user_id = Column(Integer, nullable=False)
 
 
 class DjangoCommentClientPermission(Base):
@@ -1550,11 +1358,8 @@ class DjangoCommentClientPermissionRoles(Base):
     __tablename__ = 'django_comment_client_permission_roles'
 
     id = Column(Integer, primary_key=True)
-    permission_id = Column(ForeignKey(u'django_comment_client_permission.name'), nullable=False)
-    role_id = Column(ForeignKey(u'django_comment_client_role.id'), nullable=False)
-
-    permission = relationship(u'DjangoCommentClientPermission')
-    role = relationship(u'DjangoCommentClientRole')
+    permission_id = Column(String(30), nullable=False)
+    role_id = Column(Integer, nullable=False)
 
 
 class DjangoCommentClientRole(Base):
@@ -1569,11 +1374,8 @@ class DjangoCommentClientRoleUsers(Base):
     __tablename__ = 'django_comment_client_role_users'
 
     id = Column(Integer, primary_key=True)
-    role_id = Column(ForeignKey(u'django_comment_client_role.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    role = relationship(u'DjangoCommentClientRole')
-    user = relationship(u'AuthUser')
+    role_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class DjangoCommentCommonCoursediscussionsettings(Base):
@@ -1593,9 +1395,7 @@ class DjangoCommentCommonForumsconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     connection_timeout = Column(Float(asdecimal=True), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class DjangoContentType(Base):
@@ -1642,20 +1442,16 @@ class DjangoOpenidAuthUseropenid(Base):
     id = Column(Integer, primary_key=True)
     claimed_id = Column(String, nullable=False)
     display_id = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class DjangoRedirect(Base):
     __tablename__ = 'django_redirect'
 
     id = Column(Integer, primary_key=True)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     old_path = Column(String(200), nullable=False)
     new_path = Column(String(200), nullable=False)
-
-    site = relationship(u'DjangoSite')
 
 
 class DjangoSession(Base):
@@ -1710,11 +1506,8 @@ class DjceleryPeriodictask(Base):
     total_run_count = Column(Integer, nullable=False)
     date_changed = Column(DateTime, nullable=False)
     description = Column(String, nullable=False)
-    crontab_id = Column(ForeignKey(u'djcelery_crontabschedule.id'))
-    interval_id = Column(ForeignKey(u'djcelery_intervalschedule.id'))
-
-    crontab = relationship(u'DjceleryCrontabschedule')
-    interval = relationship(u'DjceleryIntervalschedule')
+    crontab_id = Column(Integer)
+    interval_id = Column(Integer)
 
 
 class DjceleryPeriodictasks(Base):
@@ -1741,9 +1534,7 @@ class DjceleryTaskstate(Base):
     runtime = Column(Float(asdecimal=True))
     retries = Column(Integer, nullable=False)
     hidden = Column(Integer, nullable=False)
-    worker_id = Column(ForeignKey(u'djcelery_workerstate.id'))
-
-    worker = relationship(u'DjceleryWorkerstate')
+    worker_id = Column(Integer)
 
 
 class DjceleryWorkerstate(Base):
@@ -1759,10 +1550,8 @@ class EdxvalCoursevideo(Base):
 
     id = Column(Integer, primary_key=True)
     course_id = Column(String(255), nullable=False)
-    video_id = Column(ForeignKey(u'edxval_video.id'), nullable=False)
+    video_id = Column(Integer, nullable=False)
     is_hidden = Column(Integer, nullable=False)
-
-    video = relationship(u'EdxvalVideo')
 
 
 class EdxvalEncodedvideo(Base):
@@ -1774,11 +1563,8 @@ class EdxvalEncodedvideo(Base):
     url = Column(String(200), nullable=False)
     file_size = Column(Integer, nullable=False)
     bitrate = Column(Integer, nullable=False)
-    profile_id = Column(ForeignKey(u'edxval_profile.id'), nullable=False)
-    video_id = Column(ForeignKey(u'edxval_video.id'), nullable=False)
-
-    profile = relationship(u'EdxvalProfile')
-    video = relationship(u'EdxvalVideo')
+    profile_id = Column(Integer, nullable=False)
+    video_id = Column(Integer, nullable=False)
 
 
 class EdxvalProfile(Base):
@@ -1797,9 +1583,7 @@ class EdxvalSubtitle(Base):
     fmt = Column(String(20), nullable=False)
     language = Column(String(8), nullable=False)
     content = Column(String, nullable=False)
-    video_id = Column(ForeignKey(u'edxval_video.id'), nullable=False)
-
-    video = relationship(u'EdxvalVideo')
+    video_id = Column(Integer, nullable=False)
 
 
 class EdxvalVideo(Base):
@@ -1825,7 +1609,7 @@ class EmailMarketingEmailmarketingconfiguration(Base):
     sailthru_retry_interval = Column(Integer, nullable=False)
     sailthru_max_retries = Column(Integer, nullable=False)
     sailthru_activation_template = Column(String(20), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     sailthru_abandoned_cart_delay = Column(Integer, nullable=False)
     sailthru_abandoned_cart_template = Column(String(20), nullable=False)
     sailthru_content_cache_age = Column(Integer, nullable=False)
@@ -1836,8 +1620,6 @@ class EmailMarketingEmailmarketingconfiguration(Base):
     sailthru_upgrade_template = Column(String(20), nullable=False)
     sailthru_lms_url_override = Column(String(80), nullable=False)
     welcome_email_send_delay = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
 
 
 class EmbargoCountry(Base):
@@ -1852,11 +1634,8 @@ class EmbargoCountryaccessrule(Base):
 
     id = Column(Integer, primary_key=True)
     rule_type = Column(String(255), nullable=False)
-    country_id = Column(ForeignKey(u'embargo_country.id'), nullable=False)
-    restricted_course_id = Column(ForeignKey(u'embargo_restrictedcourse.id'), nullable=False)
-
-    country = relationship(u'EmbargoCountry')
-    restricted_course = relationship(u'EmbargoRestrictedcourse')
+    country_id = Column(Integer, nullable=False)
+    restricted_course_id = Column(Integer, nullable=False)
 
 
 class EmbargoCourseaccessrulehistory(Base):
@@ -1883,9 +1662,7 @@ class EmbargoEmbargoedstate(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     embargoed_countries = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class EmbargoIpfilter(Base):
@@ -1896,9 +1673,7 @@ class EmbargoIpfilter(Base):
     enabled = Column(Integer, nullable=False)
     whitelist = Column(String, nullable=False)
     blacklist = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class EmbargoRestrictedcourse(Base):
@@ -1920,9 +1695,7 @@ class EnterpriseEnrollmentnotificationemailtemplate(Base):
     plaintext_template = Column(String, nullable=False)
     html_template = Column(String, nullable=False)
     subject_line = Column(String(100), nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    site = relationship(u'DjangoSite')
+    site_id = Column(Integer, nullable=False)
 
 
 class EnterpriseEnterprisecourseenrollment(Base):
@@ -1933,9 +1706,7 @@ class EnterpriseEnterprisecourseenrollment(Base):
     modified = Column(DateTime, nullable=False)
     consent_granted = Column(Integer)
     course_id = Column(String(255), nullable=False)
-    enterprise_customer_user_id = Column(ForeignKey(u'enterprise_enterprisecustomeruser.id'), nullable=False)
-
-    enterprise_customer_user = relationship(u'EnterpriseEnterprisecustomeruser')
+    enterprise_customer_user_id = Column(Integer, nullable=False)
 
 
 class EnterpriseEnterprisecustomer(Base):
@@ -1946,14 +1717,12 @@ class EnterpriseEnterprisecustomer(Base):
     uuid = Column(String(32), primary_key=True)
     name = Column(String(255), nullable=False)
     active = Column(Integer, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     catalog = Column(Integer)
     enable_data_sharing_consent = Column(Integer, nullable=False)
     enforce_data_sharing_consent = Column(String(25), nullable=False)
     enable_audit_enrollment = Column(Integer, nullable=False)
     require_account_level_consent = Column(Integer, nullable=False)
-
-    site = relationship(u'DjangoSite')
 
 
 class EnterpriseEnterprisecustomerbrandingconfiguration(Base):
@@ -1963,9 +1732,7 @@ class EnterpriseEnterprisecustomerbrandingconfiguration(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     logo = Column(String(255))
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
+    enterprise_customer_id = Column(String(32), nullable=False)
 
 
 class EnterpriseEnterprisecustomerentitlement(Base):
@@ -1975,9 +1742,7 @@ class EnterpriseEnterprisecustomerentitlement(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     entitlement_id = Column(Integer, nullable=False)
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
+    enterprise_customer_id = Column(String(32), nullable=False)
 
 
 class EnterpriseEnterprisecustomeridentityprovider(Base):
@@ -1987,9 +1752,7 @@ class EnterpriseEnterprisecustomeridentityprovider(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     provider_id = Column(String(50), nullable=False)
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
+    enterprise_customer_id = Column(String(32), nullable=False)
 
 
 class EnterpriseEnterprisecustomeruser(Base):
@@ -1999,9 +1762,7 @@ class EnterpriseEnterprisecustomeruser(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     user_id = Column(Integer, nullable=False)
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
+    enterprise_customer_id = Column(String(32), nullable=False)
 
 
 class EnterpriseHistoricalenrollmentnotificationemailtemplate(Base):
@@ -2016,10 +1777,8 @@ class EnterpriseHistoricalenrollmentnotificationemailtemplate(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     site_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class EnterpriseHistoricalenterprisecourseenrollment(Base):
@@ -2034,9 +1793,7 @@ class EnterpriseHistoricalenterprisecourseenrollment(Base):
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
     enterprise_customer_user_id = Column(Integer)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
-
-    history_user = relationship(u'AuthUser')
+    history_user_id = Column(Integer)
 
 
 class EnterpriseHistoricalenterprisecustomer(Base):
@@ -2050,15 +1807,13 @@ class EnterpriseHistoricalenterprisecustomer(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     site_id = Column(Integer)
     catalog = Column(Integer)
     enable_data_sharing_consent = Column(Integer, nullable=False)
     enforce_data_sharing_consent = Column(String(25), nullable=False)
     enable_audit_enrollment = Column(Integer, nullable=False)
     require_account_level_consent = Column(Integer, nullable=False)
-
-    history_user = relationship(u'AuthUser')
 
 
 class EnterpriseHistoricalenterprisecustomerentitlement(Base):
@@ -2072,9 +1827,7 @@ class EnterpriseHistoricalenterprisecustomerentitlement(Base):
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
     enterprise_customer_id = Column(String(32))
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
-
-    history_user = relationship(u'AuthUser')
+    history_user_id = Column(Integer)
 
 
 class EnterpriseHistoricaluserdatasharingconsentaudit(Base):
@@ -2087,10 +1840,8 @@ class EnterpriseHistoricaluserdatasharingconsentaudit(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     user_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class EnterprisePendingenrollment(Base):
@@ -2101,9 +1852,7 @@ class EnterprisePendingenrollment(Base):
     modified = Column(DateTime, nullable=False)
     course_id = Column(String(255), nullable=False)
     course_mode = Column(String(25), nullable=False)
-    user_id = Column(ForeignKey(u'enterprise_pendingenterprisecustomeruser.id'), nullable=False)
-
-    user = relationship(u'EnterprisePendingenterprisecustomeruser')
+    user_id = Column(Integer, nullable=False)
 
 
 class EnterprisePendingenterprisecustomeruser(Base):
@@ -2113,9 +1862,7 @@ class EnterprisePendingenterprisecustomeruser(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     user_email = Column(String(254), nullable=False)
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
+    enterprise_customer_id = Column(String(32), nullable=False)
 
 
 class EnterpriseUserdatasharingconsentaudit(Base):
@@ -2125,9 +1872,7 @@ class EnterpriseUserdatasharingconsentaudit(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     state = Column(String(8), nullable=False)
-    user_id = Column(ForeignKey(u'enterprise_enterprisecustomeruser.id'), nullable=False)
-
-    user = relationship(u'EnterpriseEnterprisecustomeruser')
+    user_id = Column(Integer, nullable=False)
 
 
 class ExperimentsExperimentdata(Base):
@@ -2139,9 +1884,7 @@ class ExperimentsExperimentdata(Base):
     experiment_id = Column(SmallInteger, nullable=False)
     key = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class ExperimentsExperimentkeyvalue(Base):
@@ -2167,9 +1910,7 @@ class ExternalAuthExternalauthmap(Base):
     internal_password = Column(String(31), nullable=False)
     dtcreated = Column(DateTime, nullable=False)
     dtsignup = Column(DateTime)
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer)
 
 
 class GradesComputegradessetting(Base):
@@ -2180,9 +1921,7 @@ class GradesComputegradessetting(Base):
     enabled = Column(Integer, nullable=False)
     batch_size = Column(Integer, nullable=False)
     course_ids = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class GradesCoursepersistentgradesflag(Base):
@@ -2192,9 +1931,7 @@ class GradesCoursepersistentgradesflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     course_id = Column(String(255), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class GradesPersistentcoursegrade(Base):
@@ -2220,9 +1957,7 @@ class GradesPersistentgradesenabledflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     enabled_for_all_courses = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class GradesPersistentsubsectiongrade(Base):
@@ -2240,10 +1975,8 @@ class GradesPersistentsubsectiongrade(Base):
     possible_all = Column(Float(asdecimal=True), nullable=False)
     earned_graded = Column(Float(asdecimal=True), nullable=False)
     possible_graded = Column(Float(asdecimal=True), nullable=False)
-    visible_blocks_hash = Column(ForeignKey(u'grades_visibleblocks.hashed'), nullable=False)
+    visible_blocks_hash = Column(String(100), nullable=False)
     first_attempted = Column(DateTime)
-
-    grades_visibleblocks = relationship(u'GradesVisibleblocks')
 
 
 class GradesVisibleblocks(Base):
@@ -2262,9 +1995,7 @@ class InstructorTaskGradereportsetting(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     batch_size = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class InstructorTaskInstructortask(Base):
@@ -2281,9 +2012,7 @@ class InstructorTaskInstructortask(Base):
     created = Column(DateTime)
     updated = Column(DateTime, nullable=False)
     subtasks = Column(String, nullable=False)
-    requester_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    requester = relationship(u'AuthUser')
+    requester_id = Column(Integer, nullable=False)
 
 
 class IntegratedChannelEnterpriseintegratedchannel(Base):
@@ -2303,9 +2032,7 @@ class LmsXblockXblockasidesconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     disabled_blocks = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class MicrositeConfigurationHistoricalmicrositeorganizationmapping(Base):
@@ -2316,10 +2043,8 @@ class MicrositeConfigurationHistoricalmicrositeorganizationmapping(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     microsite_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class MicrositeConfigurationHistoricalmicrositetemplate(Base):
@@ -2331,10 +2056,8 @@ class MicrositeConfigurationHistoricalmicrositetemplate(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     microsite_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class MicrositeConfigurationMicrosite(Base):
@@ -2343,9 +2066,7 @@ class MicrositeConfigurationMicrosite(Base):
     id = Column(Integer, primary_key=True)
     key = Column(String(63), nullable=False)
     values = Column(String, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    site = relationship(u'DjangoSite')
+    site_id = Column(Integer, nullable=False)
 
 
 class MicrositeConfigurationMicrositehistory(Base):
@@ -2356,9 +2077,7 @@ class MicrositeConfigurationMicrositehistory(Base):
     modified = Column(DateTime, nullable=False)
     key = Column(String(63), nullable=False)
     values = Column(String, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    site = relationship(u'DjangoSite')
+    site_id = Column(Integer, nullable=False)
 
 
 class MicrositeConfigurationMicrositeorganizationmapping(Base):
@@ -2366,9 +2085,7 @@ class MicrositeConfigurationMicrositeorganizationmapping(Base):
 
     id = Column(Integer, primary_key=True)
     organization = Column(String(63), nullable=False)
-    microsite_id = Column(ForeignKey(u'microsite_configuration_microsite.id'), nullable=False)
-
-    microsite = relationship(u'MicrositeConfigurationMicrosite')
+    microsite_id = Column(Integer, nullable=False)
 
 
 class MicrositeConfigurationMicrositetemplate(Base):
@@ -2377,9 +2094,7 @@ class MicrositeConfigurationMicrositetemplate(Base):
     id = Column(Integer, primary_key=True)
     template_uri = Column(String(255), nullable=False)
     template = Column(String, nullable=False)
-    microsite_id = Column(ForeignKey(u'microsite_configuration_microsite.id'), nullable=False)
-
-    microsite = relationship(u'MicrositeConfigurationMicrosite')
+    microsite_id = Column(Integer, nullable=False)
 
 
 class MilestonesCoursecontentmilestone(Base):
@@ -2391,12 +2106,9 @@ class MilestonesCoursecontentmilestone(Base):
     course_id = Column(String(255), nullable=False)
     content_id = Column(String(255), nullable=False)
     active = Column(Integer, nullable=False)
-    milestone_id = Column(ForeignKey(u'milestones_milestone.id'), nullable=False)
-    milestone_relationship_type_id = Column(ForeignKey(u'milestones_milestonerelationshiptype.id'), nullable=False)
+    milestone_id = Column(Integer, nullable=False)
+    milestone_relationship_type_id = Column(Integer, nullable=False)
     requirements = Column(String(255))
-
-    milestone = relationship(u'MilestonesMilestone')
-    milestone_relationship_type = relationship(u'MilestonesMilestonerelationshiptype')
 
 
 class MilestonesCoursemilestone(Base):
@@ -2407,11 +2119,8 @@ class MilestonesCoursemilestone(Base):
     modified = Column(DateTime, nullable=False)
     course_id = Column(String(255), nullable=False)
     active = Column(Integer, nullable=False)
-    milestone_id = Column(ForeignKey(u'milestones_milestone.id'), nullable=False)
-    milestone_relationship_type_id = Column(ForeignKey(u'milestones_milestonerelationshiptype.id'), nullable=False)
-
-    milestone = relationship(u'MilestonesMilestone')
-    milestone_relationship_type = relationship(u'MilestonesMilestonerelationshiptype')
+    milestone_id = Column(Integer, nullable=False)
+    milestone_relationship_type_id = Column(Integer, nullable=False)
 
 
 class MilestonesMilestone(Base):
@@ -2448,9 +2157,7 @@ class MilestonesUsermilestone(Base):
     source = Column(String, nullable=False)
     collected = Column(DateTime)
     active = Column(Integer, nullable=False)
-    milestone_id = Column(ForeignKey(u'milestones_milestone.id'), nullable=False)
-
-    milestone = relationship(u'MilestonesMilestone')
+    milestone_id = Column(Integer, nullable=False)
 
 
 class MobileApiAppversionconfig(Base):
@@ -2474,9 +2181,7 @@ class MobileApiIgnoremobileavailableflagconfig(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class MobileApiMobileapiconfig(Base):
@@ -2486,9 +2191,7 @@ class MobileApiMobileapiconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     video_profiles = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class NotesNote(Base):
@@ -2506,9 +2209,7 @@ class NotesNote(Base):
     tags = Column(String, nullable=False)
     created = Column(DateTime)
     updated = Column(DateTime, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class NotifyNotification(Base):
@@ -2520,9 +2221,7 @@ class NotifyNotification(Base):
     is_viewed = Column(Integer, nullable=False)
     is_emailed = Column(Integer, nullable=False)
     created = Column(DateTime, nullable=False)
-    subscription_id = Column(ForeignKey(u'notify_subscription.subscription_id'))
-
-    subscription = relationship(u'NotifySubscription')
+    subscription_id = Column(Integer)
 
 
 class NotifyNotificationtype(Base):
@@ -2530,9 +2229,7 @@ class NotifyNotificationtype(Base):
 
     key = Column(String(128), primary_key=True)
     label = Column(String(128))
-    content_type_id = Column(ForeignKey(u'django_content_type.id'))
-
-    content_type = relationship(u'DjangoContentType')
+    content_type_id = Column(Integer)
 
 
 class NotifySettings(Base):
@@ -2540,9 +2237,7 @@ class NotifySettings(Base):
 
     id = Column(Integer, primary_key=True)
     interval = Column(SmallInteger, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class NotifySubscription(Base):
@@ -2551,11 +2246,8 @@ class NotifySubscription(Base):
     subscription_id = Column(Integer, primary_key=True)
     object_id = Column(String(64))
     send_emails = Column(Integer, nullable=False)
-    notification_type_id = Column(ForeignKey(u'notify_notificationtype.key'), nullable=False)
-    settings_id = Column(ForeignKey(u'notify_settings.id'), nullable=False)
-
-    notification_type = relationship(u'NotifyNotificationtype')
-    settings = relationship(u'NotifySettings')
+    notification_type_id = Column(String(128), nullable=False)
+    settings_id = Column(Integer, nullable=False)
 
 
 class Oauth2Accesstoken(Base):
@@ -2565,11 +2257,8 @@ class Oauth2Accesstoken(Base):
     token = Column(String(255), nullable=False)
     expires = Column(DateTime, nullable=False)
     scope = Column(Integer, nullable=False)
-    client_id = Column(ForeignKey(u'oauth2_client.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    client = relationship(u'Oauth2Client')
-    user = relationship(u'AuthUser')
+    client_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class Oauth2Client(Base):
@@ -2582,10 +2271,8 @@ class Oauth2Client(Base):
     client_id = Column(String(255), nullable=False)
     client_secret = Column(String(255), nullable=False)
     client_type = Column(Integer, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'))
+    user_id = Column(Integer)
     logout_uri = Column(String(200))
-
-    user = relationship(u'AuthUser')
 
 
 class Oauth2Grant(Base):
@@ -2596,11 +2283,8 @@ class Oauth2Grant(Base):
     expires = Column(DateTime, nullable=False)
     redirect_uri = Column(String(255), nullable=False)
     scope = Column(Integer, nullable=False)
-    client_id = Column(ForeignKey(u'oauth2_client.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    client = relationship(u'Oauth2Client')
-    user = relationship(u'AuthUser')
+    client_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class Oauth2ProviderAccesstoken(Base):
@@ -2610,11 +2294,8 @@ class Oauth2ProviderAccesstoken(Base):
     token = Column(String(255), nullable=False)
     expires = Column(DateTime, nullable=False)
     scope = Column(String, nullable=False)
-    application_id = Column(ForeignKey(u'oauth2_provider_application.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    application = relationship(u'Oauth2ProviderApplication')
-    user = relationship(u'AuthUser')
+    application_id = Column(Integer, nullable=False)
+    user_id = Column(Integer)
 
 
 class Oauth2ProviderApplication(Base):
@@ -2627,10 +2308,8 @@ class Oauth2ProviderApplication(Base):
     authorization_grant_type = Column(String(32), nullable=False)
     client_secret = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
+    user_id = Column(Integer, nullable=False)
     skip_authorization = Column(Integer, nullable=False)
-
-    user = relationship(u'AuthUser')
 
 
 class Oauth2ProviderGrant(Base):
@@ -2641,11 +2320,8 @@ class Oauth2ProviderGrant(Base):
     expires = Column(DateTime, nullable=False)
     redirect_uri = Column(String(255), nullable=False)
     scope = Column(String, nullable=False)
-    application_id = Column(ForeignKey(u'oauth2_provider_application.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    application = relationship(u'Oauth2ProviderApplication')
-    user = relationship(u'AuthUser')
+    application_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class Oauth2ProviderRefreshtoken(Base):
@@ -2653,22 +2329,16 @@ class Oauth2ProviderRefreshtoken(Base):
 
     id = Column(Integer, primary_key=True)
     token = Column(String(255), nullable=False)
-    access_token_id = Column(ForeignKey(u'oauth2_provider_accesstoken.id'), nullable=False)
-    application_id = Column(ForeignKey(u'oauth2_provider_application.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    access_token = relationship(u'Oauth2ProviderAccesstoken')
-    application = relationship(u'Oauth2ProviderApplication')
-    user = relationship(u'AuthUser')
+    access_token_id = Column(Integer, nullable=False)
+    application_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class Oauth2ProviderTrustedclient(Base):
     __tablename__ = 'oauth2_provider_trustedclient'
 
     id = Column(Integer, primary_key=True)
-    client_id = Column(ForeignKey(u'oauth2_client.id'), nullable=False)
-
-    client = relationship(u'Oauth2Client')
+    client_id = Column(Integer, nullable=False)
 
 
 class Oauth2Refreshtoken(Base):
@@ -2677,22 +2347,16 @@ class Oauth2Refreshtoken(Base):
     id = Column(Integer, primary_key=True)
     token = Column(String(255), nullable=False)
     expired = Column(Integer, nullable=False)
-    access_token_id = Column(ForeignKey(u'oauth2_accesstoken.id'), nullable=False)
-    client_id = Column(ForeignKey(u'oauth2_client.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    access_token = relationship(u'Oauth2Accesstoken')
-    client = relationship(u'Oauth2Client')
-    user = relationship(u'AuthUser')
+    access_token_id = Column(Integer, nullable=False)
+    client_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class OauthDispatchRestrictedapplication(Base):
     __tablename__ = 'oauth_dispatch_restrictedapplication'
 
     id = Column(Integer, primary_key=True)
-    application_id = Column(ForeignKey(u'oauth2_provider_application.id'), nullable=False)
-
-    application = relationship(u'Oauth2ProviderApplication')
+    application_id = Column(Integer, nullable=False)
 
 
 class OauthProviderConsumer(Base):
@@ -2705,9 +2369,7 @@ class OauthProviderConsumer(Base):
     secret = Column(String(16), nullable=False)
     status = Column(SmallInteger, nullable=False)
     xauth_allowed = Column(Integer, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer)
 
 
 class OauthProviderNonce(Base):
@@ -2741,13 +2403,9 @@ class OauthProviderToken(Base):
     verifier = Column(String(10), nullable=False)
     callback = Column(String(2083))
     callback_confirmed = Column(Integer, nullable=False)
-    consumer_id = Column(ForeignKey(u'oauth_provider_consumer.id'), nullable=False)
-    scope_id = Column(ForeignKey(u'oauth_provider_scope.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    consumer = relationship(u'OauthProviderConsumer')
-    scope = relationship(u'OauthProviderScope')
-    user = relationship(u'AuthUser')
+    consumer_id = Column(Integer, nullable=False)
+    scope_id = Column(Integer)
+    user_id = Column(Integer)
 
 
 class OrganizationsOrganization(Base):
@@ -2771,9 +2429,7 @@ class OrganizationsOrganizationcourse(Base):
     modified = Column(DateTime, nullable=False)
     course_id = Column(String(255), nullable=False)
     active = Column(Integer, nullable=False)
-    organization_id = Column(ForeignKey(u'organizations_organization.id'), nullable=False)
-
-    organization = relationship(u'OrganizationsOrganization')
+    organization_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexam(Base):
@@ -2801,11 +2457,8 @@ class ProctoringProctoredexamreviewpolicy(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     review_policy = Column(String, nullable=False)
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    set_by_user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    set_by_user = relationship(u'AuthUser')
+    proctored_exam_id = Column(Integer, nullable=False)
+    set_by_user_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexamreviewpolicyhistory(Base):
@@ -2816,11 +2469,8 @@ class ProctoringProctoredexamreviewpolicyhistory(Base):
     modified = Column(DateTime, nullable=False)
     original_id = Column(Integer, nullable=False)
     review_policy = Column(String, nullable=False)
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    set_by_user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    set_by_user = relationship(u'AuthUser')
+    proctored_exam_id = Column(Integer, nullable=False)
+    set_by_user_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexamsoftwaresecurereview(Base):
@@ -2833,13 +2483,9 @@ class ProctoringProctoredexamsoftwaresecurereview(Base):
     review_status = Column(String(255), nullable=False)
     raw_data = Column(String, nullable=False)
     video_url = Column(String, nullable=False)
-    exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'))
-    reviewed_by_id = Column(ForeignKey(u'auth_user.id'))
-    student_id = Column(ForeignKey(u'auth_user.id'))
-
-    exam = relationship(u'ProctoringProctoredexam')
-    reviewed_by = relationship(u'AuthUser', primaryjoin='ProctoringProctoredexamsoftwaresecurereview.reviewed_by_id == AuthUser.id')
-    student = relationship(u'AuthUser', primaryjoin='ProctoringProctoredexamsoftwaresecurereview.student_id == AuthUser.id')
+    exam_id = Column(Integer)
+    reviewed_by_id = Column(Integer)
+    student_id = Column(Integer)
 
 
 class ProctoringProctoredexamsoftwaresecurereviewhistory(Base):
@@ -2852,13 +2498,9 @@ class ProctoringProctoredexamsoftwaresecurereviewhistory(Base):
     review_status = Column(String(255), nullable=False)
     raw_data = Column(String, nullable=False)
     video_url = Column(String, nullable=False)
-    exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'))
-    reviewed_by_id = Column(ForeignKey(u'auth_user.id'))
-    student_id = Column(ForeignKey(u'auth_user.id'))
-
-    exam = relationship(u'ProctoringProctoredexam')
-    reviewed_by = relationship(u'AuthUser', primaryjoin='ProctoringProctoredexamsoftwaresecurereviewhistory.reviewed_by_id == AuthUser.id')
-    student = relationship(u'AuthUser', primaryjoin='ProctoringProctoredexamsoftwaresecurereviewhistory.student_id == AuthUser.id')
+    exam_id = Column(Integer)
+    reviewed_by_id = Column(Integer)
+    student_id = Column(Integer)
 
 
 class ProctoringProctoredexamstudentallowance(Base):
@@ -2869,11 +2511,8 @@ class ProctoringProctoredexamstudentallowance(Base):
     modified = Column(DateTime, nullable=False)
     key = Column(String(255), nullable=False)
     value = Column(String(255), nullable=False)
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    user = relationship(u'AuthUser')
+    proctored_exam_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexamstudentallowancehistory(Base):
@@ -2885,11 +2524,8 @@ class ProctoringProctoredexamstudentallowancehistory(Base):
     allowance_id = Column(Integer, nullable=False)
     key = Column(String(255), nullable=False)
     value = Column(String(255), nullable=False)
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    user = relationship(u'AuthUser')
+    proctored_exam_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexamstudentattempt(Base):
@@ -2910,12 +2546,9 @@ class ProctoringProctoredexamstudentattempt(Base):
     is_sample_attempt = Column(Integer, nullable=False)
     student_name = Column(String(255), nullable=False)
     review_policy_id = Column(Integer)
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
+    proctored_exam_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
     is_status_acknowledged = Column(Integer, nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    user = relationship(u'AuthUser')
 
 
 class ProctoringProctoredexamstudentattemptcomment(Base):
@@ -2929,9 +2562,7 @@ class ProctoringProctoredexamstudentattemptcomment(Base):
     duration = Column(Integer, nullable=False)
     comment = Column(String, nullable=False)
     status = Column(String(255), nullable=False)
-    review_id = Column(ForeignKey(u'proctoring_proctoredexamsoftwaresecurereview.id'), nullable=False)
-
-    review = relationship(u'ProctoringProctoredexamsoftwaresecurereview')
+    review_id = Column(Integer, nullable=False)
 
 
 class ProctoringProctoredexamstudentattempthistory(Base):
@@ -2953,11 +2584,8 @@ class ProctoringProctoredexamstudentattempthistory(Base):
     review_policy_id = Column(Integer)
     last_poll_timestamp = Column(DateTime)
     last_poll_ipaddr = Column(String(32))
-    proctored_exam_id = Column(ForeignKey(u'proctoring_proctoredexam.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    proctored_exam = relationship(u'ProctoringProctoredexam')
-    user = relationship(u'AuthUser')
+    proctored_exam_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class ProgramsProgramsapiconfig(Base):
@@ -2966,10 +2594,8 @@ class ProgramsProgramsapiconfig(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     marketing_path = Column(String(255), nullable=False)
-
-    changed_by = relationship(u'AuthUser')
 
 
 class RssProxyWhitelistedrssurl(Base):
@@ -3008,12 +2634,10 @@ class SapSuccessFactorsHistoricalsapsuccessfactorsenterprisecus80ad(Base):
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
     enterprise_customer_id = Column(String(32))
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     sapsf_company_id = Column(String(255), nullable=False)
     sapsf_user_id = Column(String(255), nullable=False)
     user_type = Column(String(20), nullable=False)
-
-    history_user = relationship(u'AuthUser')
 
 
 class SapSuccessFactorsLearnerdatatransmissionaudit(Base):
@@ -3042,12 +2666,10 @@ class SapSuccessFactorsSapsuccessfactorsenterprisecustomerconfidb8a(Base):
     sapsf_base_url = Column(String(255), nullable=False)
     key = Column(String(255), nullable=False)
     secret = Column(String(255), nullable=False)
-    enterprise_customer_id = Column(ForeignKey(u'enterprise_enterprisecustomer.uuid'), nullable=False)
+    enterprise_customer_id = Column(String(32), nullable=False)
     sapsf_company_id = Column(String(255), nullable=False)
     sapsf_user_id = Column(String(255), nullable=False)
     user_type = Column(String(20), nullable=False)
-
-    enterprise_customer = relationship(u'EnterpriseEnterprisecustomer')
 
 
 class SapSuccessFactorsSapsuccessfactorsglobalconfiguration(Base):
@@ -3060,9 +2682,7 @@ class SapSuccessFactorsSapsuccessfactorsglobalconfiguration(Base):
     course_api_path = Column(String(255), nullable=False)
     oauth_api_path = Column(String(255), nullable=False)
     provider_id = Column(String(100), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class SelfPacedSelfpacedconfiguration(Base):
@@ -3072,9 +2692,16 @@ class SelfPacedSelfpacedconfiguration(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     enable_course_home_improvements = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
 
-    changed_by = relationship(u'AuthUser')
+
+class ShoppingcartCertificateitem(Base):
+    __tablename__ = 'shoppingcart_certificateitem'
+
+    orderitem_ptr_id = Column(Integer, primary_key=True)
+    course_id = Column(String(128), nullable=False)
+    mode = Column(String(50), nullable=False)
+    course_enrollment_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartCoupon(Base):
@@ -3088,22 +2715,24 @@ class ShoppingcartCoupon(Base):
     created_at = Column(DateTime, nullable=False)
     is_active = Column(Integer, nullable=False)
     expiration_date = Column(DateTime)
-    created_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    created_by = relationship(u'AuthUser')
+    created_by_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartCouponredemption(Base):
     __tablename__ = 'shoppingcart_couponredemption'
 
     id = Column(Integer, primary_key=True)
-    coupon_id = Column(ForeignKey(u'shoppingcart_coupon.id'), nullable=False)
-    order_id = Column(ForeignKey(u'shoppingcart_order.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
+    coupon_id = Column(Integer, nullable=False)
+    order_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
-    coupon = relationship(u'ShoppingcartCoupon')
-    order = relationship(u'ShoppingcartOrder')
-    user = relationship(u'AuthUser')
+
+class ShoppingcartCourseregcodeitem(Base):
+    __tablename__ = 'shoppingcart_courseregcodeitem'
+
+    orderitem_ptr_id = Column(Integer, primary_key=True)
+    course_id = Column(String(128), nullable=False)
+    mode = Column(String(50), nullable=False)
 
 
 class ShoppingcartCourseregcodeitemannotation(Base):
@@ -3123,15 +2752,25 @@ class ShoppingcartCourseregistrationcode(Base):
     created_at = Column(DateTime, nullable=False)
     mode_slug = Column(String(100))
     is_valid = Column(Integer, nullable=False)
-    created_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    invoice_id = Column(ForeignKey(u'shoppingcart_invoice.id'))
-    order_id = Column(ForeignKey(u'shoppingcart_order.id'))
-    invoice_item_id = Column(ForeignKey(u'shoppingcart_courseregistrationcodeinvoiceitem.invoiceitem_ptr_id'))
+    created_by_id = Column(Integer, nullable=False)
+    invoice_id = Column(Integer)
+    order_id = Column(Integer)
+    invoice_item_id = Column(Integer)
 
-    created_by = relationship(u'AuthUser')
-    invoice = relationship(u'ShoppingcartInvoice')
-    invoice_item = relationship(u'ShoppingcartCourseregistrationcodeinvoiceitem')
-    order = relationship(u'ShoppingcartOrder')
+
+class ShoppingcartCourseregistrationcodeinvoiceitem(Base):
+    __tablename__ = 'shoppingcart_courseregistrationcodeinvoiceitem'
+
+    invoiceitem_ptr_id = Column(Integer, primary_key=True)
+    course_id = Column(String(128), nullable=False)
+
+
+class ShoppingcartDonation(Base):
+    __tablename__ = 'shoppingcart_donation'
+
+    orderitem_ptr_id = Column(Integer, primary_key=True)
+    donation_type = Column(String(32), nullable=False)
+    course_id = Column(String(255), nullable=False)
 
 
 class ShoppingcartDonationconfiguration(Base):
@@ -3140,9 +2779,7 @@ class ShoppingcartDonationconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class ShoppingcartInvoice(Base):
@@ -3176,9 +2813,7 @@ class ShoppingcartInvoicehistory(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime, nullable=False)
     snapshot = Column(String, nullable=False)
-    invoice_id = Column(ForeignKey(u'shoppingcart_invoice.id'), nullable=False)
-
-    invoice = relationship(u'ShoppingcartInvoice')
+    invoice_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartInvoiceitem(Base):
@@ -3190,16 +2825,7 @@ class ShoppingcartInvoiceitem(Base):
     qty = Column(Integer, nullable=False)
     unit_price = Column(Numeric(30, 2), nullable=False)
     currency = Column(String(8), nullable=False)
-    invoice_id = Column(ForeignKey(u'shoppingcart_invoice.id'), nullable=False)
-
-    invoice = relationship(u'ShoppingcartInvoice')
-
-
-class ShoppingcartCourseregistrationcodeinvoiceitem(ShoppingcartInvoiceitem):
-    __tablename__ = 'shoppingcart_courseregistrationcodeinvoiceitem'
-
-    invoiceitem_ptr_id = Column(ForeignKey(u'shoppingcart_invoiceitem.id'), primary_key=True)
-    course_id = Column(String(128), nullable=False)
+    invoice_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartInvoicetransaction(Base):
@@ -3212,13 +2838,9 @@ class ShoppingcartInvoicetransaction(Base):
     currency = Column(String(8), nullable=False)
     comments = Column(String)
     status = Column(String(32), nullable=False)
-    created_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    invoice_id = Column(ForeignKey(u'shoppingcart_invoice.id'), nullable=False)
-    last_modified_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    created_by = relationship(u'AuthUser', primaryjoin='ShoppingcartInvoicetransaction.created_by_id == AuthUser.id')
-    invoice = relationship(u'ShoppingcartInvoice')
-    last_modified_by = relationship(u'AuthUser', primaryjoin='ShoppingcartInvoicetransaction.last_modified_by_id == AuthUser.id')
+    created_by_id = Column(Integer, nullable=False)
+    invoice_id = Column(Integer, nullable=False)
+    last_modified_by_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartOrder(Base):
@@ -3247,9 +2869,7 @@ class ShoppingcartOrder(Base):
     recipient_email = Column(String(255))
     customer_reference_number = Column(String(63))
     order_type = Column(String(32), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class ShoppingcartOrderitem(Base):
@@ -3268,49 +2888,17 @@ class ShoppingcartOrderitem(Base):
     refund_requested_time = Column(DateTime)
     service_fee = Column(Numeric(30, 2), nullable=False)
     report_comments = Column(String, nullable=False)
-    order_id = Column(ForeignKey(u'shoppingcart_order.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    order = relationship(u'ShoppingcartOrder')
-    user = relationship(u'AuthUser')
+    order_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
-class ShoppingcartPaidcourseregistration(ShoppingcartOrderitem):
+class ShoppingcartPaidcourseregistration(Base):
     __tablename__ = 'shoppingcart_paidcourseregistration'
 
-    orderitem_ptr_id = Column(ForeignKey(u'shoppingcart_orderitem.id'), primary_key=True)
+    orderitem_ptr_id = Column(Integer, primary_key=True)
     course_id = Column(String(128), nullable=False)
     mode = Column(String(50), nullable=False)
-    course_enrollment_id = Column(ForeignKey(u'student_courseenrollment.id'))
-
-    course_enrollment = relationship(u'StudentCourseenrollment')
-
-
-class ShoppingcartCourseregcodeitem(ShoppingcartOrderitem):
-    __tablename__ = 'shoppingcart_courseregcodeitem'
-
-    orderitem_ptr_id = Column(ForeignKey(u'shoppingcart_orderitem.id'), primary_key=True)
-    course_id = Column(String(128), nullable=False)
-    mode = Column(String(50), nullable=False)
-
-
-class ShoppingcartDonation(ShoppingcartOrderitem):
-    __tablename__ = 'shoppingcart_donation'
-
-    orderitem_ptr_id = Column(ForeignKey(u'shoppingcart_orderitem.id'), primary_key=True)
-    donation_type = Column(String(32), nullable=False)
-    course_id = Column(String(255), nullable=False)
-
-
-class ShoppingcartCertificateitem(ShoppingcartOrderitem):
-    __tablename__ = 'shoppingcart_certificateitem'
-
-    orderitem_ptr_id = Column(ForeignKey(u'shoppingcart_orderitem.id'), primary_key=True)
-    course_id = Column(String(128), nullable=False)
-    mode = Column(String(50), nullable=False)
-    course_enrollment_id = Column(ForeignKey(u'student_courseenrollment.id'), nullable=False)
-
-    course_enrollment = relationship(u'StudentCourseenrollment')
+    course_enrollment_id = Column(Integer)
 
 
 class ShoppingcartPaidcourseregistrationannotation(Base):
@@ -3326,15 +2914,10 @@ class ShoppingcartRegistrationcoderedemption(Base):
 
     id = Column(Integer, primary_key=True)
     redeemed_at = Column(DateTime)
-    course_enrollment_id = Column(ForeignKey(u'student_courseenrollment.id'))
-    order_id = Column(ForeignKey(u'shoppingcart_order.id'))
-    redeemed_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    registration_code_id = Column(ForeignKey(u'shoppingcart_courseregistrationcode.id'), nullable=False)
-
-    course_enrollment = relationship(u'StudentCourseenrollment')
-    order = relationship(u'ShoppingcartOrder')
-    redeemed_by = relationship(u'AuthUser')
-    registration_code = relationship(u'ShoppingcartCourseregistrationcode')
+    course_enrollment_id = Column(Integer)
+    order_id = Column(Integer)
+    redeemed_by_id = Column(Integer, nullable=False)
+    registration_code_id = Column(Integer, nullable=False)
 
 
 class SiteConfigurationSiteconfiguration(Base):
@@ -3342,10 +2925,8 @@ class SiteConfigurationSiteconfiguration(Base):
 
     id = Column(Integer, primary_key=True)
     values = Column(String, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     enabled = Column(Integer, nullable=False)
-
-    site = relationship(u'DjangoSite')
 
 
 class SiteConfigurationSiteconfigurationhistory(Base):
@@ -3355,10 +2936,8 @@ class SiteConfigurationSiteconfigurationhistory(Base):
     created = Column(DateTime, nullable=False)
     modified = Column(DateTime, nullable=False)
     values = Column(String, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     enabled = Column(Integer, nullable=False)
-
-    site = relationship(u'DjangoSite')
 
 
 class SocialAuthAssociation(Base):
@@ -3408,9 +2987,7 @@ class SocialAuthUsersocialauth(Base):
     provider = Column(String(32), nullable=False)
     uid = Column(String(255), nullable=False)
     extra_data = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class SplashSplashconfig(Base):
@@ -3424,9 +3001,7 @@ class SplashSplashconfig(Base):
     unaffected_usernames = Column(String, nullable=False)
     unaffected_url_paths = Column(String, nullable=False)
     redirect_url = Column(String(200), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StaticReplaceAssetbaseurlconfig(Base):
@@ -3436,9 +3011,7 @@ class StaticReplaceAssetbaseurlconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     base_url = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StaticReplaceAssetexcludedextensionsconfig(Base):
@@ -3448,9 +3021,7 @@ class StaticReplaceAssetexcludedextensionsconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     excluded_extensions = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StatusCoursemessage(Base):
@@ -3459,9 +3030,7 @@ class StatusCoursemessage(Base):
     id = Column(Integer, primary_key=True)
     course_key = Column(String(255), nullable=False)
     message = Column(String)
-    global_message_id = Column(ForeignKey(u'status_globalstatusmessage.id'), nullable=False)
-
-    global_message = relationship(u'StatusGlobalstatusmessage')
+    global_message_id = Column(Integer, nullable=False)
 
 
 class StatusGlobalstatusmessage(Base):
@@ -3471,9 +3040,7 @@ class StatusGlobalstatusmessage(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     message = Column(String)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentAnonymoususerid(Base):
@@ -3482,9 +3049,7 @@ class StudentAnonymoususerid(Base):
     id = Column(Integer, primary_key=True)
     anonymous_user_id = Column(String(32), nullable=False)
     course_id = Column(String(255), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentCourseaccessrole(Base):
@@ -3494,9 +3059,7 @@ class StudentCourseaccessrole(Base):
     org = Column(String(64), nullable=False)
     course_id = Column(String(255), nullable=False)
     role = Column(String(64), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentCourseenrollment(Base):
@@ -3507,9 +3070,7 @@ class StudentCourseenrollment(Base):
     created = Column(DateTime)
     is_active = Column(Integer, nullable=False)
     mode = Column(String(100), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentCourseenrollmentallowed(Base):
@@ -3529,9 +3090,7 @@ class StudentCourseenrollmentattribute(Base):
     namespace = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
     value = Column(String(255), nullable=False)
-    enrollment_id = Column(ForeignKey(u'student_courseenrollment.id'), nullable=False)
-
-    enrollment = relationship(u'StudentCourseenrollment')
+    enrollment_id = Column(Integer, nullable=False)
 
 
 class StudentDashboardconfiguration(Base):
@@ -3541,9 +3100,7 @@ class StudentDashboardconfiguration(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     recent_enrollment_time_delta = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentEnrollmentrefundconfiguration(Base):
@@ -3553,9 +3110,7 @@ class StudentEnrollmentrefundconfiguration(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     refund_window_microseconds = Column(BigInteger, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentEntranceexamconfiguration(Base):
@@ -3566,9 +3121,7 @@ class StudentEntranceexamconfiguration(Base):
     created = Column(DateTime)
     updated = Column(DateTime, nullable=False)
     skip_entrance_exam = Column(Integer, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentHistoricalcourseenrollment(Base):
@@ -3582,10 +3135,8 @@ class StudentHistoricalcourseenrollment(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     user_id = Column(Integer)
-
-    history_user = relationship(u'AuthUser')
 
 
 class StudentLanguageproficiency(Base):
@@ -3593,9 +3144,7 @@ class StudentLanguageproficiency(Base):
 
     id = Column(Integer, primary_key=True)
     code = Column(String(16), nullable=False)
-    user_profile_id = Column(ForeignKey(u'auth_userprofile.id'), nullable=False)
-
-    user_profile = relationship(u'AuthUserprofile')
+    user_profile_id = Column(Integer, nullable=False)
 
 
 class StudentLinkedinaddtoprofileconfiguration(Base):
@@ -3607,9 +3156,7 @@ class StudentLinkedinaddtoprofileconfiguration(Base):
     company_identifier = Column(String, nullable=False)
     dashboard_tracking_code = Column(String, nullable=False)
     trk_partner_name = Column(String(10), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentLoginfailures(Base):
@@ -3618,9 +3165,7 @@ class StudentLoginfailures(Base):
     id = Column(Integer, primary_key=True)
     failure_count = Column(Integer, nullable=False)
     lockout_until = Column(DateTime)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentLogoutviewconfiguration(Base):
@@ -3629,9 +3174,7 @@ class StudentLogoutviewconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentManualenrollmentaudit(Base):
@@ -3642,11 +3185,8 @@ class StudentManualenrollmentaudit(Base):
     time_stamp = Column(DateTime)
     state_transition = Column(String(255), nullable=False)
     reason = Column(String)
-    enrolled_by_id = Column(ForeignKey(u'auth_user.id'))
-    enrollment_id = Column(ForeignKey(u'student_courseenrollment.id'))
-
-    enrolled_by = relationship(u'AuthUser')
-    enrollment = relationship(u'StudentCourseenrollment')
+    enrolled_by_id = Column(Integer)
+    enrollment_id = Column(Integer)
 
 
 class StudentPasswordhistory(Base):
@@ -3655,9 +3195,7 @@ class StudentPasswordhistory(Base):
     id = Column(Integer, primary_key=True)
     password = Column(String(128), nullable=False)
     time_set = Column(DateTime, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentPendingemailchange(Base):
@@ -3666,9 +3204,7 @@ class StudentPendingemailchange(Base):
     id = Column(Integer, primary_key=True)
     new_email = Column(String(255), nullable=False)
     activation_key = Column(String(32), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentPendingnamechange(Base):
@@ -3677,9 +3213,7 @@ class StudentPendingnamechange(Base):
     id = Column(Integer, primary_key=True)
     new_name = Column(String(255), nullable=False)
     rationale = Column(String(1024), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentRegistrationcookieconfiguration(Base):
@@ -3690,9 +3224,7 @@ class StudentRegistrationcookieconfiguration(Base):
     enabled = Column(Integer, nullable=False)
     utm_cookie_name = Column(String(255), nullable=False)
     affiliate_cookie_name = Column(String(255), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class StudentUserattribute(Base):
@@ -3703,9 +3235,7 @@ class StudentUserattribute(Base):
     modified = Column(DateTime, nullable=False)
     name = Column(String(255), nullable=False)
     value = Column(String(255), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentUsersignupsource(Base):
@@ -3713,9 +3243,7 @@ class StudentUsersignupsource(Base):
 
     id = Column(Integer, primary_key=True)
     site = Column(String(255), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentUserstanding(Base):
@@ -3724,11 +3252,8 @@ class StudentUserstanding(Base):
     id = Column(Integer, primary_key=True)
     account_status = Column(String(31), nullable=False)
     standing_last_changed_at = Column(DateTime, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    changed_by = relationship(u'AuthUser', primaryjoin='StudentUserstanding.changed_by_id == AuthUser.id')
-    user = relationship(u'AuthUser', primaryjoin='StudentUserstanding.user_id == AuthUser.id')
+    changed_by_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class StudentUsertestgroup(Base):
@@ -3743,11 +3268,8 @@ class StudentUsertestgroupUsers(Base):
     __tablename__ = 'student_usertestgroup_users'
 
     id = Column(Integer, primary_key=True)
-    usertestgroup_id = Column(ForeignKey(u'student_usertestgroup.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
-    usertestgroup = relationship(u'StudentUsertestgroup')
+    usertestgroup_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class SubmissionsScore(Base):
@@ -3758,11 +3280,8 @@ class SubmissionsScore(Base):
     points_possible = Column(Integer, nullable=False)
     created_at = Column(DateTime, nullable=False)
     reset = Column(Integer, nullable=False)
-    student_item_id = Column(ForeignKey(u'submissions_studentitem.id'), nullable=False)
-    submission_id = Column(ForeignKey(u'submissions_submission.id'))
-
-    student_item = relationship(u'SubmissionsStudentitem')
-    submission = relationship(u'SubmissionsSubmission')
+    student_item_id = Column(Integer, nullable=False)
+    submission_id = Column(Integer)
 
 
 class SubmissionsScoreannotation(Base):
@@ -3772,22 +3291,16 @@ class SubmissionsScoreannotation(Base):
     annotation_type = Column(String(255), nullable=False)
     creator = Column(String(255), nullable=False)
     reason = Column(String, nullable=False)
-    score_id = Column(ForeignKey(u'submissions_score.id'), nullable=False)
-
-    score = relationship(u'SubmissionsScore')
+    score_id = Column(Integer, nullable=False)
 
 
 class SubmissionsScoresummary(Base):
     __tablename__ = 'submissions_scoresummary'
 
     id = Column(Integer, primary_key=True)
-    highest_id = Column(ForeignKey(u'submissions_score.id'), nullable=False)
-    latest_id = Column(ForeignKey(u'submissions_score.id'), nullable=False)
-    student_item_id = Column(ForeignKey(u'submissions_studentitem.id'), nullable=False)
-
-    highest = relationship(u'SubmissionsScore', primaryjoin='SubmissionsScoresummary.highest_id == SubmissionsScore.id')
-    latest = relationship(u'SubmissionsScore', primaryjoin='SubmissionsScoresummary.latest_id == SubmissionsScore.id')
-    student_item = relationship(u'SubmissionsStudentitem')
+    highest_id = Column(Integer, nullable=False)
+    latest_id = Column(Integer, nullable=False)
+    student_item_id = Column(Integer, nullable=False)
 
 
 class SubmissionsStudentitem(Base):
@@ -3809,10 +3322,8 @@ class SubmissionsSubmission(Base):
     submitted_at = Column(DateTime, nullable=False)
     created_at = Column(DateTime, nullable=False)
     raw_answer = Column(String, nullable=False)
-    student_item_id = Column(ForeignKey(u'submissions_studentitem.id'), nullable=False)
+    student_item_id = Column(Integer, nullable=False)
     status = Column(String(1), nullable=False)
-
-    student_item = relationship(u'SubmissionsStudentitem')
 
 
 class SurveySurveyanswer(Base):
@@ -3824,11 +3335,8 @@ class SurveySurveyanswer(Base):
     field_name = Column(String(255), nullable=False)
     field_value = Column(String(1024), nullable=False)
     course_key = Column(String(255))
-    form_id = Column(ForeignKey(u'survey_surveyform.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    form = relationship(u'SurveySurveyform')
-    user = relationship(u'AuthUser')
+    form_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class SurveySurveyform(Base):
@@ -3846,9 +3354,7 @@ class TaggingTagavailablevalues(Base):
 
     id = Column(Integer, primary_key=True)
     value = Column(String(255), nullable=False)
-    category_id = Column(ForeignKey(u'tagging_tagcategories.id'), nullable=False)
-
-    category = relationship(u'TaggingTagcategories')
+    category_id = Column(Integer, nullable=False)
 
 
 class TaggingTagcategories(Base):
@@ -3882,11 +3388,8 @@ class TeamsCourseteammembership(Base):
     id = Column(Integer, primary_key=True)
     date_joined = Column(DateTime, nullable=False)
     last_activity_at = Column(DateTime, nullable=False)
-    team_id = Column(ForeignKey(u'teams_courseteam.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    team = relationship(u'TeamsCourseteam')
-    user = relationship(u'AuthUser')
+    team_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class ThemingSitetheme(Base):
@@ -3894,9 +3397,7 @@ class ThemingSitetheme(Base):
 
     id = Column(Integer, primary_key=True)
     theme_dir_name = Column(String(255), nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    site = relationship(u'DjangoSite')
+    site_id = Column(Integer, nullable=False)
 
 
 class ThirdPartyAuthLtiproviderconfig(Base):
@@ -3914,17 +3415,14 @@ class ThirdPartyAuthLtiproviderconfig(Base):
     lti_hostname = Column(String(255), nullable=False)
     lti_consumer_secret = Column(String(255), nullable=False)
     lti_max_timestamp_age = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     icon_image = Column(String(100), nullable=False)
     visible = Column(Integer, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     drop_existing_session = Column(Integer, nullable=False)
     max_session_length = Column(Integer)
     skip_hinted_login_dialog = Column(Integer, nullable=False)
     send_to_registration_first = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
-    site = relationship(u'DjangoSite')
 
 
 class ThirdPartyAuthOauth2providerconfig(Base):
@@ -3942,18 +3440,15 @@ class ThirdPartyAuthOauth2providerconfig(Base):
     key = Column(String, nullable=False)
     secret = Column(String, nullable=False)
     other_settings = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     icon_image = Column(String(100), nullable=False)
     visible = Column(Integer, nullable=False)
     provider_slug = Column(String(30), nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     drop_existing_session = Column(Integer, nullable=False)
     max_session_length = Column(Integer)
     skip_hinted_login_dialog = Column(Integer, nullable=False)
     send_to_registration_first = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
-    site = relationship(u'DjangoSite')
 
 
 class ThirdPartyAuthProviderapipermissions(Base):
@@ -3961,9 +3456,7 @@ class ThirdPartyAuthProviderapipermissions(Base):
 
     id = Column(Integer, primary_key=True)
     provider_id = Column(String(255), nullable=False)
-    client_id = Column(ForeignKey(u'oauth2_client.id'), nullable=False)
-
-    client = relationship(u'Oauth2Client')
+    client_id = Column(Integer, nullable=False)
 
 
 class ThirdPartyAuthSamlconfiguration(Base):
@@ -3977,11 +3470,8 @@ class ThirdPartyAuthSamlconfiguration(Base):
     entity_id = Column(String(255), nullable=False)
     org_info_str = Column(String, nullable=False)
     other_config_str = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    changed_by = relationship(u'AuthUser')
-    site = relationship(u'DjangoSite')
+    changed_by_id = Column(Integer)
+    site_id = Column(Integer, nullable=False)
 
 
 class ThirdPartyAuthSamlproviderconfig(Base):
@@ -4006,20 +3496,17 @@ class ThirdPartyAuthSamlproviderconfig(Base):
     attr_username = Column(String(128), nullable=False)
     attr_email = Column(String(128), nullable=False)
     other_settings = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
+    changed_by_id = Column(Integer)
     icon_image = Column(String(100), nullable=False)
     debug_mode = Column(Integer, nullable=False)
     visible = Column(Integer, nullable=False)
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
+    site_id = Column(Integer, nullable=False)
     automatic_refresh_enabled = Column(Integer, nullable=False)
     identity_provider_type = Column(String(128), nullable=False)
     drop_existing_session = Column(Integer, nullable=False)
     max_session_length = Column(Integer)
     skip_hinted_login_dialog = Column(Integer, nullable=False)
     send_to_registration_first = Column(Integer, nullable=False)
-
-    changed_by = relationship(u'AuthUser')
-    site = relationship(u'DjangoSite')
 
 
 class ThirdPartyAuthSamlproviderdata(Base):
@@ -4063,9 +3550,7 @@ class UserApiUsercoursetag(Base):
     key = Column(String(255), nullable=False)
     course_id = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class UserApiUserorgtag(Base):
@@ -4077,9 +3562,7 @@ class UserApiUserorgtag(Base):
     key = Column(String(255), nullable=False)
     org = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class UserApiUserpreference(Base):
@@ -4088,9 +3571,7 @@ class UserApiUserpreference(Base):
     id = Column(Integer, primary_key=True)
     key = Column(String(255), nullable=False)
     value = Column(String, nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    user = relationship(u'AuthUser')
+    user_id = Column(Integer, nullable=False)
 
 
 class UserTasksUsertaskartifact(Base):
@@ -4104,9 +3585,7 @@ class UserTasksUsertaskartifact(Base):
     file = Column(String(100))
     url = Column(String(200), nullable=False)
     text = Column(String, nullable=False)
-    status_id = Column(ForeignKey(u'user_tasks_usertaskstatus.id'), nullable=False)
-
-    status = relationship(u'UserTasksUsertaskstatus')
+    status_id = Column(Integer, nullable=False)
 
 
 class UserTasksUsertaskstatus(Base):
@@ -4124,11 +3603,8 @@ class UserTasksUsertaskstatus(Base):
     completed_steps = Column(SmallInteger, nullable=False)
     total_steps = Column(SmallInteger, nullable=False)
     attempts = Column(SmallInteger, nullable=False)
-    parent_id = Column(ForeignKey(u'user_tasks_usertaskstatus.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    parent = relationship(u'UserTasksUsertaskstatus', remote_side=[id])
-    user = relationship(u'AuthUser')
+    parent_id = Column(Integer)
+    user_id = Column(Integer, nullable=False)
 
 
 class UtilRatelimitconfiguration(Base):
@@ -4137,9 +3613,7 @@ class UtilRatelimitconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class VerifiedTrackContentVerifiedtrackcohortedcourse(Base):
@@ -4162,10 +3636,8 @@ class VerifyStudentHistoricalverificationdeadline(Base):
     history_id = Column(Integer, primary_key=True)
     history_date = Column(DateTime, nullable=False)
     history_type = Column(String(1), nullable=False)
-    history_user_id = Column(ForeignKey(u'auth_user.id'))
+    history_user_id = Column(Integer)
     deadline_is_explicit = Column(Integer, nullable=False)
-
-    history_user = relationship(u'AuthUser')
 
 
 class VerifyStudentIcrvstatusemailsconfiguration(Base):
@@ -4174,9 +3646,7 @@ class VerifyStudentIcrvstatusemailsconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class VerifyStudentIncoursereverificationconfiguration(Base):
@@ -4185,9 +3655,7 @@ class VerifyStudentIncoursereverificationconfiguration(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class VerifyStudentSkippedreverification(Base):
@@ -4196,11 +3664,8 @@ class VerifyStudentSkippedreverification(Base):
     id = Column(Integer, primary_key=True)
     course_id = Column(String(255), nullable=False)
     created_at = Column(DateTime, nullable=False)
-    checkpoint_id = Column(ForeignKey(u'verify_student_verificationcheckpoint.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    checkpoint = relationship(u'VerifyStudentVerificationcheckpoint')
-    user = relationship(u'AuthUser')
+    checkpoint_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class VerifyStudentSoftwaresecurephotoverification(Base):
@@ -4221,13 +3686,9 @@ class VerifyStudentSoftwaresecurephotoverification(Base):
     error_msg = Column(String, nullable=False)
     error_code = Column(String(50), nullable=False)
     photo_id_key = Column(String, nullable=False)
-    copy_id_photo_from_id = Column(ForeignKey(u'verify_student_softwaresecurephotoverification.id'))
-    reviewing_user_id = Column(ForeignKey(u'auth_user.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    copy_id_photo_from = relationship(u'VerifyStudentSoftwaresecurephotoverification', remote_side=[id])
-    reviewing_user = relationship(u'AuthUser', primaryjoin='VerifyStudentSoftwaresecurephotoverification.reviewing_user_id == AuthUser.id')
-    user = relationship(u'AuthUser', primaryjoin='VerifyStudentSoftwaresecurephotoverification.user_id == AuthUser.id')
+    copy_id_photo_from_id = Column(Integer)
+    reviewing_user_id = Column(Integer)
+    user_id = Column(Integer, nullable=False)
 
 
 class VerifyStudentVerificationcheckpoint(Base):
@@ -4242,11 +3703,8 @@ class VerifyStudentVerificationcheckpointPhotoVerification(Base):
     __tablename__ = 'verify_student_verificationcheckpoint_photo_verification'
 
     id = Column(Integer, primary_key=True)
-    verificationcheckpoint_id = Column(ForeignKey(u'verify_student_verificationcheckpoint.id'), nullable=False)
-    softwaresecurephotoverification_id = Column(ForeignKey(u'verify_student_softwaresecurephotoverification.id'), nullable=False)
-
-    softwaresecurephotoverification = relationship(u'VerifyStudentSoftwaresecurephotoverification')
-    verificationcheckpoint = relationship(u'VerifyStudentVerificationcheckpoint')
+    verificationcheckpoint_id = Column(Integer, nullable=False)
+    softwaresecurephotoverification_id = Column(Integer, nullable=False)
 
 
 class VerifyStudentVerificationdeadline(Base):
@@ -4268,11 +3726,8 @@ class VerifyStudentVerificationstatus(Base):
     timestamp = Column(DateTime, nullable=False)
     response = Column(String)
     error = Column(String)
-    checkpoint_id = Column(ForeignKey(u'verify_student_verificationcheckpoint.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    checkpoint = relationship(u'VerifyStudentVerificationcheckpoint')
-    user = relationship(u'AuthUser')
+    checkpoint_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class VideoConfigCoursehlsplaybackenabledflag(Base):
@@ -4282,9 +3737,7 @@ class VideoConfigCoursehlsplaybackenabledflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     course_id = Column(String(255), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class VideoConfigHlsplaybackenabledflag(Base):
@@ -4294,9 +3747,7 @@ class VideoConfigHlsplaybackenabledflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     enabled_for_all_courses = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class WaffleFlag(Base):
@@ -4321,22 +3772,16 @@ class WaffleFlagGroups(Base):
     __tablename__ = 'waffle_flag_groups'
 
     id = Column(Integer, primary_key=True)
-    flag_id = Column(ForeignKey(u'waffle_flag.id'), nullable=False)
-    group_id = Column(ForeignKey(u'auth_group.id'), nullable=False)
-
-    flag = relationship(u'WaffleFlag')
-    group = relationship(u'AuthGroup')
+    flag_id = Column(Integer, nullable=False)
+    group_id = Column(Integer, nullable=False)
 
 
 class WaffleFlagUsers(Base):
     __tablename__ = 'waffle_flag_users'
 
     id = Column(Integer, primary_key=True)
-    flag_id = Column(ForeignKey(u'waffle_flag.id'), nullable=False)
-    user_id = Column(ForeignKey(u'auth_user.id'), nullable=False)
-
-    flag = relationship(u'WaffleFlag')
-    user = relationship(u'AuthUser')
+    flag_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class WaffleSample(Base):
@@ -4370,9 +3815,7 @@ class WaffleUtilsWaffleflagcourseoverridemodel(Base):
     waffle_flag = Column(String(255), nullable=False)
     course_id = Column(String(255), nullable=False)
     override_choice = Column(String(3), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class WikiArticle(Base):
@@ -4385,13 +3828,9 @@ class WikiArticle(Base):
     group_write = Column(Integer, nullable=False)
     other_read = Column(Integer, nullable=False)
     other_write = Column(Integer, nullable=False)
-    current_revision_id = Column(ForeignKey(u'wiki_articlerevision.id'))
-    group_id = Column(ForeignKey(u'auth_group.id'))
-    owner_id = Column(ForeignKey(u'auth_user.id'))
-
-    current_revision = relationship(u'WikiArticlerevision', primaryjoin='WikiArticle.current_revision_id == WikiArticlerevision.id')
-    group = relationship(u'AuthGroup')
-    owner = relationship(u'AuthUser')
+    current_revision_id = Column(Integer)
+    group_id = Column(Integer)
+    owner_id = Column(Integer)
 
 
 class WikiArticleforobject(Base):
@@ -4400,11 +3839,8 @@ class WikiArticleforobject(Base):
     id = Column(Integer, primary_key=True)
     object_id = Column(Integer, nullable=False)
     is_mptt = Column(Integer, nullable=False)
-    article_id = Column(ForeignKey(u'wiki_article.id'), nullable=False)
-    content_type_id = Column(ForeignKey(u'django_content_type.id'), nullable=False)
-
-    article = relationship(u'WikiArticle')
-    content_type = relationship(u'DjangoContentType')
+    article_id = Column(Integer, nullable=False)
+    content_type_id = Column(Integer, nullable=False)
 
 
 class WikiArticleplugin(Base):
@@ -4413,26 +3849,7 @@ class WikiArticleplugin(Base):
     id = Column(Integer, primary_key=True)
     deleted = Column(Integer, nullable=False)
     created = Column(DateTime, nullable=False)
-    article_id = Column(ForeignKey(u'wiki_article.id'), nullable=False)
-
-    article = relationship(u'WikiArticle')
-    current_revisions = relationship(u'WikiRevisionpluginrevision', secondary='wiki_revisionplugin')
-
-
-class WikiReusableplugin(WikiArticleplugin):
-    __tablename__ = 'wiki_reusableplugin'
-
-    articleplugin_ptr_id = Column(ForeignKey(u'wiki_articleplugin.id'), primary_key=True)
-
-
-class WikiAttachment(WikiReusableplugin):
-    __tablename__ = 'wiki_attachment'
-
-    reusableplugin_ptr_id = Column(ForeignKey(u'wiki_reusableplugin.articleplugin_ptr_id'), primary_key=True)
-    original_filename = Column(String(256))
-    current_revision_id = Column(ForeignKey(u'wiki_attachmentrevision.id'))
-
-    current_revision = relationship(u'WikiAttachmentrevision', primaryjoin='WikiAttachment.current_revision_id == WikiAttachmentrevision.id')
+    article_id = Column(Integer, nullable=False)
 
 
 class WikiArticlerevision(Base):
@@ -4449,14 +3866,17 @@ class WikiArticlerevision(Base):
     locked = Column(Integer, nullable=False)
     content = Column(String, nullable=False)
     title = Column(String(512), nullable=False)
-    article_id = Column(ForeignKey(u'wiki_article.id'), nullable=False)
-    previous_revision_id = Column(ForeignKey(u'wiki_articlerevision.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'))
+    article_id = Column(Integer, nullable=False)
+    previous_revision_id = Column(Integer)
+    user_id = Column(Integer)
 
-    article = relationship(u'WikiArticle', primaryjoin='WikiArticlerevision.article_id == WikiArticle.id')
-    previous_revision = relationship(u'WikiArticlerevision', remote_side=[id])
-    user = relationship(u'AuthUser')
-    articleplugin_ptrs = relationship(u'WikiArticleplugin', secondary='wiki_simpleplugin')
+
+class WikiAttachment(Base):
+    __tablename__ = 'wiki_attachment'
+
+    reusableplugin_ptr_id = Column(Integer, primary_key=True)
+    original_filename = Column(String(256))
+    current_revision_id = Column(Integer)
 
 
 class WikiAttachmentrevision(Base):
@@ -4473,33 +3893,44 @@ class WikiAttachmentrevision(Base):
     locked = Column(Integer, nullable=False)
     file = Column(String(100), nullable=False)
     description = Column(String, nullable=False)
-    attachment_id = Column(ForeignKey(u'wiki_attachment.reusableplugin_ptr_id'), nullable=False)
-    previous_revision_id = Column(ForeignKey(u'wiki_attachmentrevision.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    attachment = relationship(u'WikiAttachment', primaryjoin='WikiAttachmentrevision.attachment_id == WikiAttachment.reusableplugin_ptr_id')
-    previous_revision = relationship(u'WikiAttachmentrevision', remote_side=[id])
-    user = relationship(u'AuthUser')
+    attachment_id = Column(Integer, nullable=False)
+    previous_revision_id = Column(Integer)
+    user_id = Column(Integer)
 
 
+class WikiImage(Base):
+    __tablename__ = 'wiki_image'
 
+    revisionplugin_ptr_id = Column(Integer, primary_key=True)
+
+
+class WikiImagerevision(Base):
+    __tablename__ = 'wiki_imagerevision'
+
+    revisionpluginrevision_ptr_id = Column(Integer, primary_key=True)
+    image = Column(String(2000))
+    width = Column(SmallInteger)
+    height = Column(SmallInteger)
+
+
+class WikiReusableplugin(Base):
+    __tablename__ = 'wiki_reusableplugin'
+
+    articleplugin_ptr_id = Column(Integer, primary_key=True)
 
 
 class WikiReusablepluginArticles(Base):
     __tablename__ = 'wiki_reusableplugin_articles'
 
     id = Column(Integer, primary_key=True)
-    reusableplugin_id = Column(ForeignKey(u'wiki_reusableplugin.articleplugin_ptr_id'), nullable=False)
-    article_id = Column(ForeignKey(u'wiki_article.id'), nullable=False)
-
-    article = relationship(u'WikiArticle')
-    reusableplugin = relationship(u'WikiReusableplugin')
+    reusableplugin_id = Column(Integer, nullable=False)
+    article_id = Column(Integer, nullable=False)
 
 
 t_wiki_revisionplugin = Table(
     'wiki_revisionplugin', metadata,
-    Column('articleplugin_ptr_id', ForeignKey(u'wiki_articleplugin.id'), primary_key=True),
-    Column('current_revision_id', ForeignKey(u'wiki_revisionpluginrevision.id'))
+    Column('articleplugin_ptr_id', Integer, primary_key=True),
+    Column('current_revision_id', Integer)
 )
 
 
@@ -4515,28 +3946,15 @@ class WikiRevisionpluginrevision(Base):
     created = Column(DateTime, nullable=False)
     deleted = Column(Integer, nullable=False)
     locked = Column(Integer, nullable=False)
-    plugin_id = Column(ForeignKey(u'wiki_revisionplugin.articleplugin_ptr_id'), nullable=False)
-    previous_revision_id = Column(ForeignKey(u'wiki_revisionpluginrevision.id'))
-    user_id = Column(ForeignKey(u'auth_user.id'))
-
-    plugin = relationship(u'WikiRevisionplugin', primaryjoin='WikiRevisionpluginrevision.plugin_id == WikiRevisionplugin.articleplugin_ptr_id')
-    previous_revision = relationship(u'WikiRevisionpluginrevision', remote_side=[id])
-    user = relationship(u'AuthUser')
-
-
-class WikiImagerevision(WikiRevisionpluginrevision):
-    __tablename__ = 'wiki_imagerevision'
-
-    revisionpluginrevision_ptr_id = Column(ForeignKey(u'wiki_revisionpluginrevision.id'), primary_key=True)
-    image = Column(String(2000))
-    width = Column(SmallInteger)
-    height = Column(SmallInteger)
+    plugin_id = Column(Integer, nullable=False)
+    previous_revision_id = Column(Integer)
+    user_id = Column(Integer)
 
 
 t_wiki_simpleplugin = Table(
     'wiki_simpleplugin', metadata,
-    Column('articleplugin_ptr_id', ForeignKey(u'wiki_articleplugin.id'), primary_key=True),
-    Column('article_revision_id', ForeignKey(u'wiki_articlerevision.id'), nullable=False)
+    Column('articleplugin_ptr_id', Integer, primary_key=True),
+    Column('article_revision_id', Integer, nullable=False)
 )
 
 
@@ -4549,13 +3967,9 @@ class WikiUrlpath(Base):
     rght = Column(Integer, nullable=False)
     tree_id = Column(Integer, nullable=False)
     level = Column(Integer, nullable=False)
-    article_id = Column(ForeignKey(u'wiki_article.id'), nullable=False)
-    parent_id = Column(ForeignKey(u'wiki_urlpath.id'))
-    site_id = Column(ForeignKey(u'django_site.id'), nullable=False)
-
-    article = relationship(u'WikiArticle')
-    parent = relationship(u'WikiUrlpath', remote_side=[id])
-    site = relationship(u'DjangoSite')
+    article_id = Column(Integer, nullable=False)
+    parent_id = Column(Integer)
+    site_id = Column(Integer, nullable=False)
 
 
 class WorkflowAssessmentworkflow(Base):
@@ -4579,9 +3993,7 @@ class WorkflowAssessmentworkflowcancellation(Base):
     comments = Column(String, nullable=False)
     cancelled_by_id = Column(String(40), nullable=False)
     created_at = Column(DateTime, nullable=False)
-    workflow_id = Column(ForeignKey(u'workflow_assessmentworkflow.id'), nullable=False)
-
-    workflow = relationship(u'WorkflowAssessmentworkflow')
+    workflow_id = Column(Integer, nullable=False)
 
 
 class WorkflowAssessmentworkflowstep(Base):
@@ -4592,9 +4004,7 @@ class WorkflowAssessmentworkflowstep(Base):
     submitter_completed_at = Column(DateTime)
     assessment_completed_at = Column(DateTime)
     order_num = Column(Integer, nullable=False)
-    workflow_id = Column(ForeignKey(u'workflow_assessmentworkflow.id'), nullable=False)
-
-    workflow = relationship(u'WorkflowAssessmentworkflow')
+    workflow_id = Column(Integer, nullable=False)
 
 
 class XblockConfigCourseeditltifieldsenabledflag(Base):
@@ -4604,9 +4014,7 @@ class XblockConfigCourseeditltifieldsenabledflag(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     course_id = Column(String(255), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class XblockConfigStudioconfig(Base):
@@ -4616,9 +4024,7 @@ class XblockConfigStudioconfig(Base):
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
     disabled_blocks = Column(String, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class XblockDjangoXblockconfiguration(Base):
@@ -4629,9 +4035,7 @@ class XblockDjangoXblockconfiguration(Base):
     enabled = Column(Integer, nullable=False)
     name = Column(String(255), nullable=False)
     deprecated = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class XblockDjangoXblockstudioconfiguration(Base):
@@ -4643,9 +4047,7 @@ class XblockDjangoXblockstudioconfiguration(Base):
     name = Column(String(255), nullable=False)
     template = Column(String(255), nullable=False)
     support_level = Column(String(2), nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
 
 
 class XblockDjangoXblockstudioconfigurationflag(Base):
@@ -4654,6 +4056,4 @@ class XblockDjangoXblockstudioconfigurationflag(Base):
     id = Column(Integer, primary_key=True)
     change_date = Column(DateTime, nullable=False)
     enabled = Column(Integer, nullable=False)
-    changed_by_id = Column(ForeignKey(u'auth_user.id'))
-
-    changed_by = relationship(u'AuthUser')
+    changed_by_id = Column(Integer)
