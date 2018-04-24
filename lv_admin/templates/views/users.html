@@ -2,7 +2,7 @@
     <div class="col-md-12">
 
         <div class="tile">
-            <h3>${get_app_res("Dan sách thành viên")}</h3>
+            <h3>${get_app_res("Danh sách thành viên")}</h3>
             <div class="table-responsive">
                 <table class="table table-bordered">
                 <thead>
@@ -10,11 +10,13 @@
                     <th>${get_app_res("Username")}</th>
                     <th>${get_app_res("Email")}</th>
 
-                    <th>${get_app_res("Full name")}</th>
-                     <th>${get_app_res("Description")}</th>
+                    <th>${get_app_res("Họ")}</th>
+                     <th>${get_app_res("Tên")}</th>
+                    <th>${get_app_res("Đã kích hoạt")}</th>
+                    <th>${get_app_res("Là quản lý hệ thống")}</th>
                     <th>
                         <button class="btn btn-primary" ng-click="$root.$dialog($id).url('pages/users.new').done()">
-                            ${get_global_res("New")}
+                            ${get_global_res("Thêm")}
                         </button>
                     </th>
                 </tr>
@@ -28,14 +30,33 @@
                         {{p.email}}
                     </td>
                      <td>
-                        {{p.displayName}}
+                        {{p.first_name}}
                     </td>
                      <td>
-                        {{p.description}}
+                        {{p.last_name}}
+                    </td>
+                    <td>
+
+                        <span style="font-size:14pt" ng-if="p.is_active==1">
+                            &#10003;
+                        </span>
+                        <span style="font-size:14pt" ng-if="p.is_active==0">
+                            &#9633;
+                        </span>
+                    </td>
+                    <td>
+
+                        <span style="font-size:14pt" ng-if="p.is_superuser==1">
+                            &#10003;
+                        </span>
+                        <span style="font-size:14pt" ng-if="p.is_superuser==0">
+                            &#9633;
+                        </span>
+
                     </td>
                     <td>
                         <button class="btn btn-primary " ng-click="$root.$dialog($id).params(p).url('pages/users.new').done()">
-                            ${get_global_res("Edit")}
+                            ${get_global_res("Sửa")}
                         </button>
                     </td>
                 </tr>
@@ -43,7 +64,7 @@
                 </tbody>
                   <thead>
                     <tr>
-                    <th colspan="4"></th>
+                    <th colspan="6"></th>
                     <th>
                         <button class="btn btn-primary " ng-click="$root.$dialog($id).url('pages/users.new').done()">
                             ${get_global_res("New")}
@@ -72,8 +93,13 @@
             scope.load_data(txt);
         })
         scope.load_data=function(txt){
-            services.api("admin.api.users/get_list")
-                    .data({search_text:txt
+            services.api("lv_admin.api.users/get_list")
+                    .data({
+                            search_text:txt,
+                            page_size:50,
+                            page_index:0,
+                            sort:[]
+
                     }).done().then(function(res){
                         scope.data=res;
                         console.log(res);

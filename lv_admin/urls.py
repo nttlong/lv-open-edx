@@ -9,5 +9,6 @@ urlpatterns=[
     url(r'^$', views.index),
     url(r'^users$', views.index, name="users_admin"),
     app.get_static_urls(),
-    url(r'^pages/(?P<path>.*)$', views.load_page, name='singleshop')
+    url(r'^pages/(?P<path>.*)$', views.load_page, name='singleshop'),
+    url(r'^api$',views.api)
 ]

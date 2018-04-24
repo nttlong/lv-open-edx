@@ -8,6 +8,8 @@ def json_serial(obj):
         return obj.isoformat()
     elif type(obj) is ObjectId:
         return obj.__str__()
+    elif obj.__class__.__class__ is sqlalchemy.ext.declarative.api.DeclarativeMeta:
+        return obj.__dict__
     elif type(obj) is sqlalchemy.orm.state.InstanceState:
         return  None
     return obj.__str__()

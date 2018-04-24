@@ -52,54 +52,39 @@ body{
     text-align: center;
 }
 .lv-nav{
-    width:auto !important;
-    border:solid 4px red !important;
-}
-.lv-nav .wrapper-header{
-        border:solid 4px red !important;
-        max-width:none !important;
-}
-.v-scroll-body{
-    overflow-x:hidden;
-}
-.navbar{
-    border:none !important;
-    padding-left:4px !important;
-    padding-right:62px !important;
+    width:100% !important;
 
 }
-.navbar.navbar-default .user-image-frame{
-    padding:0 !important;
-    margin:2px !important;
+.lv-nav .wrapper-header{
+
+        width:"100%" !important
 }
-.hd.logo-header {
-    margin:0 !important;
-    padding:0 !important;
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0;
+    padding-left: 0;
+}
+.row {
+    width: 100%;
+    display: flex;
+    max-width: none !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.navbar-header {
+    max-height:32px;
 }
 .navbar-brand {
-     margin:0 !important;
-    padding:0 !important;
-}
-.navbar-brand .logo img {
-    margin-left:20px !important;
-    padding:0 !important;
-    max-height:54px !important;
-}
-.clear-margin{
-    margin:0 !important;
-}
-.clear-padding{
-    margin:0 !important;
-}
-.full {
-    width:100% !important;
-    max-width:none !important;
-    min-width:none !important;
-}
-.dashboard-search-bar.full {
-    width:100% !important;
-    max-width:none !important;
-    min-width:none !important;
+    float: left;
+    height: 50px;
+    padding: 4px 4px;
+    font-size: 18px;
+    line-height: 20px;
 }
 .debug {
    border:solid 4px red !important
