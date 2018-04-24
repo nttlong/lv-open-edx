@@ -5,6 +5,8 @@ from lms.djangoapps.ccx.overrides import get_current_ccx
 
 # App that handles subdomain specific branding
 from branding import api as branding_api
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+from django.core.urlresolvers import reverse
 %>
 <nav class="navbar navbar-default" role="navigation">
 	<!-- Brand and toggle get grouped for better mobile display -->
@@ -22,15 +24,68 @@ from branding import api as branding_api
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
+
 		<ul class="nav navbar-nav" style="display:none">
 			<li class="active"><a href="#">Link</a></li>
 			<li><a href="#">Link</a></li>
 		</ul>
+
         % if user.is_authenticated():
             <%include file="navbar-authenticated.html" args="online_help_token=online_help_token"/>
         % else:
             <%include file="navbar-not-authenticated.html" args="online_help_token=online_help_token"/>
         % endif
+		<ul class="nav navbar-nav navbar-right">
+
+			<li class="dropdown">
+				<%
+					if LANGUAGE_CODE=="vi":
+						_code="vn"
+					else:
+						_code="au"
+				%>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='flag-icon flag-icon-${_code}'></i><span> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<% languages = released_languages() %>
+
+					% for language in languages:
+						<%
+                            if language[0] == "en":
+                                code = "au"
+                            else:
+                                code = "vn"
+						%>
+					<li><a href="javascript:_do_select_lang('${language[0]}')"><i class='flag-icon flag-icon-${code}'></i><span>&nbsp;</span>${language[1]}</a></li>
+					% endfor
+				</ul>
+			</li>
+		</ul>
+		<form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+				<input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+				% if user.is_authenticated():
+                  	<input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+                % else:
+                  	<input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                % endif
+			        <select class="input select language-selector" id="settings-language-value" name="language" style="display:none">
+                     % for language in languages:
+                       % if language[0] == LANGUAGE_CODE:
+                         <option value="${language[0]}" selected="selected">${language[1]}</option>
+                       % else:
+                         <option value="${language[0]}" >${language[1]}</option>
+                       % endif
+                     % endfor
+                   </select>
+
+				<script>
+					function _do_select_lang(code){
+						console.log(code);
+						$("#settings-language-value").val(code)
+						$("#settings-language-value").trigger("change")
+
+					}
+				</script>
+		</form>
 
 
 	</div><!-- /.navbar-collapse -->

@@ -76,6 +76,12 @@ body{
     box-sizing: border-box;
     margin: 0 auto;
 }
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+}
 .navbar-header {
     max-height:32px;
 }
@@ -85,6 +91,11 @@ body{
     padding: 4px 4px;
     font-size: 18px;
     line-height: 20px;
+}
+.home {
+    max-width: none;
+    margin: 0 auto;
+    padding: 0px
 }
 .debug {
    border:solid 4px red !important
