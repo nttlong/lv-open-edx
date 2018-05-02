@@ -1,5 +1,6 @@
 import  os
 import json
+import applications
 
 import sys
 from django.http import HttpResponse
@@ -7,7 +8,8 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 from . import language as lang_manager
 import threading
-lock = None
+import logging
+logger=logging.getLogger(__name__)
 global lock
 lock=threading.Lock()
 from datetime import date, datetime
@@ -33,15 +35,21 @@ def get_language_item(language,app_name,view,key,value):
             raise ex
     return _language_cache[hash_key]
 def apply(request,template_file,app):
-
+    import api
     from django.core.context_processors import csrf
     def get_language():
-        return request.LANGUAGE_CODE
+        if hasattr(request,"request.LANGUAGE_CODE"):
+            return request.LANGUAGE_CODE
+        else:
+            from django.utils import translation
+            return translation.get_language()
+
+
     def get_app_url(path):
-        if app.name == "default":
+        if app.name == "default" or get_app_host()=="":
             return get_abs_url() + (lambda: "" if path == "" else "/" + path)()
         else:
-            return get_abs_url() + "/" + get_app_host() + (lambda: "" if path == "" else "/" + path)()
+            return (get_abs_url() + "/" + get_app_host() + (lambda: "" if path == "" else "/" + path)())
 
     def get_app_host():
         if app.name == "default":
@@ -76,7 +84,11 @@ def apply(request,template_file,app):
     def get_global_res(key):
         return get_language_item(get_language(), "-", "-", key, key)
     def get_static(path):
-        return request.get_app_url("static")+"/"+path
+        if app.host_dir=="":
+            return get_abs_url()+"/"+app.name+"/static/"+path
+            # return request.get_app_url(app.name+"/static")+"/"+path
+        else:
+            return request.get_app_url("static")+"/"+path
     def get_abs_url():
         __root_url__= None
 
@@ -92,13 +104,28 @@ def apply(request,template_file,app):
         return app
     def get_app_name():
         return app.name
-
-
+    def get_api_key(path):
+        return api.get_api_key(path)
+    def get_api_path(id):
+        return api.get_api_path(id)
+    def register_view():
+        return applications.get_settings().AUTHORIZATION_ENGINE.register_view(app=get_app_name(),view=get_view_path())
 
     def render(model):
-        fileName = template_file
+        from mako import exceptions
+        login_page=None
+        is_public=None
+        if type(template_file) is dict:
+            fileName=template_file["file"]
+            login_page=template_file.get("login",None)
+            is_public = template_file.get("is_public", False)
+        else:
+            fileName = template_file
         def get_csrftoken():
-            return csrf(request)["csrf_token"]
+            if type(csrf(request)["csrf_token"]) is str:
+                return csrf(request)["csrf_token"]
+            else:
+                return csrf(request)["csrf_token"].encode()
 
         render_model = {
             "get_res": get_res,
@@ -115,21 +142,32 @@ def apply(request,template_file,app):
             "get_static": get_static,
             "get_language": get_language,
             "template_file": template_file,
+            "get_api_key":get_api_key,
+            "get_api_path":get_api_path,
+            "register_view":register_view,
+            "request":request
         }
-
-
-
-
-
         # mylookup = TemplateLookup(directories=config._default_settings["TEMPLATES_DIRS"])
         if fileName != None:
-            mylookup = TemplateLookup(directories=[os.getcwd()+"/"+request.get_app().template_dir],
+            ret_res=None
+            mylookup = TemplateLookup(directories=[os.getcwd() + "/" + request.get_app().template_dir],
                                       default_filters=['decode.utf8'],
                                       input_encoding='utf-8',
                                       output_encoding='utf-8',
                                       encoding_errors='replace'
                                       )
-            return HttpResponse(mylookup.get_template(fileName).render(**render_model))
+            try:
+                ret_res=mylookup.get_template(fileName).render(**render_model)
+
+            except exceptions.MakoException as ex:
+                logger.debug(ex)
+                raise (ex)
+            except Exception as ex:
+                logger.debug(exceptions.html_error_template().render())
+                raise (Exception(exceptions.html_error_template().render()))
+            return HttpResponse(ret_res)
+
+
         else:
             mylookup = TemplateLookup(directories=["apps/templates"],
                                       default_filters=['decode.utf8'],
@@ -138,6 +176,7 @@ def apply(request,template_file,app):
                                       encoding_errors='replace'
                                       )
             return HttpResponse(mylookup.get_template(fileName).render(**render_model))
+
 
     setattr(request,"template_file",template_file)
     setattr(request, "render", render)
@@ -153,6 +192,9 @@ def apply(request,template_file,app):
     setattr(request, "get_app_url", get_app_url)
     setattr(request,"get_language",get_language)
     setattr(request, "get_app_name", get_app_name)
+    setattr(request, "get_api_key", get_api_key)
+    setattr(request, "get_api_path", get_api_path)
+    setattr(request,"register_view",register_view)
 
 
 
