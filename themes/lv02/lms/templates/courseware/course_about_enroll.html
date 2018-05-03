@@ -72,3 +72,6 @@ from django.utils.http import urlquote  as django_urlquote
             </a>
 
 %endif
+%if staff_access and studio_url is not None:
+         <a class="btn btn-info" href="${studio_url}">${_("View About Page in studio")}</a>
+% endif

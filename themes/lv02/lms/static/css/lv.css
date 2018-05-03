@@ -22,6 +22,22 @@
 .header-global.slim .course-header {
     width: auto !important;
 }
+article.course div.course-info{
+        padding:0 !important;
+
+}
+article.course div.course-info * {
+
+}
+article.course section.course-info {
+
+        padding:0 !important;
+
+
+}
+article.course section.course-info * {
+
+}
 .btn.dropdown-toggle.selectpicker.btn-default{
     border: none !important;
     color:#0075b4 !important;
