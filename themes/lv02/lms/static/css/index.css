@@ -1,0 +1,22 @@
+.find-courses .courses-container .courses .courses-listing .courses-listing-item, .university-profile .courses-container .courses .courses-listing .courses-listing-item {
+    margin: 15px 0 60px 0;
+
+}
+.courses-container .courses .courses-listing .courses-listing-item {
+    margin: 0 0 80px 0;
+    max-height: 360px;
+}
+@media screen and (max-width: 600px) {
+    .find-courses .courses-container .courses .courses-listing .courses-listing-item, .university-profile .courses-container .courses[role="region"] {
+        width:100% !important;
+        clear:both;
+        float:left;
+    }
+   .find-courses .courses-container .courses .courses-listing .courses-listing-item, .university-profile .courses-container .courses .courses-listing {
+
+   }
+  .find-courses .courses-container .courses .courses-listing .courses-listing-item, .university-profile .courses-container .courses .courses-listing .courses-listing-item {
+
+
+    }
+}

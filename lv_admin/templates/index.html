@@ -19,6 +19,20 @@
       app.controller("admin",["$dialog","$scope",function($dialog,$scope){
           $dialog($scope)
           ws_set_url("${get_abs_url()}/${get_app_host()}/api")
+          ws_onBeforeCall(function(){
+            var mask=$("<div class='mask'></div>").appendTo("body")
+            return mask
+          });
+          onBeforeLoadContent(function(){
+                var mask=$("<div class='mask'></div>").appendTo("body")
+              return mask
+          });
+          onAfterLoadContent(function(mask){
+              mask.remove();
+          });
+          ws_onAfterCall(function(mask){
+                mask.remove();
+          });
           history_navigator($scope.$root);
           $scope.$root.$history.change(function(data){
              $scope._onSearch=undefined;

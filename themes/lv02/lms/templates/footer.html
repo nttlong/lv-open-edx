@@ -8,7 +8,7 @@
 %>
 <% footer = get_footer(is_secure=is_secure) %>
 <%namespace name='static' file='static_content.html'/>
-
+<footer class="lv-main-footer">
 <div class="container-fluid">
   <div class="row">
     % for item_num, link in enumerate(footer['navigation_links'], start=1):
@@ -119,3 +119,4 @@
 % if settings.FEATURES.get('ENABLE_COOKIE_CONSENT', False):
   <%include file="widgets/cookie-consent.html" />
 % endif
+  </footer>

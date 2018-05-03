@@ -1,0 +1,25 @@
+@font-face {
+	font-family: 'SEGOEUIL';
+	src: url('./SEGOEUIL.eot');
+	src: local('SEGOEUIL'), url('./SEGOEUIL.woff') format('woff'), url('./SEGOEUI.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1409">Text with this font applied</p> */
+.fontsforweb_fontid_1409 {
+	font-family: 'SEGOEUIL' !important;
+}
+.collapse.navbar-collapse.navbar-ex1-collapse a {
+    /*font-family:'SEGOEUIL';*/
+    /*font-weight:bolder;
+    font-size:14pt;*/
+
+}
+body * {
+   /* font-family:'SEGOEUIL';*/
+
+}
+body p {
+    /*color:#0a0a0a !important;*/
+}
+.light-button, div.history-controls input[type="submit"], a.light-button, .gray-button, input[type="reset"], input[type="submit"], input[type="button"], button, .button, form input[type="reset"], form input[type="submit"], form input[type="button"], form button, form .button, .xmodule_display.xmodule_LTIModule div.lti .wrapper-lti-link .lti-link .link_lti_new_window {
+    /*font-family:'SEGOEUIL';*/
+}

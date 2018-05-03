@@ -10,7 +10,7 @@ from openedx.core.djangolib.markup import HTML, Text
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="home" style="width:100%">
-      <header>
+      <header class="lv-header">
         <div class="outer-wrapper">
           <div class="title">
             <div class="heading-group">
@@ -20,7 +20,7 @@ from openedx.core.djangolib.markup import HTML, Text
                   ## Translators: 'Open edX' is a registered trademark, please keep this untranslated. See http://open.edx.org for more information.
                   <h1>${Text(_(u"Welcome to the Open edX{registered_trademark} platform!")).format(registered_trademark=HTML("<sup style='font-size: 65%'>&reg;</sup>"))}</h1>
                   ## Translators: 'Open edX' is a registered trademark, please keep this untranslated. See http://open.edx.org for more information.
-                  <p>${_("It works! This is the default homepage for this Open edX instance.")}</p>
+                  <!--<p>${_("It works! This is the default homepage for this Open edX instance.")}</p>-->
               % endif
             </div>
             % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):

@@ -22,3 +22,5 @@ def api(request):
     setattr(request,"app",app)
     ret_data=quicky.caller.call(request)
     return HttpResponse(ret_data)
+def login(request):
+    pass

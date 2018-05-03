@@ -1,4 +1,4 @@
-<div title="${get_global_res('Create new user')}">
+<div title="{{getTitle()}}">
 
         <div class="container-fluid dialog-form">
             <div class="row">
@@ -28,40 +28,39 @@
             </div>
             <div class="row">
                  <div class="col-sm-4">
-                <label>${get_global_res("Display name")}</label>
+                <label>${get_global_res("Họ")}</label>
             </div>
             <div class="col-sm-8">
-                <input type="text" ng-model="model.displayName" class="form-control">
+                <input type="text" ng-model="model.first_name" class="form-control">
             </div>
             </div>
             <div class="row">
                  <div class="col-sm-4">
-                <label>${get_global_res("System admin")}</label>
+                <label>${get_global_res("Tên")}</label>
             </div>
             <div class="col-sm-8">
-                <input type="checkbox" ng-model="model.isSysAdmin" class="form-control">
+                <input type="text" ng-model="model.last_name" class="form-control">
+            </div>
+            </div>
+            <div class="row">
+                 <div class="col-sm-4">
+                <label>${get_global_res("Là nhân viên")}</label>
+            </div>
+            <div class="col-sm-8">
+                <input type="checkbox" ng-model="model.is_staff" class="form-control">
             </div>
 
             </div>
             <div class="row">
                  <div class="col-sm-4">
-                <label>${get_global_res("Is admin")}</label>
+                <label>${get_global_res("Là quản trị viên")}</label>
             </div>
             <div class="col-sm-8">
-                <input type="checkbox" ng-model="model.isStaff" class="form-control">
+                <input type="checkbox" ng-model="model.is_supperuser" class="form-control">
             </div>
 
             </div>
-            <div class="row">
-                 <div class="col-sm-4">
-                <label>${get_global_res("Description")}</label>
-            </div>
-            <div class="col-sm-8">
-                <textarea ng-model="model.description" class="form-control">
 
-                </textarea>
-            </div>
-            </div>
             <div class="row">
                 <div class="col-sm-12">
                       <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
@@ -94,6 +93,14 @@
         scope.isNew=!angular.isDefined(params);
         scope.load=function(item){
             alert(item);
+        }
+        scope.getTitle=function(){
+            if(scope.isNew){
+                return "${get_global_res("Thêm mới tài khoản")}"
+            }
+            else {
+                return "${get_global_res("Sửa tài khoản")}"
+            }
         }
         scope.doAction=function(){
             alert(scope.$parent.view_path)

@@ -1,9 +1,10 @@
-body{
-    font-family: Segoe UI !important;
-}
+@import url("font-awesome.min.css");
+@import url('set_font.css');
+@import url('course_about.css');
+@import url('index.css');
 
 .home>header{
-     background-image: url("http://jobs.surehcs.vn/photo/banner/5a0bac80d5b52917b8cc7a12.png") !important;
+     background-image: url("images/5a0bac80d5b52917b8cc7a12.png") !important;
 }
 
 .flag-icon-vn{
@@ -78,25 +79,59 @@ body{
 }
 .navbar {
     position: relative;
-    min-height: 50px;
+    min-height: 60px;
     margin-bottom: 0px;
-    border: 1px solid transparent;
+    border: 1px solid transparent;;
+    z-index:20000;
 }
 .navbar-header {
-    max-height:32px;
+    min-height:60px;
 }
 .navbar-brand {
     float: left;
     height: 50px;
     padding: 4px 4px;
     font-size: 18px;
-    line-height: 20px;
+    line-height: 20px
 }
 .home {
     max-width: none;
     margin: 0 auto;
     padding: 0px
 }
+.light-button, div.history-controls input[type="submit"], a.light-button, .gray-button, input[type="reset"], input[type="submit"], input[type="button"], button, .button, form input[type="reset"], form input[type="submit"], form input[type="button"], form button, form .button, .xmodule_display.xmodule_LTIModule div.lti .wrapper-lti-link .lti-link .link_lti_new_window {
+    border:inherit;
+    border-radius: 3px;
+    box-shadow: none;
+    color: #333;
+    display: inline-block;
+    font-size: inherit;
+    font-weight: bold;
+    background-color: #f1f1f1;
+    background-image:none;
+    background-image: none;
+    padding: 7px 18px;
+    text-decoration: none;
+    text-shadow:none;
+    background-clip: padding-box;
+
+}
+.lv-main-footer {
+    border-top: 1px solid #d5d5d5;
+    background: #e2e2e2;
+    padding: 15px 0 30px 0;
+    width: 100%;
+    font-size: 15px;
+}
+header.lv-header {
+    /*min-height:600px !important;*/
+
+}
+a.btn-primary{
+    color:#fff !important;
+}
+
 .debug {
-   border:solid 4px red !important
+   border:solid 4px red !important;
+   margin:-4px;
 }
