@@ -1,0 +1,46 @@
+.dashboard-main {
+    padding:28px;
+    min-height:800px;
+
+}
+.dashboard-search-bar {
+    float: right;
+    padding: 0;
+    width: 100% !important;
+}
+.dashboard-search-results {
+
+}
+.course-dashboard-item {
+    border:solid 2px red;
+    margin:-2px;
+    min-height:180px;
+    max-height:180px;
+    height:180px;
+
+}
+div.course-dashboard-item div.course-container article.course section.details h2
+{
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+.dashboard-search-bar {
+    padding: 0;
+    width: 90% !important;
+}
+div.course-dashboard-item div.course-container article.course section.details div.wrapper-course-image {
+    width:32.33%;
+    float:left;
+    overflow-y:hidden;
+    min-height:100px;
+    max-height:100px;
+}
+div.course-dashboard-item div.course-container article.course section.details div.wrapper-course-details {
+    line-height:32pt;
+    float:right;
+    width:66.66%;
+
+}

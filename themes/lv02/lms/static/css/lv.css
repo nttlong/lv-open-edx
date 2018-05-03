@@ -2,6 +2,7 @@
 @import url('set_font.css');
 @import url('course_about.css');
 @import url('index.css');
+@import url('dashboard.css');
 
 .home>header{
      background-image: url("images/5a0bac80d5b52917b8cc7a12.png") !important;
