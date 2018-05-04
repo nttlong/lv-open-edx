@@ -68,3 +68,8 @@ FIX LOI SEARCH:
     thay:
     #url(r'^search/', include('search.urls')),
     url(r'^search/', include('searchdata_lv.urls'), name='course_discovery')
+
+Các file quan trọng cần phải xem là:
+1- lv_apps/readme.txt (cách thêm một app)
+2- themes/readme.txt (Các cài đặt theme cho production)
+

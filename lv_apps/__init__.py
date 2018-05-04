@@ -18,6 +18,6 @@ quicky.language.set_config(
 )
 quicky.applications.load_app(dict(
     name="lv-admin",
-    path= "lv-packages/lv_admin",
+    path= "lv-packages/apps/lv_admin",
     host="lv_admin"
 ))

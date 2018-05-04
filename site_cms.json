@@ -1,13 +1,14 @@
 {
   "PLATFORM_NAME":"Lac viet LMS",
   "COMPREHENSIVE_THEME_DIR__1":"lv",
-  "COMPREHENSIVE_THEME_DIRS_1":{
+  "COMPREHENSIVE_THEME_DIRS":{
     "lv":{
       "name":"themes",
       "description":"Themse"
     }
   },
   "DEFAULT_SITE_THEME":"lv02",
-  "ENABLE_COMPREHENSIVE_THEMING":false,
-  "ENABLE_CSMH_EXTENDED": false
+  "ENABLE_COMPREHENSIVE_THEMING":true,
+  "ENABLE_CSMH_EXTENDED": false,
+   "THEME_NAME": "lv02"
 }
