@@ -1,8 +1,78 @@
+
 .dashboard-main {
     padding:28px;
     min-height:800px;
 
 }
+.dashboard-main .course-info  {
+    clear:both;
+    z-index:1;
+
+
+}
+
+.dashboard-main .course-info * {
+    z-index:1;
+}
+
+.dashboard-main .course-info  h3.course-title {
+    clear:both;
+
+
+}
+.dashboard-main .course-info ul.nav.navbar-nav.navbar-left {
+     margin:0;
+}
+.dashboard-main .course-info ul.nav.navbar-nav.navbar-left a {
+    background-color:transparent;
+    margin:0;
+    padding:0;
+
+}
+
+.dashboard-main .course-info ul.nav.navbar-nav.navbar-left ul.dropdown-menu {
+
+    z-index:10000;
+    padding:8px;
+}
+.dashboard-main .course-info ul.nav.navbar-nav.navbar-left ul.dropdown-menu li {
+    padding:4px;
+     z-index:20000;
+}
+.dashboard-main .course-actions {
+    clear:both;
+}
+
+.dashboard-main .course-info ul.nav.navbar-nav.navbar-left ul.dropdown-menu  li.dropdown {
+
+}
+
+.dashboard-main .course-info  span.info-university,
+.dashboard-main .course-info  span.info-date-block.localized-datetime,
+.dashboard-main .course-info  span.info-course-id  {
+    clear:both;
+    width:100%;
+    float:left;
+    margin:0 ;
+    padding:0;
+    line-height:18pt;
+
+}
+
+.course-info  span.info-university,
+span.info-date-block.localized-datetime,
+span.info-course-id  {
+    clear:both;
+    width:100%;
+    float:left;
+    margin:0 ;
+    padding:0;
+    line-height:18pt;
+
+}
+
+
+
 .dashboard-search-bar {
     float: right;
     padding: 0;
@@ -11,21 +81,40 @@
 .dashboard-search-results {
 
 }
-.course-dashboard-item {
-    border:solid 2px red;
-    margin:-2px;
-    min-height:180px;
-    max-height:180px;
-    height:180px;
+.dashboard-main .course-dashboard-item {
+
+
+    min-height:200px;
+    max-height:200px;
+    height:200px;
+    background-color:rgb(255, 255, 255);
+    border-bottom-color:rgb(202, 202, 202);
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    margin-bottom:20px;
 
 }
-div.course-dashboard-item div.course-container article.course section.details h2
+div#unenroll-modal {
+    background-color:transparent;
+    border:none !important;
+    box-shadow: none;
+
+}
+.dashboard-search-results {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 300px;
+}
+div.course-dashboard-item div.course-container article.course section.details h3
 {
   text-overflow: ellipsis;
 
   /* Required for text-overflow to do anything */
   white-space: nowrap;
   overflow: hidden;
+
 }
 .dashboard-search-bar {
     padding: 0;

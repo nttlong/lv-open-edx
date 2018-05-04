@@ -13,7 +13,7 @@ from openedx.core.lib.courses import course_image_url
   donkey.debug(request,course)
 %>
 <section>
-           <i class="fa fa-bank"></i>&nbsp;  <b>${helper.get_global_res("Organization")}</b>:&nbsp;<i>${course.display_org_with_default | h}</i>
+           <i class="fa fa-bank"></i>&nbsp;  <b>${_("Organization")}</b>:&nbsp;<i>${course.display_org_with_default | h}</i>
 </section>
 <section>
   <i class="icon fa fa-info-circle"></i>
@@ -32,7 +32,8 @@ from openedx.core.lib.courses import course_image_url
       <%
          course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z')
       %>
-      <i>${course_date_string}</i>
+      <i class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></i>
+
   % endif
 </section>
 <section>
