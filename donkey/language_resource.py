@@ -16,3 +16,5 @@ class resources():
         if __root_url__[__root_url__.__len__() - 1] == "/":
             __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
         return __root_url__
+    def get_app_static(self,app_name,source):
+        return self.get_abs_url()+"/"+app_name+"/"+source
