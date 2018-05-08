@@ -31,7 +31,9 @@ django.catalog = {
     "Create an Account":"Tạo ngay 1 tài khoản để tham gia các khóa học",
     "Already have an {platformName} account?":"Đã có tài khoản tại  {platformName}?",
     "Sign in.":"Đăng nhập ngay",
-    "optional":"Tùy chọn"
+    "optional":"Tùy chọn",
+    "Course Handouts":"Tài liệu khóa học",
+
 
 };
 

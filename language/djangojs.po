@@ -8617,7 +8617,7 @@ msgstr "Trạng thái Xuất bản"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Draft saved on {lastSavedStart}{editedOn}{lastSavedEnd} by {editedByStart}{editedBy}{editedByEnd}"
-msgstr "Bản nháp lưu trên {lastSavedStart}{editedOn}{lastSavedEnd} bởi {editedByStart}{editedBy}{editedByEnd}"
+msgstr "Bản nháp lưu vào thời điểm {lastSavedStart}{editedOn}{lastSavedEnd} bởi {editedByStart}{editedBy}{editedByEnd}"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid ""
