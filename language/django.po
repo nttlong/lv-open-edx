@@ -19330,7 +19330,7 @@ msgstr "Định nghĩa chính sách hướng dẫn sử dụng"
 
 #: cms/templates/settings_advanced.html
 msgid "{strong_start}Warning{strong_end}: Do not modify these policies unless you are familiar with their purpose."
-msgstr "{strong_start}Cảnh báo{strong_and}: Không sửa đổi các chính sách này trừ khi bạn đã quen với các mục đích của chúng."
+msgstr "{strong_start}Cảnh báo{strong_end}: Không sửa đổi các chính sách này trừ khi bạn đã quen với các mục đích của chúng."
 
 #: cms/templates/settings_advanced.html
 msgid "Show Deprecated Settings"
