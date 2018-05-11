@@ -73,7 +73,7 @@ msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2017-08-18 20:39+0000\n"
-"PO-Revision-Date: 2018-05-07 11:47+0700\n"
+"PO-Revision-Date: 2018-05-09 11:24+0700\n"
 "Last-Translator: Hoà Lê Thanh <hoa.lethanh@gmail.com>, 2017\n"
 "Language-Team: Vietnamese (https://www.transifex.com/open-edx/teams/6205/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -17883,11 +17883,11 @@ msgstr "Chào mừng"
 
 #: cms/templates/howitworks.html
 msgid "Welcome to {studio_name}"
-msgstr "Chào mừng đến với Hệ thống tạo lập nội dung LacViet"
+msgstr "Hệ thống tạo khóa học trực tuyến"
 
 #: cms/templates/howitworks.html
 msgid "{studio_name} helps manage your online courses, so you can focus on teaching them"
-msgstr "Hệ thống tạo lập nội dung LacViet giúp quản lý các khóa học trực tuyến của bạn, vì vậy bạn có thể tập trung vào việc giảng dạy"
+msgstr "Cung cấp công cụ soạn thảo đa dạng - Chủ động quản lý nội dung đào tạo - Dễ dàng theo dõi tiến độ học tập - Truy xuất thông tin báo cáo phân tích"
 
 #: cms/templates/howitworks.html
 msgid "{studio_name}'s Many Features"
@@ -17903,15 +17903,13 @@ msgstr "Phóng to hình ảnh"
 
 #: cms/templates/howitworks.html
 msgid "Keeping Your Course Organized"
-msgstr "Sắp xếp các khóa học của bạn"
+msgstr "Dễ dàng sắp xếp nội dung khóa học"
 
 #: cms/templates/howitworks.html
 msgid ""
 "The backbone of your course is how it is organized. {studio_name} offers an {strong_start}Outline{strong_end} editor, providing a simple hierarchy and "
 "easy drag and drop to help you and your students stay organized."
-msgstr ""
-"Điểm then chốt của một khóa học là cách nó được tổ chức như thế nào. Studio cung cấp một trình soạn thảo đa dạng, một hệ thống phân cấp đơn giản, dễ "
-"dàng kéo và thả để sắp xếp nội dung."
+msgstr "Hệ thống cung cấp một trình soạn thảo đa dạng, dễ dàng kéo và thả để sắp xếp nội dung."
 
 #: cms/templates/howitworks.html
 msgid "Simple Organization For Content"
@@ -17919,9 +17917,7 @@ msgstr "Sắp xếp nội dung đơn giản"
 
 #: cms/templates/howitworks.html
 msgid "{studio_name} uses a simple hierarchy of {strong_start}sections{strong_end} and {strong_start}subsections{strong_end} to organize your content."
-msgstr ""
-"Hệ thống tạo lập nội dung LacViet sử dụng các phân cấp đơn giản bao gồm gồm {strong_start}các chương{strong_end} và {strong_start}các tiểu "
-"mục{strong_end} để sắp xếp nội dung khóa học."
+msgstr "Sử dụng hệ thống phân cấp gồm {strong_start}các chương{strong_end} và {strong_start}các tiểu mục{strong_end} để tạo nội dung khóa học."
 
 #: cms/templates/howitworks.html
 msgid "Change Your Mind Anytime"
@@ -17929,7 +17925,7 @@ msgstr "Dễ dàng điều chỉnh nội dung"
 
 #: cms/templates/howitworks.html
 msgid "Draft your outline and build content anywhere. Simple drag and drop tools let you reorganize quickly."
-msgstr "Soạn thảo và xây dựng nội dung khóa học ở bất kỳ đâu. Công cụ kéo và thả đơn giản giúp đơn giản hóa việc cấu trúc lại khóa học."
+msgstr "Sử dụng công cụ kéo thả để dễ dàng sắp xếp khóa học."
 
 #: cms/templates/howitworks.html
 msgid "Go A Week Or A Semester At A Time"
@@ -17937,36 +17933,33 @@ msgstr "Tạo lập nội dung từng bước"
 
 #: cms/templates/howitworks.html
 msgid "Build and release {strong_start}sections{strong_end} to your students incrementally. You don't have to have it all done at once."
-msgstr "Xây dựng và phát hành các {strong_start}chương{strong_end} trong khóa học theo từng bước. Bạn không phải thực hiện tất cả cùng một lúc."
+msgstr "Tạo lập và phát hành lần lượt nội dung theo từng {strong_start}chương{strong_end}."
 
 #: cms/templates/howitworks.html
 msgid "Learning is More than Just Lectures"
-msgstr "Việc học không chỉ giới hạn ở việc nghe giảng"
+msgstr "Học không chỉ dừng lại ở việc nghe giảng"
 
 #: cms/templates/howitworks.html
 msgid ""
 "{studio_name} lets you weave your content together in a way that reinforces learning. Insert videos, discussions, and a wide variety of exercises with "
 "just a few clicks."
-msgstr ""
-"Hệ thống tạo lập nội dung LacViet cho phép kết hợp các nội dung với nhau theo cách dễ dàng củng cố việc học tập. Chèn các video, thảo luận, và một loạt "
-"các bài tập chỉ với một vài cú nhấp chuột."
+msgstr "Đa dạng hóa nội dung bài học bằng các video, thảo luận, và một loạt các bài tập chỉ với một vài cú nhấp chuột."
 
 #: cms/templates/howitworks.html
 msgid "Create Learning Pathways"
-msgstr "Tạo một lộ trình học tập"
+msgstr "Hoạch định lộ trình học tập rõ ràng"
 
 #: cms/templates/howitworks.html
 msgid "Help your students understand one concept at a time with multimedia, HTML, and exercises."
-msgstr "Giúp Nhân viên hiểu được các khái niệm thông qua các dạng bài tập đa phương tiện."
+msgstr "Lộ trình học tập rõ rang giúp nhanh chóng đạt được mục tiêu đề ra."
 
 #: cms/templates/howitworks.html
 msgid "Work Visually, Organize Quickly"
-msgstr "Công cụ trực quan và Tổ chức nhanh chóng"
+msgstr "Công cụ trực quan, nhanh chóng"
 
 #: cms/templates/howitworks.html
 msgid "Work visually and see exactly what your students will see. Reorganize all your content with drag and drop."
-msgstr ""
-"Sử dụng công cụ trực quan để xem chính xác những gì Nhân viên của bạn có thể thấy. Nhanh chóng sắp xếp lại tất cả nội dung của bạn bằng cách kéo và thả."
+msgstr "Sử dụng công cụ trực quan để sắp xếp khóa học."
 
 #: cms/templates/howitworks.html
 msgid "A Broad Library of Problem Types"
@@ -17974,9 +17967,7 @@ msgstr "Thư viện với đa dạng các loại bài tập"
 
 #: cms/templates/howitworks.html
 msgid "It's more than just multiple choice. {studio_name} supports more than a dozen types of problems to challenge your learners."
-msgstr ""
-"Không chỉ đơn giản là những bài tập trắc nghiệm. Hệ thống tạo lập nội dung LacViet còn hỗ trợ đa dạng các loại bài tập khác để thử thách Nhân viên của "
-"bạn."
+msgstr "Đa dạng các thể loại bài tập kiểm tra kiến thức đã học."
 
 #: cms/templates/howitworks.html
 msgid "{studio_name} Gives You Simple, Fast, and Incremental Publishing. With Friends."
@@ -17984,16 +17975,13 @@ msgstr "Hệ thống tạo lập nội dung LacViet cung cấp quá trình xuấ
 
 #: cms/templates/howitworks.html
 msgid "Simple, Fast, and Incremental Publishing. With Friends."
-msgstr "Quá trình xuất bản nội dung đơn giản nhanh chóng, dễ cập nhật và chia sẻ với nhiều người."
+msgstr "Quá trình phát hành nội dung đơn giản, nhanh chóng."
 
 #: cms/templates/howitworks.html
 msgid ""
 "{studio_name} works like web applications you already know, yet understands how you build curriculum. Instant publishing to the web when you want it, "
 "incremental release when it makes sense. And with co-authors, you can have a whole team building a course, together."
-msgstr ""
-"Hệ thống tạo lập nội dung LacViet hoạt động hầu như tương tự các ứng dụng web, nhưng chúng tôi có thể thấu hiểu cách bạn xây dựng chương trình giảng "
-"dạy. Phát hành tức thì nội dung lên web khi bạn muốn, phát hành tuần tự từng nội dung khi bạn yêu cầu. Và hơn hết, bạn có thể cùng một nhóm xây dựng "
-"một khóa học cùng nhau."
+msgstr "Hệ thống cho phép phát hành nội dung bất cứ lúc nào."
 
 #: cms/templates/howitworks.html
 msgid "Instant Changes"
@@ -18001,7 +17989,7 @@ msgstr "Cập nhật tức thì"
 
 #: cms/templates/howitworks.html
 msgid "Caught a bug? No problem. When you want, your changes go live when you click Save."
-msgstr "Xảy ra lỗi? Không có vấn đề gì cả. Bất cứ khi nào bạn muốn, bấm Lưu sau khi thay đổi, nội dung khóa học sẽ được cập nhật ngay."
+msgstr "Bất cứ khi nào cần thay đổi nội dung, chỉ cần nhấp nút Save."
 
 #: cms/templates/howitworks.html
 msgid "Release-On Date Publishing"
@@ -18011,9 +17999,7 @@ msgstr "Phát hành nội dung"
 msgid ""
 "When you've finished a {strong_start}section{strong_end}, pick when you want it to go live and {studio_name} takes care of the rest. Build your course "
 "incrementally."
-msgstr ""
-"Ngay khi hoàn thành một {strong_start}chương{strong_end}, hãy chọn thời điểm bạn muốn phát hành nội dung sau đó Hệ thống sẽ xử lý phần còn lại. Chú ý "
-"xây dựng khóa học của bạn theo từng bước."
+msgstr "Xác định thời điểm phát hành nội dung ngay sau khi tạo lập."
 
 #: cms/templates/howitworks.html
 msgid "Work in Teams"
@@ -18021,7 +18007,7 @@ msgstr "Làm việc theo nhóm"
 
 #: cms/templates/howitworks.html
 msgid "Co-authors have full access to all the same authoring tools. Make your course better through a team effort."
-msgstr "Các tác giả khóa học có thể truy cập vào tất cả các công cụ xử lý giống nhau. Hãy sử dụng sức mạnh tập thể để làm khóa học của bạn tốt hơn."
+msgstr "Một khóa học có thể có hơn một người quản lý."
 
 #: cms/templates/howitworks.html
 msgid "Sign Up for {studio_name} Today!"
@@ -18029,11 +18015,11 @@ msgstr "Đăng ký tham gia Hệ thống tạo lập nội dung LacViet ngay hô
 
 #: cms/templates/howitworks.html
 msgid "Sign Up & Start Making Your {platform_name} Course"
-msgstr "Đăng ký và Bắt đầu các khóa học của bạn với Hệ thống tạo lập nội dung LacViet"
+msgstr "Đăng ký và Bắt đầu các khóa học của bạn với Hệ thống tạo khóa học trực tuyến"
 
 #: cms/templates/howitworks.html
 msgid "Already have a {studio_name} Account? Sign In"
-msgstr "Bạn đã có một tài khoản trên Hệ thống tạo lập nội dung LacViet? Đăng nhập"
+msgstr "Bạn đã có một tài khoản trên Hệ thống tạo khóa học trực tuyến? Đăng nhập"
 
 #: cms/templates/howitworks.html
 msgid "Outlining Your Course"

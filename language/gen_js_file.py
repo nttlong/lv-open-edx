@@ -1,7 +1,7 @@
 import polib
 import json
 import os
-po = polib.pofile(os.getcwd()+os.sep+"djangojs.po")
+po = polib.pofile(os.getcwd()+os.sep+"/lv-packages/language/djangojs.po")
 data={}
 for entry in po:
     data.update({
@@ -9,6 +9,6 @@ for entry in po:
     })
 _data=json.dumps(data)
 
-with open(os.getcwd()+os.sep+'djangojs.js', 'w') as file:
+with open(os.getcwd()+os.sep+'/lv-packages/language/djangojs.js', 'w') as file:
     file.write(_data)
     # print entry.msgid, entry.msgstr
