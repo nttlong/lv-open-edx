@@ -1,0 +1,5 @@
+# If you are logged as root user:
+/opt/bitnami/apps/edx/bnconfig --machine_hostname sienz.org
+
+# If you are logged as bitnami user (or non-root user):
+sudo /opt/bitnami/apps/edx/bnconfig --machine_hostname sienz.org
