@@ -5,10 +5,14 @@ from django.http import HttpResponse
 import json
 import importlib
 import logging
-import serilize
+
+import JSON
 import applications
 import sys
 import threading
+
+from packages.quicky.layout_view import view
+
 global lock
 lock = threading.Lock()
 logger = logging.getLogger(__name__)
@@ -25,11 +29,23 @@ def call(request):
             return HttpResponse('401 Unauthorized', status=401)
         if not user.is_staff and not user.is_superuser:
             return HttpResponse('401 Unauthorized', status=401)
-        post_data = json.loads(request.body)
+
+
+        post_data = JSON.from_json(request.body)
         if not post_data.has_key("path"):
             raise Exception("Api post without using path")
         path = post_data["path"]
         view = post_data["view"]
+        if not post_data.has_key("offset_minutes"):
+            raise (Exception("It look like you forget post 'offset_minutes' from client."
+                             "Remember that before ajax post please set 'offset_minutes' from browser."
+                             "How to calculate 'offset_minutes'?:"
+                             "var now = new Date();"
+                             "var offset_minutes = now.getTimezoneOffset();"))
+        offset_minutes=post_data["offset_minutes"]
+        setattr(threading.current_thread(),"client_offset_minutes",offset_minutes)
+
+
         path = get_api_path(path)
 
         view_privileges = applications.get_settings().AUTHORIZATION_ENGINE.get_view_of_user(
@@ -48,10 +64,16 @@ def call(request):
             mdl = importlib.import_module(module_path.replace("/","."))
         except ImportError as ex:
             logger.debug(Exception("import {0} is error or not found".format(module_path)))
-            raise Exception("import {0} is error or not found".format(module_path))
+            logger.debug(ex)
+            raise Exception("import {0} is error or not found.Error description {1}".format(module_path,ex.message))
 
         except Exception as ex:
-            raise Exception("import '{0}' encountered '{1}'".format(module_path, ex.message))
+            if type(ex) is str:
+                raise Exception("import '{0}' encountered '{1}'".format(module_path, ex))
+            elif hasattr(ex,"messagte"):
+                raise Exception("import '{0}' encountered '{1}'".format(module_path, ex))
+            else:
+                raise Exception("import '{0}' encountered '{1}'".format(module_path, ex))
 
         ret = None
 
@@ -63,19 +85,21 @@ def call(request):
                             "privileges": view_privileges,
                             "data": post_data.get("data", {}),
                             "user": user,
-                            "request": request
+                            "request": request,
+                            "view":view
                         })
                 else:
                     ret = getattr(mdl, method_path)(
                         {
                             "privileges": view_privileges,
                             "user": user,
-                            "request": request
+                            "request": request,
+                            "view":view
                         })
 
             except Exception as ex:
                 raise Exception("Call  '{0}' in '{1}' encountered '{2}'".format(method_path, module_path, ex))
-        ret_data = serilize.to_json(ret)
+        ret_data = JSON.to_json(ret)
 
         return HttpResponse(ret_data)
     except Exception as ex:
