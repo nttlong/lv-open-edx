@@ -11,7 +11,7 @@ import applications
 import sys
 import threading
 
-from packages.quicky.layout_view import view
+from quicky.layout_view import view
 
 global lock
 lock = threading.Lock()

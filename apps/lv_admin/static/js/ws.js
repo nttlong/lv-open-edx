@@ -14,17 +14,19 @@ function ws_get_url(){
     return _ws_url_;
 }
 function ws_call(api_path,view_path,data,cb,owner){
-    
+
     return new Promise(function(resolve,reject){
-        
+
         owner.api_path=api_path;
         console.log("before")
-        
+
         sender=undefined;
         if(_wsOnBeforeCall){
             owner.sender=_wsOnBeforeCall();
             console.log(owner)
         }
+          var now = new Date()
+          var offset_minutes = now.getTimezoneOffset()
           $.ajax({
             url: ws_get_url(),
             type: "post",
@@ -32,7 +34,10 @@ function ws_call(api_path,view_path,data,cb,owner){
             data: JSON.stringify({
                    path:api_path,
                    view:view_path,
-                   data:data
+                   data:data,
+                   offset_minutes:offset_minutes
+
+
             }) ,
             success: function (res) {
                 console.log("after")
@@ -53,7 +58,11 @@ function ws_call(api_path,view_path,data,cb,owner){
                     _wsOnAfterCall(owner.sender)
                 }
                 var newWindow = window.open();
-                newWindow.document.write(errorThrown);
+                var txt=jqXHR.responseText
+                while(txt.indexOf(String.fromCharCode(10))>-1){
+                    txt=txt.replace(String.fromCharCode(10),"<br/>")
+                }
+                newWindow.document.write(txt);
                 if(cb){
                     cb({
                         error:{
