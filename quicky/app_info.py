@@ -1,10 +1,14 @@
+
 import os
 import sys
 import importlib
 from django.conf.urls.static import static
 from django.conf.urls import include,url
-
+settings=None
 class app_config():
+    """
+    class for app info instance
+    """
     package_name=""
     package_path=""
     path=""
@@ -23,6 +27,11 @@ class app_config():
     on_end_request = None
 
     def __init__(self,config):
+        # type: (dict) -> app_config
+        """
+        Create new instance for app_info
+        :param config:including 'path', 'host' and name
+        """
 
         if type(config)==tuple and config.__len__()>0:
             config=config[0]
@@ -58,11 +67,22 @@ class app_config():
         self.client_static=config.get("client_static",path+ "/static")
         self.static=config.get("static_dir",os.path.join(path, "static"))
     def get_static_urls(self):
+        """
+        get static url of application for client
+        :return:
+        """
         if self.host_dir == "":
-            return url(r'^(?i)'+self.name+'/static/(?P<path>.*)$', 'django.views.static.serve',{'document_root':self.get_server_static(), 'show_indexes': True})
+            return url(r'^' + self.name + '/static/(?P<path>.*)$', 'django.views.static.serve',
+                       {'document_root': self.get_server_static(), 'show_indexes': True})
         else:
-            return url(r'^(?i)static/(?P<path>.*)$', 'django.views.static.serve',{'document_root':self.get_server_static(), 'show_indexes': True})
+            return url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
+                       {'document_root': self.get_server_static(), 'show_indexes': True})
+
     def get_urls(self):
+        """
+        Buil list of urls
+        :return:
+        """
         if self.urls==None:
             self.urls=[]
         if self.host_dir=="":
@@ -71,13 +91,33 @@ class app_config():
             self.urls = url(r'^(?i)' + self.host_dir + "/", include(self.package_name + ".urls"))
         return [self.urls,self.get_static_urls()]
     def get_client_static(self):
+        """
+        get relative client path at server
+        :return:
+        """
         return self.client_static
     def get_server_static(self):
+        """
+        get full server static path
+        :return:
+        """
         _path= (self.static).replace("/",os.path.sep)
         return os.getcwd()+os.path.sep+_path
     def get_login_url(self):
-        if hasattr(self.mdl.settings,"login_url"):
-            if self.host_dir=="":
-                return "/"+self.mdl.settings.login_url
-            else:
-                return "/"+self.host_dir+"/"+self.mdl.settings.login_url
+        """
+        get login url from settings of app in settings.py
+        :return:
+        """
+        import threading
+        if hasattr(threading.currentThread(), "tenancy_code"):
+            if hasattr(self.mdl.settings, "login_url"):
+                if self.host_dir == "":
+                    return "/" + threading.currentThread().request_tenancy_code + "/" + self.mdl.settings.login_url
+                else:
+                    return "/" + threading.currentThread().request_tenancy_code + "/" + self.host_dir + "/" + self.mdl.settings.login_url
+        else:
+            if hasattr(self.mdl.settings, "login_url"):
+                if self.host_dir == "":
+                    return "/" + self.mdl.settings.login_url
+                else:
+                    return "/" + self.host_dir + "/" + self.mdl.settings.login_url

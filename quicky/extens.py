@@ -1,16 +1,22 @@
+"""
+This module support extent django http request
+"""
 import  os
 import json
 import applications
-
+import encryptor
 import sys
 from django.http import HttpResponse
 from mako.template import Template
 from mako.lookup import TemplateLookup
 from . import language as lang_manager
 import threading
+import tenancy
 import logging
 logger=logging.getLogger(__name__)
 global lock
+settings=None
+
 lock=threading.Lock()
 from datetime import date, datetime
 
@@ -21,13 +27,13 @@ _language_cache={}
 class render_server():
     def __init__(self):
         pass
-def get_language_item(language,app_name,view,key,value):
+def get_language_item(schema,language,app_name,view,key,value):
     global _language_cache
-    hash_key="language={0};app={1};view={2};key={3}".format(language,app_name,view,key).lower()
+    hash_key="schema={4},language={0};app={1};view={2};key={3}".format(language,app_name,view,key,schema).lower()
     if not _language_cache.has_key(hash_key):
         try:
             lock.acquire()
-            ret=lang_manager.get_language_item(language,app_name,view,key,value)
+            ret=lang_manager.get_language_item(schema,language,app_name,view,key,value)
             _language_cache[hash_key]=ret
             lock.release()
         except Exception as ex:
@@ -51,11 +57,20 @@ def apply(request,template_file,app):
         else:
             return (get_abs_url() + "/" + get_app_host() + (lambda: "" if path == "" else "/" + path)())
     def get_app_host():
-        if app.name == "default":
-            return ""
-        else:
+        from . import get_django_settings_module
+        is_multi_tenancy = get_django_settings_module().__dict__.get("USE_MULTI_TENANCY", False)
+        if not is_multi_tenancy:
             return app.host_dir
+        else:
+            if app.host_dir == "":
+                return tenancy.get_customer_code()
+            else:
+                return tenancy.get_customer_code()+"/"+app.host_dir
     def get_view_path():
+        code=tenancy.get_schema()
+        not_inclue_tenancy_code=False
+        if hasattr(request,"not_inclue_tenancy_code"):
+            not_inclue_tenancy_code=request.not_inclue_tenancy_code
         ret = request.get_full_path().split("?")[0]
         if app.name == "default":
             if ret[0:1] == "/":
@@ -63,7 +78,10 @@ def apply(request,template_file,app):
             if ret == "":
                 return "index"
             else:
-                return ret
+                if not not_inclue_tenancy_code:
+                    return ret[code.__len__():ret.__len__()]
+                else:
+                    return ret
         else:
             if ret[0:1] == "/":
                 ret = ret[1:ret.__len__()]
@@ -73,37 +91,69 @@ def apply(request,template_file,app):
             if ret == "":
                 return "index"
             else:
-                return ret
+                 if not not_inclue_tenancy_code:
+                    return ret[code.__len__():ret.__len__()]
+                 else:
+                    return ret
     def get_user():
         return request.user
-    def get_res(key):
-        return get_language_item(get_language(),app.name,get_view_path(),key,key)
-    def get_app_res(key):
-        return get_language_item(get_language(), app.name, "-", key, key)
-    def get_global_res(key):
-        return get_language_item(get_language(), "-", "-", key, key)
+    def get_res(key,value=None):
+        if value==None:
+            value=key
+        key=key.lower()
+        return get_language_item(tenancy.get_schema(), get_language(),app.name,get_view_path(),key,value)
+    def get_app_res(key,value=None):
+        if value==None:
+            value=key
+        key=key.lower()
+        return get_language_item(tenancy.get_schema(),get_language(), app.name, "-", key, value)
+    def get_global_res(key,value=None):
+        if value==None:
+            value=key
+        key=key.lower()
+        return get_language_item(tenancy.get_schema(),get_language(), "-", "-", key, value)
     def get_static(path):
         if app.host_dir=="":
-            return request.get_app_url(app.name+"/static") + "/" + path
+            return get_abs_url()+"/"+app.name+"/static" + "/" + path
         else:
-            return request.get_app_url("static")+"/"+path
+            return get_abs_url()+"/"+app.host_dir+"/"+"static/"+path
     def get_abs_url():
         __root_url__= None
-
-        if request.get_full_path() == "/":
-            __root_url__ = request.build_absolute_uri()
+        host_dir = None
+        from . import get_django_settings_module
+        global settings
+        if settings == None:
+            settings = get_django_settings_module()
+        if hasattr(settings, "HOST_DIR"):
+            host_dir = settings.HOST_DIR
+        if host_dir==None:
+            if request.get_full_path() == "/":
+                __root_url__ = request.build_absolute_uri()
+            else:
+                __root_url__ = request.build_absolute_uri().replace(
+                    request.get_full_path(), "")
+            if __root_url__[__root_url__.__len__() - 1] == "/":
+                __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
+            return __root_url__
         else:
-            __root_url__ = request.build_absolute_uri().replace(
-                request.get_full_path(), "")
-        if __root_url__[__root_url__.__len__() - 1] == "/":
-            __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
-        return __root_url__
+            if request.get_full_path() == "/":
+                __root_url__ = request.build_absolute_uri()
+            else:
+                __root_url__ = request.build_absolute_uri().replace(
+                    request.get_full_path(), "")
+            if __root_url__[__root_url__.__len__() - 1] == "/":
+                __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
+            return __root_url__+"/"+host_dir
     def get_app():
         return app
     def get_app_name():
         return app.name
     def get_api_key(path):
-        return api.get_api_key(path)
+
+        items=path.split('.')
+        path=path[items[0].__len__():path.__len__()]
+
+        return api.get_api_key(app.mdl.__name__+path)
     def get_api_path(id):
         return api.get_api_path(id)
     def register_view():
@@ -143,7 +193,8 @@ def apply(request,template_file,app):
             "get_api_key":get_api_key,
             "get_api_path":get_api_path,
             "register_view":register_view,
-            "request":request
+            "request":request,
+            "encryptor":encryptor
         }
         # mylookup = TemplateLookup(directories=config._default_settings["TEMPLATES_DIRS"])
         if fileName != None:

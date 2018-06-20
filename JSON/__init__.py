@@ -9,7 +9,6 @@ datetime_format = "%Y-%m-%dT%H:%M:%S.%f"
 datetime_format_javascript = "%Y-%m-%dT%H:%M:%S.%fZ"
 datetime_format_regex = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}$')
 datetime_format_regex_from_javascript = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$')
-
 def json_serilize_dict(obj):
     ret={}
     for x in obj.keys():
@@ -22,8 +21,6 @@ def json_serilize_dict(obj):
                 x:obj[x]
             })
     return ret
-
-
 def json_serial(obj):
     """JSON serializer for objects not serializable by default json code"""
     if isinstance(obj, (datetime, date)):
@@ -63,7 +60,6 @@ def datetime_parser(dct):
 
 
     return dct
-
 def to_json(ret):
 
     if ret==None:

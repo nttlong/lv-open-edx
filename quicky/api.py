@@ -1,3 +1,6 @@
+"""
+This module create api http request handler
+"""
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import uuid
@@ -5,32 +8,37 @@ from django.http import HttpResponse
 import json
 import importlib
 import logging
-
+from . import view as view_template
 import JSON
 import applications
 import sys
 import threading
-
-from quicky.layout_view import view
-
+import pymongo
+from pymongo import MongoClient
+from packages.quicky.layout_view import view
+import re
 global lock
 lock = threading.Lock()
 logger = logging.getLogger(__name__)
 _cache_id={}
 _cache_id_revert={}
+_coll=None
 
-
-@require_http_methods(["POST"])
+@require_http_methods(["POST","GET"])
 @csrf_exempt
+@view_template.template("call_api.html")
 def call(request):
+    """
+    Call request handler
+    :param request:
+    :return:
+    """
     try:
         user = request.user
-        if user.is_anonymous():
-            return HttpResponse('401 Unauthorized', status=401)
-        if not user.is_staff and not user.is_superuser:
-            return HttpResponse('401 Unauthorized', status=401)
-
-
+        #if user.is_anonymous():
+        #    return HttpResponse('401 Unauthorized', status=401)
+        #if not user.is_staff and not user.is_superuser:
+        #    return HttpResponse('401 Unauthorized', status=401)
         post_data = JSON.from_json(request.body)
         if not post_data.has_key("path"):
             raise Exception("Api post without using path")
@@ -44,6 +52,7 @@ def call(request):
                              "var offset_minutes = now.getTimezoneOffset();"))
         offset_minutes=post_data["offset_minutes"]
         setattr(threading.current_thread(),"client_offset_minutes",offset_minutes)
+        setattr(threading.currentThread(),"client_offset_minutes",offset_minutes)
 
 
         path = get_api_path(path)
@@ -92,6 +101,7 @@ def call(request):
                     ret = getattr(mdl, method_path)(
                         {
                             "privileges": view_privileges,
+                            "data": {},
                             "user": user,
                             "request": request,
                             "view":view
@@ -105,19 +115,77 @@ def call(request):
     except Exception as ex:
         logger.debug(ex)
         raise ex
+def connect(*args,**kwargs):
+    """
+
+    """
+    try:
+        global _coll
+        if args.__len__()==0:
+            args=kwargs
+        else:
+            args=args[0]
+        cnn = MongoClient(
+            host=args["host"],
+            port=args["port"]
+        )
+        db = cnn.get_database(args["name"])
+        if args["user"] != "":
+            db.authenticate(args["user"], args["password"])
+            _coll=db.get_collection(args["collection"])
+
+    except Exception as ex:
+        logger.debug(ex)
+        raise ex
+
+
 def get_api_key(path):
     global _cache_id
     global _cache_id_revert
+    global _coll
+    if _coll==None:
+        raise (Exception("It look like you forgot call api.connect on settings.py\n"
+                         "\t\tHow to use this?:\n"
+                         "\t\t\tIn settings.py:\n"
+                         "\t\t\t\t\t  from quicky import api\n"
+                         "\t\t\t\t\t  api.connect(\n"
+                         "\t\t\t\t\t  host=db host,\n"
+                         "\t\t\t\t\t  port= db port,\n"
+                         "\t\t\t\t\t  name=db name,\n"
+                         "\t\t\t\t\t  user=db user name,\n"
+                         "\t\t\t\t\t  password=db password,\n"
+                         "\t\t\t\t\t  collection=the name of collection storage api)\n"
+                         ))
     if not _cache_id.has_key(path):
         lock.acquire()
         try:
-            id = uuid.uuid4().__str__()
-            _cache_id.update({
-                path: id
+            item=_coll.find_one({
+                "api_path":{
+                    "$regex":re.compile("^"+path+"$",re.IGNORECASE),
+                }
             })
-            _cache_id_revert.update({
-                id: path
-            })
+            if item==None:
+
+                id = uuid.uuid4().__str__()
+                _coll.insert_one({
+                    "api_path":path,
+                    "api_id":id
+                })
+                _cache_id.update({
+                    path: id
+                })
+                _cache_id_revert.update({
+                    id: path
+                })
+            else:
+                id=item["api_id"]
+                _cache_id.update({
+                    path: item["api_id"]
+                })
+                _cache_id_revert.update({
+                    id: item["api_path"]
+                })
+
             lock.release()
 
         except Exception as ex:
@@ -127,8 +195,44 @@ def get_api_key(path):
     return _cache_id[path]
 def get_api_path(id):
     if not _cache_id_revert.has_key(id):
-        logger.debug("'{0}' was not found".format(id))
-        raise Exception("'{0}' was not found".format(id))
+        if _coll == None:
+            raise (Exception("It look like you forgot call api.connect on settings.py\n"
+                             "\t\tHow to use this?:\n"
+                             "\t\t\tIn settings.py:\n"
+                             "\t\t\t\t\t  from quicky import api\n"
+                             "\t\t\t\t\t  api.connect(\n"
+                             "\t\t\t\t\t  host=db host,\n"
+                             "\t\t\t\t\t  port=db port,\n"
+                             "\t\t\t\t\t  name=db name,\n"
+                             "\t\t\t\t\t  user=db user name,\n"
+                             "\t\t\t\t\t  password=db password,\n"
+                             "\t\t\t\t\t  collection=the name of collection storage api)\n"
+                             ))
+        lock.acquire()
+        try:
+            item = _coll.find_one({
+                "api_id": {
+                    "$regex": re.compile("^" + id + "$", re.IGNORECASE)
+                }
+            })
+            if item==None:
+                raise (Exception("'"+id+"' was not found"))
+            _cache_id.update({
+                item["api_path"]: item["api_id"]
+            })
+            _cache_id_revert.update({
+                id: item["api_path"]
+            })
+            lock.release()
+            return _cache_id_revert[id]
+
+
+
+        except Exception as ex:
+            lock.release()
+            logger.debug(ex)
+            raise ex
+
     return _cache_id_revert[id]
 def logout(request):
     request.session.clear()

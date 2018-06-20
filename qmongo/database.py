@@ -1,7 +1,7 @@
 from sqlalchemy.sql.functions import count
-
+from  datetime import datetime
 from helpers import expr,validators
-
+from helpers import get_model,get_keys_of_model
 from pymongo import MongoClient
 from pymongo.errors import OperationFailure
 import logging
@@ -9,7 +9,8 @@ import copy
 import pymongo
 import pytz
 from bson.codec_options import CodecOptions
-
+import helpers
+from quicky import tenancy
 logger = logging.getLogger(__name__)
 _db={}
 def extract_data(data):
@@ -38,10 +39,14 @@ def extract_data(data):
             })
     return ret
 class QR():
-    db=None
-    _entity=None
-    _codec_options=None
+    """
+    Define queryable
+    """
+
     def __init__(self,config):
+        self.db = None
+        self._entity = None
+        self._codec_options = None
         self.db=config["database"]
         self._codec_options=config["codec_options"]
     def collection(self,name):
@@ -52,15 +57,33 @@ class QR():
     def get_collection_names(self):
         return list(self.db.collection_names())
 class ENTITY():
-    name = ""
-    qr = None
-    _data={}
-    _action=None
-    _expr=None
-    def __init__(self, qr, name):
+    """
+        Define entity
+    """
+    def __init__(self, qr,coll, name):
+        # type:(QR,COLL,str)->NotImplemented
+        """
+        Create new entity instance
+        :param qr:query
+        :param coll:COLLECTION
+        :param name:model name
+        """
+        self.name = ""
+        self.qr = None
+        self._data = {}
+        self._action = None
+        self._expr = None
         self.qr = qr
         self.name = name
+        self._coll=coll
     def insert_one(self,*args,**kwargs):
+        # type: (tuple,dict) -> ENTITY
+        """
+        Insert one item example insert_one(a=1)
+        :param args:
+        :param kwargs:
+        :return:
+        """
         if args==():
             self._data=kwargs
         else:
@@ -70,10 +93,22 @@ class ENTITY():
 
         return self
     def insert_many(self,data):
+        # type: (tuple,dict) -> ENTITY
+        """
+        Insert many items
+        :param data:
+        :return:
+        """
         self._action = "insert_many"
         self._data = data
         return self
     def update_one(self,data):
+        # type: (dict) -> ENTITY
+        """
+        update one item
+        :param data:
+        :return:
+        """
         self._action="update_one"
         if not self._data.has_key("$set"):
             self._data.update({
@@ -87,6 +122,13 @@ class ENTITY():
                 })
         return self
     def update_many(self,data,*params):
+        # type: (tuple,dict) -> ENTITY
+        """
+        Update many items
+        :param data:
+        :param params:
+        :return:
+        """
         self._action = "update_many"
         if not self._data.has_key("$set"):
             self._data.update({
@@ -100,6 +142,11 @@ class ENTITY():
                 })
         return self
     def push(self,data):
+        """
+        Push data into collection
+        :param data:
+        :return:
+        """
         if self._action==None:
             self._action="update_many"
         if not self._data.has_key("$push"):
@@ -156,6 +203,13 @@ class ENTITY():
                 })
         return self
     def filter(self,expression,*args,**kwargs):
+        """
+        Create filter before update or delete
+        :param expression:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         self._expr = expression
         if type(expression) is str:
             expr_tr=expr.get_tree(expression,*args,**kwargs)
@@ -181,12 +235,33 @@ class ENTITY():
             )
         )
     def commit(self):
+        """
+        Commit actio. Example; insert_many then commit, update or delete require filter before
+        :return:
+        """
+        _id=None
+        if self._data.has_key("$set"):
+            _id=self._data["$set"].get("_id",None)
+            for key in self._data["$set"].keys():
+                if key[0:1]=="$" or key == "_id":
+                    self._data["$set"].pop(key)
+        else:
+            for key in self._data.keys():
+                if key[0:1]=="$" or key == "_id":
+                    self._data.pop(key)
+                
+
+
         _coll=self.qr.db.get_collection(self.name).with_options(codec_options=self.qr._codec_options)
+        model_events = helpers.events(self._coll._model.name)
         if self._action=="insert_one":
             ret_data={}
             try:
                 self._data=extract_data(self._data)
-                ret_validate_require=validators.validate_require_data(self.name,self._data)
+                if model_events!=None:
+                    for fn in model_events._on_before_insert:
+                        fn(self._data)
+                ret_validate_require=validators.validate_require_data(self._coll._model.name,self._data)
                 if ret_validate_require.__len__()>0:
                     return dict(
                         error=dict(
@@ -194,7 +269,7 @@ class ENTITY():
                             code="missing"
                         )
                     )
-                ret_validate_data_type=validators.validate_type_of_data(self.name,self._data)
+                ret_validate_data_type=validators.validate_type_of_data(self._coll._model.name,self._data)
                 if ret_validate_data_type.__len__()>0:
                     return dict(
                         error=dict(
@@ -215,6 +290,7 @@ class ENTITY():
                 )
             except pymongo.errors.DuplicateKeyError as ex:
                 ret_data= self.get_duplicate_error(ex)
+
                 ret_data.update({
                     "data":self._data
                 })
@@ -225,6 +301,10 @@ class ENTITY():
 
 
         elif self._action=="insert_many":
+            if model_events:
+                for item in self._data:
+                    for fn in model_events._on_before_insert:
+                        fn(item)
             ret = _coll.insert_many(self._data)
             self._action = None
             self._data = {}
@@ -239,7 +319,10 @@ class ENTITY():
                 self._data = {}
                 return ret
             if self._action=="update_many":
-                ret_validate_require = validators.validate_require_data(self.name, self._data["$set"], partial=True)
+                if model_events:
+                    for fn in model_events._on_before_update:
+                        fn(self._data["$set"])
+                ret_validate_require = validators.validate_require_data(self._coll._model.name, self._data["$set"], partial=True)
                 if ret_validate_require.__len__() > 0:
                     return dict(
                         error=dict(
@@ -247,7 +330,7 @@ class ENTITY():
                             code="missing"
                         )
                     )
-                ret_validate_data_type = validators.validate_type_of_data(self.name, self._data["$set"])
+                ret_validate_data_type = validators.validate_type_of_data(self._coll._model.name, self._data["$set"])
                 if ret_validate_data_type.__len__() > 0:
                     return dict(
                         error=dict(
@@ -292,6 +375,7 @@ class ENTITY():
                     self._expr = None
                     self._action = None
                     self._data = {}
+                   
                     return dict(
                         error=None,
                         data=ret
@@ -310,12 +394,12 @@ class ENTITY():
                 self._expr = None
                 self._action = None
                 self._data = {}
-                return ret
+                return { "deleted":ret.deleted_count}
 class WHERE():
-    name = ""
-    _coll = None
-    _where_list=[]
-    _entity=None
+    """
+    This class define where for Entity will be remove on the next version
+    """
+
 
     def _get_where(self):
         i = 0
@@ -335,6 +419,10 @@ class WHERE():
         return y
 
     def __init__(self, coll):
+        self.name = ""
+        self._coll = None
+        self._where_list = []
+        self._entity = None
         self._coll = coll
         self.name=coll.name
     def get_list(self):
@@ -349,7 +437,7 @@ class WHERE():
             return self._coll.find_one(self._get_where())
     def to_entity(self):
         if self._entity==None:
-            self._entity=ENTITY(self._coll.qr,self.name)
+            self._entity=ENTITY(self._coll.qr,self._coll,self.name)
         return self._entity
     def where(self,expression,*params):
         self._where_list.append(dict(
@@ -405,21 +493,95 @@ class WHERE():
     def commit(self):
         return self.to_entity().commit()
 class COLL():
-    name=""
-    qr=None
-    _where=None
-    _entity=None
-
+    """
+    Define a collection
+    """
     def __init__(self,qr,name):
+        # type: (QR,str) -> NotImplemented
+        """
+        Create instance of COLL
+        :param qr:
+        :param name:
+        """
+        self.name = ""
+        self.qr = None
+        self._where = None
+        self._entity = None
+        self._none_schema_name = None
+        self._none_schema_name=name
+        import threading
+        if hasattr(threading.currentThread(),"tenancy_code") and tenancy.get_schema()!="":
+            self.name=tenancy.get_schema()+"."+name
+        else:
+            self.name = name
+        self._model=get_model(name)
+       
+
         self.qr=qr
-        self.name=name
+    def descibe_fields(self,tabs,fields):
+        """
+        Return list of fields
+        :param tabs:
+        :param fields:
+        :return:
+        """
+        _fields = ""
+        for x in fields:
+            _fields += tabs+ x + "\n"
+        return  _fields
+    def get_name(self):
+        # type:() -> str
+        """
+        Get name of collection without schema
+        :return:
+        """
+        return self._none_schema_name
     def get_collection(self):
-        return self.qr.db.get_collection(self.name).with_options(codec_options=self.qr._codec_options)
+        # type: () -> pymongo.collection.Collection
+        """
+        get mongodb collection, before get this method will run create unique key script according to 'key' in model
+        :return:
+        """
+        ret_coll=self.qr.db.get_collection(self.name).with_options(codec_options=self.qr._codec_options)
+        key_info=get_keys_of_model(self._none_schema_name)
+        if key_info["keys"]!=None  and not key_info["has_created"]:
+            for item in key_info["keys"]:
+                keys=[]
+                partialFilterExpression={}
+                
+                for field_name in item:
+                    
+                    keys.append((field_name,pymongo.ASCENDING))
+                    if(self._model.meta[field_name]=="text"):
+                        partialFilterExpression.update({
+                            field_name:{
+                                "$type":"string"
+                            }
+                        })
+                if keys.__len__() > 0:
+                    ret_coll.create_index(keys,
+                                      unique=True,
+                                      partialFilterExpression=partialFilterExpression)
+            key_info["has_created"]=True
+        return ret_coll
     def find_one(self,exprression,*args,**kwargs):
+        # type: (str,dict) -> dict
+        # type: (str,tuple) -> dict
+        # type: (str,int) -> dict
+        # type: (str,bool) -> dict
+        # type: (str,float) -> dict
+        # type: (str,datetime) -> dict
+        # type: (str,list) -> dict
         """find one item with conditional ex: find_one("Username={0}","admin"),
             find_one("Username='admin'"),
             find_one("Username=@username",username="admin")
          """
+
+        unknown_fields = self._model.validate_expression(exprression,None,*args,**kwargs)
+        if unknown_fields.__len__() > 0:
+            raise (Exception("What is bellow list of fields?:\n" + self.descibe_fields("\t\t", unknown_fields) +
+                             " \n Your selected fields now is bellow list: \n" +
+                             self.descibe_fields("\t\t\t", self._model.get_fields())))
         if type(exprression) is dict:
             ret = self.get_collection().find_one(exprression)
             return ret
@@ -432,11 +594,23 @@ class COLL():
             filter = expr.parse_expression_to_json_expression(exprression, kwargs)
             ret=self.get_collection().find_one(filter)
             return ret
-    def find(self,exprression,*params):
+    def find(self,exprression,*args,**kwargs):
+        # type: (str,dict) -> dict
+        # type: (str,tuple) -> dict
+        # type: (str,int) -> dict
+        # type: (str,bool) -> dict
+        # type: (str,float) -> dict
+        # type: (str,datetime) -> dict
+        # type: (str,list) -> dict
         """find and get a list of items item with conditional ex: find("Username={0}","admin"),
                     find("Username='admin'"),
                     find("Username=@username",username="admin")
                  """
+        unknown_fields = self._model.validate_expression(exprression,None,*args,**kwargs)
+        if unknown_fields.__len__() > 0:
+            raise (Exception("What is bellow list of fields?:\n" + self.descibe_fields("\t\t", unknown_fields) +
+                             " \n Your selected fields now is bellow list: \n" +
+                             self.descibe_fields("\t\t\t", self._model.get_fields())))
         if type(exprression) is dict:
             ret = self.get_collection().find(exprression)
             return list(ret)
@@ -449,12 +623,24 @@ class COLL():
             ret=self.get_collection().find(y)
             return list(ret)
     def get_list(self):
+        # type: () -> list
+        """
+        get list of items from mongodb
+        :return:
+        """
         ret = self.get_collection().find()
         return list(ret)
     def get_item(self):
+        # type : ()-> dict
+        """
+        Get one item from mongodb without filtering
+        :return:
+        """
         ret = self.get_collection().find_one()
         return ret
     def where(self,exprression,*params):
+        # type: (str,dict) -> COLL
+        # type: (str,tuple) -> COLL
         """Create filter expression before get data from mongo
             Ex:where("strLenCP(Username)<3").get_list(),
                where("strLenCP(Username)<@strong_number",strong_number=5).get_list()
@@ -466,21 +652,48 @@ class COLL():
             self._where.where(exprression,params)
         return self._where
     def entity(self):
+        self.get_collection()
         if self._entity==None:
-            self._entity=ENTITY(self.qr,self.name)
+            self._entity=ENTITY(self.qr,self,self.name)
         return self._entity
     def aggregate(self):
         """create aggregate before create pipeline"""
-        return AGGREGATE(self.qr,self.name)
-    def entity(self):
-        if self._entity==None:
-            self._entity=ENTITY(self.qr,self.name)
-        return self._entity
+        return AGGREGATE(self,self.qr,self.name)
     def insert(self,*args,**kwargs):
+        # type: (dict) -> dict
+        # type: (tuple) -> dict
+        """
+        insert item into database
+        :param args:
+        :param kwargs:
+        :return: dict including data has been inserted and error
+        """
+
         ac=self.entity().insert_one(*args,**kwargs)
         ret=ac.commit()
         return ret
     def update(self,data,filter,*args,**kwargs):
+        # type: (dict,str,int) -> dict
+        # type: (dict,str,bool) -> dict
+        # type: (dict,str,datetime) -> dict
+        # type: (dict,str,float) -> dict
+        # type: (dict,str,dict) -> dict
+        # type: (dict,str,tuple) -> dict
+        # type: (dict,str,list) -> dict
+
+        """
+        Update data example: update({"password":"123"},"username=={0}","admin")
+        :param data:dict data will be update
+        :param filter:conditional text expression
+        :param args:
+        :param kwargs:
+        :return: dict with data and error
+        """
+        unknown_fields = self._model.validate_expression(filter,None,*args,**kwargs)
+        if unknown_fields.__len__() > 0:
+            raise (Exception("What is bellow list of fields?:\n" + self.descibe_fields("\t\t", unknown_fields) +
+                             " \n Your selected fields now is bellow list: \n" +
+                             self.descibe_fields("\t\t\t", self._model.get_fields())))
         if type(args) is tuple and args.__len__()>0 and kwargs=={}:
             kwargs=args[0]
         ac=self.entity().filter(filter,kwargs)
@@ -488,6 +701,14 @@ class COLL():
         ret=ac.commit()
         return ret
     def create_unique_index(self,*args,**kwargs):
+        """
+        Create unique key refer to link : https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if type(args) is tuple and args.__len__()>0:
+            args=args[0]
         for item in args:
             keys=[]
             partialFilterExpression={}
@@ -508,7 +729,28 @@ class COLL():
 
         return self
     def delete(self,filter,*args,**kwargs):
-        ac=self.entity().filter(filter,kwargs)
+        # type: (str,int) -> dict
+        # type: (str,bool) -> dict
+        # type: (str,float) -> dict
+        # type: (str,datetime) -> dict
+        # type: (str,str) -> dict
+        # type: (str,unicode) -> dict
+        # type: (str,dict) -> dict
+        # type: (str,tuple) -> dict
+        # type: (str) -> dict
+        """
+        Delete data according to filter expression. Example detele("IsInactive=={0},True)
+        :param filter:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        unknown_fields = self._model.validate_expression(filter,None,*args,**kwargs)
+        if unknown_fields.__len__() > 0:
+            raise (Exception("What is bellow list of fields?:\n" + self.descibe_fields("\t\t", unknown_fields) +
+                             " \n Your selected fields now is bellow list: \n" +
+                             self.descibe_fields("\t\t\t", self._model.get_fields())))
+        ac=self.entity().filter(filter,*args,**kwargs)
         ac.delete()
         ret=ac.commit()
         return ret
@@ -538,17 +780,60 @@ class COLL():
 
         return data_item
 class AGGREGATE():
-    name = ""
-    qr = None
-    _pipe=[]
+    """
+    This class is a utility for mongodb aggregation framework. For more detail refer to :https://docs.mongodb.com/manual/aggregation/
 
-    def __init__(self, qr, name):
+    """
+
+    def __init__(self,coll, qr, name):
+        # type: (COLL,QR,str) -> AGGREGATE
+        """
+        Create instance of AGGREGATE
+        :param coll: instance of COLL
+        :param qr: instance of QR, this param will be use when get data from mongodb
+        :param name: collecion name without schema
+        """
+        self._coll=coll
+        self._selected_fields = None
         self.qr = qr
         self.name = name
         self._pipe=[]
-    def project(self,*args,**kwargs):
+    def get_selected_fields(self):
+        # type: () -> list
         """
-        Create project pipeline
+        Get current selected fields of aggregate pipeline
+        :return:
+        """
+        if self._selected_fields==None:
+            self._selected_fields=self._coll._model.get_fields()
+        return self._selected_fields
+    def descibe_fields(self,tabs,fields):
+        # type: (str,list) -> str
+        """
+        Create well form text for list of fields
+        :param tabs: indent tab of each field must be a string contains only '\t'
+        :param fields: list of fields
+        :return: well form text
+        """
+        _fields = ""
+        for x in fields:
+            _fields += tabs+ x + "\n"
+        return  _fields
+    def check_fields(self,field):
+        # type: (str) -> bool
+        """
+        Check a field if it is in list of current selected fields
+        :param field:
+        :return: if field was found return True else False
+        """
+        ret=[x for x in self.get_selected_fields() if x==field]
+        return ret.__len__()>0
+
+    def project(self,*args,**kwargs):
+        # type: (dict) -> AGGREGATE
+        # type: (tuple) -> AGGREGATE
+        """
+        Create project pipeline (refer to :https://docs.mongodb.com/manual/reference/operator/aggregation/project/)
         Ex:
             project(
                 dict(
@@ -559,6 +844,14 @@ class AGGREGATE():
                 ),
                 time_now=datetime.now()
             )
+            or
+            project (
+                username=1,
+                password=1,
+                myConst="titeral(1)",
+                total_salary="BasicSalary + MonthlySalary"
+            )
+
         :param args:
         :param kwargs:
         :return:
@@ -583,53 +876,133 @@ class AGGREGATE():
             elif type(args) is tuple and args.__len__()==1 and type(args[0]) is dict:
                 params=kwargs
                 kwargs=args[0]
-            # for x in args:
-            #     _project.update({
-            #         x:1
-            #     })
+        _next_step_fields=[]
         for key in kwargs.keys():
-            _project.update({
-                key: expr.get_calc_expr(kwargs[key],params)
-            })
+            if kwargs[key]==1:
+                if not self.check_fields(key):
+                    raise (Exception("What is '" + key + "'?:\n" +
+                                     " \n Your selected fields now is bellow list: \n" +
+                                     self.descibe_fields("\t\t\t", self.get_selected_fields())))
+                _project.update({
+                    key: 1
+                })
+                _next_step_fields.append(key)
+            else:
+                unknown_fields = self._coll._model.validate_expression(kwargs[key],self.get_selected_fields())
+                if unknown_fields.__len__()>0:
+                    raise (Exception("What is bellow list of fields?:\n"+self.descibe_fields("\t\t",unknown_fields)+
+                                     " \n Your selected fields now is bellow list: \n"+
+                                     self.descibe_fields("\t\t\t",self.get_selected_fields())))
+                _project.update({
+                    key: expr.get_calc_expr(kwargs[key],params)
+                })
+                _next_step_fields.append(key)
+        self._selected_fields=_next_step_fields
         self._pipe.append({
             "$project":_project
         })
         return self
     def group(self,_id,selectors,*args,**kwargs):
+        # type: (dict,dict) -> AGGREGATE
+        # type: (dict,tuple) -> AGGREGATE
+        # type: (tuple,dict) -> AGGREGATE
+        # type: (tuple,tuple) -> AGGREGATE
+        """
+        Create a group pipeline for mongodb aggregate (refer to: https://docs.mongodb.com/manual/reference/operator/aggregation/group/)
+        Example: group(_id=dict(
+                                month="month(MyDate)",
+                                day="dayOfMonth(MydDate)",
+                                year="year(MyDate)"),
+                        selectors=dict(
+                                   totalPrice="sum(price*quantity+{0})),
+                                   12)
+
+        :param _id:
+        :param selectors:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        _next_step_fields=[]
         __id={}
         if type(_id) is dict:
             for key in _id.keys():
+                unknown_fields = self._coll._model.validate_expression(_id[key], self.get_selected_fields())
+                if unknown_fields.__len__()>0:
+                    raise (Exception("What is bellow list of fields?:\n"+self.descibe_fields("\t\t",unknown_fields)+
+                                     " \n Your selected fields now is bellow list: \n"+
+                                     self.descibe_fields("\t\t\t",self.get_selected_fields())))
+                _next_step_fields.append("_id")
+                _next_step_fields.append("_id."+key)
                 __id.update({
                     key:expr.get_calc_expr(_id[key],*args,**kwargs)
                 })
         else:
+            if not self.check_fields(_id):
+                raise (Exception("What is '"+_id+"'?:\n"  +
+                                 " \n Your selected fields now is bellow list: \n" +
+                                 self.descibe_fields("\t\t\t", self.get_selected_fields())))
+
             __id="$"+_id
+            _next_step_fields.append("_id")
+            _next_step_fields.append("_id."+_id)
+
         _group = {
             "$group": {
                 "_id": __id
             }
         }
         if not type(selectors) is dict:
-            raise (Exception("'selectot' must be dict type"))
+            raise (Exception("'selectors' must be dict type"))
 
 
         for key in selectors.keys():
+            unknown_fields = self._coll._model.validate_expression(selectors[key], self.get_selected_fields())
+            if unknown_fields.__len__() > 0:
+                raise (Exception("What is bellow list of fields?:\n" + self.descibe_fields("\t\t", unknown_fields) +
+                                 " \n Your selected fields now is bellow list: \n" +
+                                 self.descibe_fields("\t\t\t", self.get_selected_fields())))
             _group["$group"].update({
                 key:expr.get_calc_expr(selectors[key],*args,**kwargs)
             })
+            _next_step_fields.append(key)
+        self._selected_fields = _next_step_fields
         self._pipe.append(_group)
         return self
     def skip(self,len):
+        # type: (int) ->AGGREGATE
+        """
+        Skip aggregate
+        :param len:
+        :return:
+        """
         self._pipe.append({
             "$skip":len
         })
         return self
     def limit(self,num):
+        # type: (int) ->AGGREGATE
+        """
+        Limit aggregate
+        :param num:
+        :return:
+        """
         self._pipe.append({
             "$limit": num
         })
         return self
     def unwind(self,field_name):
+        # type: (str) -> AGGREGATE
+        """
+        Unwin aggregate
+        :param field_name: the field name for "unwind" without prefix "$"
+        :return:
+        """
+        if self.get_selected_fields().count(field_name)==0:
+            msg_detail=""
+            for x in self.get_selected_fields():
+                msg_detail+=x+"\n"
+            raise (Exception("What is '{0}'? \n Your selected fields now are: \n {1}".format(field_name,msg_detail)))
         if field_name[0:1]!="$":
             field_name="$"+field_name
         self._pipe.append({
@@ -639,20 +1012,51 @@ class AGGREGATE():
         })
         return self
     def match(self,expression, *args,**kwargs):
+        # type: (str,int) -> AGGREGATE
+        # type: (str,bool) -> AGGREGATE
+        # type: (str,datetime) -> AGGREGATE
+        # type: (str,str) -> AGGREGATE
+        # type: (str,unicode) -> AGGREGATE
+        # type: (str,float) -> AGGREGATE
+        # type: (str,dict) -> AGGREGATE
+        # type: (str,tuple) -> AGGREGATE
+        # type: (str,list) -> AGGREGATE
+
+        """
+        Mathc aggregate Example:
+            macth("userame=={0} and is_active=={1}",'admin',True)
+        :param expression:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         """Beware! You could not use any Aggregation Pipeline Operators, just use this function with Field Logic comparasion such as:
         and,or, contains,==,!=,>,<,..
         """
+        unknown_fields=self._coll._model.validate_expression(expression,self.get_selected_fields(), *args,**kwargs)
+        if unknown_fields.__len__() > 0:
+            err_msg = ""
+            for x in unknown_fields:
+                err_msg += x + "\n"
+            err_msg_fields = ""
+            for x in self.get_selected_fields():
+                err_msg_fields += x + "\n"
+            raise (Exception(
+                "What is bellow list of fields?:\n" + err_msg + " \n Your selected fields now is bellow list: \n" + err_msg_fields))
+        by_params=False
         if args==():
             args=kwargs
+            by_params=True
 
         if type(expression) is dict:
             self._pipe.append({
                 "$match":expression
             })
             return self
-        if type(expression) is str:
+        if type(expression) in [str,unicode]:
+            import helpers
             self._pipe.append({
-                "$match": expr.parse_expression_to_json_expression(expression,args)
+                "$match": (lambda :  helpers.filter(expression, args)._pipe if by_params else helpers.filter(expression, *args,**kwargs)._pipe)()
             })
             return self
 
@@ -663,6 +1067,25 @@ class AGGREGATE():
                foreign_field=None,
                alias=None,
                *args,**kwargs):
+        # type: (str,str,str,str) -> AGGREGATE
+        # type: (COLL,str,str,str) -> AGGREGATE
+        """
+        Create lookup aggregate
+        :param source: where this collection will lookup for mongodb that is 'from'
+        :param local_field:which is the field in this collection serve for lookup? for mongodb that is 'localField'
+        :param foreign_field:which is the field from source collection serve for lookup? for mongodb that is 'foreignField'
+        :param alias:The alias after lookup for mongdb that is 'as'
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if self.get_selected_fields().count(local_field)==0:
+            msm_details=""
+            for x in self.get_selected_fields():
+                msm_details+=x+"\n"
+            raise (Exception("What is '{0}'?, Your selected fields are:\n {1}".format(local_field,msm_details)))
+
+
         if args==() and kwargs=={}:
             _source=source
             if source.__class__ is COLL:
@@ -681,6 +1104,21 @@ class AGGREGATE():
                 raise Exception("'foreign_field' was not found")
             if not kwargs.has_key("alias"):
                 raise Exception("'alias' was not found")
+        source_model=None
+        if isinstance(source,COLL):
+            source_model =source._model
+        else:
+            source_model = get_model(source)
+
+        self._selected_fields = self.get_selected_fields()
+        self._selected_fields.append(alias)
+        if source_model.get_fields().count(foreign_field)==0:
+            msm_details=""
+            for x in source_model.get_fields():
+                msm_details+=x+"\n"
+            raise (Exception("What is '{0}'?\n '{0}'  is not in '{1}'.\n All fields of '{1}' are bellow:\n {2}".format(foreign_field,source,msm_details)))
+        for x in source_model.get_fields():
+            self._selected_fields.append(alias+"."+x)
         self._pipe.append({
             "$lookup":{
                 "from":kwargs["source"],
@@ -691,42 +1129,106 @@ class AGGREGATE():
         })
         return self
     def sort(self,*args,**kwargs):
+        if args==() and kwargs=={}:
+            raise (Exception("It look like you forgot set sort fields\nHow to sort?\n"
+                             ".sort(\n"
+                             "\tfield name=1 or -1\n,"
+                             "\t..\n"
+                             "\tfield name n=1 or -1"))
         _sort={
 
         }
+        for key in kwargs.keys():
+            if self.get_selected_fields().count(key)==0:
+                msg_detail=""
+                for x in self.get_selected_fields():
+                    msg_detail+=x+"\n"
+                raise (Exception("\n"
+                                 "What is '{0}'?\n"
+                                 "Your selected fields are:\n"
+                                 "{1}".format(key,msg_detail)))
+        _sort = (lambda x, y: y if y != {} else x[0])(args, kwargs)
         self._pipe.append({
-            "$sort":kwargs
+            "$sort":_sort
         })
         return self
     def count(self,alias):
+        """
+        Create count aggregate pipeline
+        :param alias: Alias field will hold count value
+        :return:
+        """
         self._pipe.append({
             "$count":alias
         })
         return self
     def get_item(self):
+        """
+        Get one item from mongdb
+        :return:
+        """
         ret=self.get_list()
         if ret.__len__()==0:
             return None
         else:
             return ret[0]
+    def get_all_documents(self):
+        # type: () -> list
+        """
+        get all items from mongodb
+        Caution: this method will return what is collection store. For example the collection maybe store different schema in each doc
+        :return:
+        """
+        coll = self.qr.db.get_collection(self.name).with_options(codec_options=self.qr._codec_options)
+        coll_ret = coll.aggregate(self._pipe)
+        ret=list(coll.aggregate(self._pipe))
+        return ret
     def get_list(self):
+        # type: () -> list
+        """
+        Get list of item in mongodb
+        Caution: this method will return the same schema for each item even the collection contains different schema for each item
+        :return:
+        """
         # try:
         #     return self.qr.db.get_collection(self.name).aggregate(self._pipe,explain=False)["cursor"]["firstBatch"]
         # except Exception as ex:
         #     return list(self.qr.db.get_collection(self.name).aggregate(self._pipe))
         coll=self.qr.db.get_collection(self.name).with_options(codec_options=self.qr._codec_options)
-        ret=list(coll.aggregate(self._pipe))
+        coll_ret=coll.aggregate(self._pipe)
+
+        ret=[]
+        for doc in coll_ret:
+            for key in self.get_selected_fields():
+                if not doc.has_key(key):
+                    doc.update({
+                        key:None
+                    })
+            ret.append(doc)
+
+        # ret=list(coll.aggregate(self._pipe))
         self._pipe=[]
+        self._selected_fields=[]
         return ret
     def get_page(self,page_index,page_size):
-        _tmp_pipe=copy.copy(self._pipe)
+        # type: (int,int) -> dict
+        """
+        get page of item according to page_index and page_size
+        Caution: this method will return the same schema for each item even the collection contains different schema for each item
+        :param page_index:
+        :param page_size:
+        :return: dict including: page_size, page_index, total_items, items
+        """
+        _tmp_pipe = [x for x in self._pipe]
+        _count_pipe=[x for x in self._pipe if self._pipe.index(x)<self._pipe.__len__() and x.keys()[0]!="$sort"]
+        self._pipe = _count_pipe
         total_items=self.count("total_items").get_item()
         self._pipe=_tmp_pipe
         items=self.skip(page_index*page_size).limit(page_size).get_list()
         return dict(
             page_size=page_size,
             page_index=page_index,
-            total_items=total_items["total_items"],
+            total_items= (lambda x: x["total_items"] if x != None else 0) (total_items),
             items=items
         )
     def __copy__(self):
