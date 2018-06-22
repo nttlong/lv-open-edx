@@ -1224,8 +1224,8 @@ class AGGREGATE():
         self._pipe = _count_pipe
         _sel_fields=self._selected_fields
         total_items=self.count("total_items").get_item()
-        self._pipe=_tmp_pipe
         self._selected_fields=_sel_fields
+        self._pipe=_tmp_pipe
         items=self.skip(page_index*page_size).limit(page_size).get_list()
         return dict(
             page_size=page_size,
