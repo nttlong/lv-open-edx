@@ -10272,7 +10272,7 @@ msgstr "Lưu ý: chỉ các giáo viên hướng dẫn được quyền chú th�
 #. untranslated. See http://open.edx.org for more information.
 #: lms/templates/index.html
 msgid "Welcome to the Open edX{registered_trademark} platform!"
-msgstr "Chào mừng bạn đến với nền tảng Open edX {registered_trademark}!"
+msgstr "Chào mừng đến với hệ thống đào tạo trực tuyến !"
 
 #. Translators: 'Open edX' is a registered trademark, please keep this
 #. untranslated. See http://open.edx.org for more information.

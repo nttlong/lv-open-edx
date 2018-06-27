@@ -33,6 +33,7 @@ django.catalog = {
     "Sign in.":"Đăng nhập ngay",
     "optional":"Tùy chọn",
     "Course Handouts":"Tài liệu khóa học",
+    "Welcome to the Open edX{registered_trademark} platform!":"Chào mừng đến với hệ thống đào tạo trực tuyến !"
 
 
 };
