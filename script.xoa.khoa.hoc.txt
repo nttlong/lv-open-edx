@@ -1,0 +1,21 @@
+
+delete from lv_lms.course_overviews_courseoverviewtab
+where course_overview_id='course-v1:LV+DEV-LV-SQL+DEV-LV-SQL'
+
+delete FROM lv_lms.course_overviews_courseoverview
+where id='course-v1:LV+DEV-LV-SQL+DEV-LV-SQL'
+
+var code="course-v1:xxx+xxx+xxx"
+        var items = code.split(":")[1].split("+");
+        var item = db.getCollection("modulestore.active_versions").findOne({
+                        run: items[2],
+                        org: items[0],
+                        course: items[1]
+                        });
+        var draftBranch = item.versions["draft-branch"];
+        var publishedBranch = item.versions["published-branch"];
+        db.getCollection("modulestore.structures").remove({ _id: draftBranch });
+        db.getCollection("modulestore.structures").remove({ _id: publishedBranch });
+        db.getCollection("modulestore.active_versions").remove({ _id: item._id });
+
+        console.log(item)

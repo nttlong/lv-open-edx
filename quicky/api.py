@@ -15,7 +15,6 @@ import sys
 import threading
 import pymongo
 from pymongo import MongoClient
-from packages.quicky.layout_view import view
 import re
 global lock
 lock = threading.Lock()
