@@ -16,7 +16,7 @@ import logging
 logger=logging.getLogger(__name__)
 global lock
 settings=None
-
+import exceptions
 lock=threading.Lock()
 from datetime import date, datetime
 
@@ -67,6 +67,8 @@ def apply(request,template_file,app):
             else:
                 return tenancy.get_customer_code()+"/"+app.host_dir
     def get_view_path():
+        if hasattr(request,"__view_path__"):
+            return request.__view_path__
         code=tenancy.get_schema()
         not_inclue_tenancy_code=False
         if hasattr(request,"not_inclue_tenancy_code"):
@@ -76,11 +78,14 @@ def apply(request,template_file,app):
             if ret[0:1] == "/":
                 ret = ret[1:ret.__len__()]
             if ret == "":
+                setattr(request,"__view_path__","index")
                 return "index"
             else:
                 if not not_inclue_tenancy_code:
+                    setattr(request, "__view_path__", ret[code.__len__():ret.__len__()])
                     return ret[code.__len__():ret.__len__()]
                 else:
+                    setattr(request, "__view_path__", ret)
                     return ret
         else:
             if ret[0:1] == "/":
@@ -89,9 +94,11 @@ def apply(request,template_file,app):
             if ret[0:1] == "/":
                 ret = ret[1:ret.__len__()]
             if ret == "":
+                setattr(request, "__view_path__", "index")
                 return "index"
             else:
-                 if not not_inclue_tenancy_code:
+                 if not not_inclue_tenancy_code and code != None:
+                    setattr(request, "__view_path__",ret[code.__len__():ret.__len__()])
                     return ret[code.__len__():ret.__len__()]
                  else:
                     return ret
@@ -118,6 +125,9 @@ def apply(request,template_file,app):
         else:
             return get_abs_url()+"/"+app.host_dir+"/"+"static/"+path
     def get_abs_url():
+        if hasattr(request, "__abs_url__"):
+            return request.__abs_url__
+
         __root_url__= None
         host_dir = None
         from . import get_django_settings_module
@@ -134,6 +144,7 @@ def apply(request,template_file,app):
                     request.get_full_path(), "")
             if __root_url__[__root_url__.__len__() - 1] == "/":
                 __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
+            setattr(request, "__abs_url__",__root_url__)
             return __root_url__
         else:
             if request.get_full_path() == "/":
@@ -143,6 +154,7 @@ def apply(request,template_file,app):
                     request.get_full_path(), "")
             if __root_url__[__root_url__.__len__() - 1] == "/":
                 __root_url__ = __root_url__[0:__root_url__.__len__() - 1]
+            setattr(request, "__abs_url__", __root_url__+"/"+host_dir)
             return __root_url__+"/"+host_dir
     def get_app():
         return app
@@ -187,7 +199,6 @@ def apply(request,template_file,app):
             "get_user": get_user,
             "get_app_url": get_app_url,
             "get_app_host": get_app_host,
-            "get_static": get_static,
             "get_language": get_language,
             "template_file": template_file,
             "get_api_key":get_api_key,
@@ -208,6 +219,9 @@ def apply(request,template_file,app):
             try:
                 ret_res=mylookup.get_template(fileName).render(**render_model)
 
+            except exceptions.AttributeError as ex:
+                logger.debug(ex)
+                raise (ex)
             except exceptions.MakoException as ex:
                 logger.debug(ex)
                 raise (ex)

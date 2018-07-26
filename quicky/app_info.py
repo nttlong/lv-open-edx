@@ -121,3 +121,7 @@ class app_config():
                     return "/" + self.mdl.settings.login_url
                 else:
                     return "/" + self.host_dir + "/" + self.mdl.settings.login_url
+    @property
+    def urls(self):
+        from django.conf.urls import include, patterns, url
+        return url(r'^'+self.host_dir+'/', include(self.path.split('/')[self.path.split('/').__len__()-1]+'.urls'))

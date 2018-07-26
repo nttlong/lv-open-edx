@@ -19,7 +19,7 @@ quicky.language.set_config(
 lv_admin=quicky.applications.load_app(dict(
     name="lv-admin",
     path= "lv-packages/apps/lv_admin",
-    host="lv_admin"
+    host="system"
 ))
 lv_cms=quicky.applications.load_app(dict(
     name="lv-cms",
