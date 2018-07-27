@@ -35,3 +35,18 @@ Trong ca 2 file lms.env.json va cms.env.json:
 
 
 How to apply a custom theme?
+
+**Lưu ý: khi cài phải disable "ALLOW_ALL_ADVANCED_COMPONENTS": trong cms lẫn lms**
+
+        Vào thư mục:
+
+            /opt/edx-ginkgo.2-3/apps/edx/venvs/src chuyển các thư mục sau đi chổ khác:
+
+            1. proctoru
+
+            2.pumukit2
+
+            3. voicerecxblock
+
+
+
