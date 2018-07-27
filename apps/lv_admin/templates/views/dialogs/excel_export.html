@@ -1,0 +1,11 @@
+<div title="{{getTitle()}}">
+<a href="{{url}}" target="_blank">${get_app_res("Bấm vào đây để download file excel")}</a>
+</div>
+<script>
+    (function(scope){
+            scope.getTitle=function(){
+                return '${get_app_res("Xuất danh sách tài khoản ra Excel")}';
+            };
+
+    });
+</script>

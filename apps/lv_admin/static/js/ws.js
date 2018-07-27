@@ -18,27 +18,25 @@ function ws_call(api_path,view_path,data,cb,owner){
     return new Promise(function(resolve,reject){
 
         owner.api_path=api_path;
-        console.log("before")
 
         sender=undefined;
-        if(_wsOnBeforeCall){
-            owner.sender=_wsOnBeforeCall();
-            console.log(owner)
-        }
+
           var now = new Date()
-          var offset_minutes = now.getTimezoneOffset()
-          $.ajax({
-            url: ws_get_url(),
-            type: "post",
-            dataType: "json",
-            data: JSON.stringify({
+          var offset_minutes = now.getTimezoneOffset();
+          var _postData=JSON.stringify({
                    path:api_path,
                    view:view_path,
                    data:data,
                    offset_minutes:offset_minutes
-
-
-            }) ,
+            });
+          if(_wsOnBeforeCall){
+            owner.sender=_wsOnBeforeCall(_postData);
+          }
+          $.ajax({
+            url: ws_get_url(),
+            type: "post",
+            dataType: "json",
+            data: _postData ,
             success: function (res) {
                 console.log("after")
                 console.log(owner)

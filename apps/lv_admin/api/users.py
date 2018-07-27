@@ -22,3 +22,5 @@ def get_list(param):
         quicky.sql_db.end_session(session)
         raise ex
     return ret
+def import_excel(args):
+    return {}

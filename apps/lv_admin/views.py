@@ -7,6 +7,11 @@ app=quicky.applications.get_app_by_file(__file__)
 import json
 @quicky.view.template("index.html")
 def index(request):
+    from django.http.response import HttpResponseRedirect
+    from django.shortcuts import redirect
+    if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
+        return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
+
     return request.render(dict(
         menu_items=app.settings.menu_items
     ))
@@ -19,8 +24,18 @@ def load_page(request,path):
 @require_http_methods(["POST"])
 @csrf_exempt
 def api(request):
+    from django.shortcuts import redirect
+    if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
+        return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
+
     setattr(request,"app",app)
     ret_data=quicky.caller.call(request)
     return HttpResponse(ret_data)
 def login(request):
     pass
+@quicky.view.template("download_excel.html")
+def download_excel(request,path):
+    import importlib
+    export_module=importlib.import_module(app.mdl.__name__+".{0}.{1}".format('excel_export',path))
+
+    return export_module.do_export(request)

@@ -105,6 +105,7 @@ function dialog($scope) {
             return me;
         }
         me.done = function (callback) {
+            debugger;
             var $sender=undefined
             if(_onBeforeLoadContent){
                 $sender=_onBeforeLoadContent()
