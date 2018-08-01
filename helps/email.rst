@@ -49,14 +49,17 @@ Các template email nằm hết trong thư mục:
 Các tham số khác:
 ---------------------
 
-Cho phép giản viên liên lạc với học viên trong lms
+Cho phép giản viên liên lạc với học viên trong lms thực hiện các bước sau:
 
-Thêm field này vào file lms.env.js
-on hoặc file features.json trong thư mục lv-packages
+    1. Thêm field này vào file lms.env.json hoặc file features.json trong thư mục lv-packages
 
-"ENABLE_INSTRUCTOR_EMAIL":true
+        "ENABLE_INSTRUCTOR_EMAIL":true
 
-Cho phép xác nhận email trước khi tham gia khóa học:
+    2. Thêm field "REQUIRE_COURSE_EMAIL_AUTH": true cũng như trên.
 
-"REQUIRE_COURSE_EMAIL_AUTH": true
+    3. Vào trang admin chọn mục "Select bulk email flag to change" thêm hoặc sửa lại ô enable
+
+
+
+
 
