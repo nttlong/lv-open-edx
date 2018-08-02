@@ -7,3 +7,70 @@ Vào thư mục: "C:\ProgramData\Elastic\Elasticsearch\config" mở file: elasti
         action.auto_create_index: false
 
         network.host: 0.0.0.0
+
+
+Cài đặt đúng version elasticsearch
+=========================================
+
+Với centos hoặc redhat
+
+    1.Thư mục lưu trữ dữ liệu nằm trong:
+
+        /var/lib/elasticseedhatarch/
+
+    2. File cấu hình nằm trong:
+
+        /etc/elasticsearch/elasticsearch.yml
+
+Mỗi một node của elasticsearch sẽ có 1 tên phân biệt, dựa vào tên này mà ES sẽ tạo thư mục lưu trữ có cùng tên
+
+Lện sau đây sẽ cho phép ES đọc và gi dữ liệu lên thư mục /var/lib/elasticsearch/
+
+    sudo chown -R elasticsearch:elasticsearch /var/lib/elasticsearch/
+
+Kiểm tra ES status:
+
+    sudo service elasticsearch status
+
+Restart ES:
+
+    sudo service elasticsearch restart
+
+Kiểm tra version:
+
+    curl -XGET 'localhost:9200' or use web browser with localhost:9200
+
+Shutdown tất cả các node trên cùng 1 server:
+
+    sudo systemctl stop elasticsearch.service
+
+Start tất cả các node trên cùng 1 server:
+
+    sudo systemctl start elasticsearch.service
+
+Lưu ý: Sau khi cấu hình ES thì phải restart lại server bằng lệnh: shutdown -r now
+
+
+Nạp lại tất cả các service:
+
+
+    sudo /bin/systemctl daemon-reload
+    sudo /bin/systemctl enable elasticsearch.service
+    sudo /bin/systemctl start elasticsearch.service
+
+Gỡ bỏ:
+
+    sudo yum remove elasticsearch
+
+Cài đặt đúng version cho open edx:
+
+    sudo yum localinstall elasticsearch-1.5.2.noarch.rpm
+
+Kiểm tra tình trạng:
+
+    http://localhost:9200/_cluster/health
+
+Trong một số trường hợp có thể dùng kill SIGNAL PID để stop service.
+
+
+
