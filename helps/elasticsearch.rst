@@ -126,8 +126,32 @@ Cài phiên bản chạy trên Redhat
 
 
 
+    6. Vào file apps/edx/edx-platform/lv-packages/site_cms.json và file apps/edx/edx-platform/lv-packages/site.json
+
+            Thêm các dòng sau:
+
+                "ELASTIC_SEARCH_CONFIG": [
+
+                    {
+
+                        "host": "172.16.7.63",
+
+                        "port": 9200,
+
+                        "use_ssl": false
+
+                    }
+
+                ]
+
+    7. Vào file apps/edx/edx-platform/lv-packages/features.json kiểm tra:
 
 
+        "ENABLE_COURSEWARE_INDEX": true
+
+    8. Vào file apps/edx/edx-platform/lv-packages/features_cms.json kiểm tra:
 
 
+        "ENABLE_COURSEWARE_INDEX":true,
 
+        "ENABLE_LIBRARY_INDEX":true,
