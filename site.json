@@ -39,7 +39,7 @@
   "DEFAULT_FILE_STORAGE": "django.core.files.storage.FileSystemStorage",
   "ELASTIC_SEARCH_CONFIG": [
         {
-            "host": "172.16.7.67",
+            "host": "172.16.7.68",
             "port": 9200,
             "use_ssl": false
         }

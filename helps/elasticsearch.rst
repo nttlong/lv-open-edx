@@ -155,3 +155,10 @@ Cài phiên bản chạy trên Redhat
         "ENABLE_COURSEWARE_INDEX":true,
 
         "ENABLE_LIBRARY_INDEX":true,
+
+
+
+    Lưu ý: sau khi cai phiên bản này thì không còn dùng:
+        url(r'^search/', include('searchdata_lv.urls'), name='course_discovery')
+        mà thay vào đó
+        url(r'^search/', include('search.urls')),
