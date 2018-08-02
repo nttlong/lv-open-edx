@@ -10,5 +10,12 @@
   "DEFAULT_SITE_THEME":"lv02",
   "ENABLE_COMPREHENSIVE_THEMING":true,
   "ENABLE_CSMH_EXTENDED": false,
-   "THEME_NAME": "lv02"
+   "THEME_NAME": "lv02",
+  "ELASTIC_SEARCH_CONFIG": [
+        {
+            "host": "172.16.7.67",
+            "port": 9200,
+            "use_ssl": false
+        }
+    ]
 }

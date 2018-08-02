@@ -74,3 +74,23 @@ Trong một số trường hợp có thể dùng kill SIGNAL PID để stop serv
 
 
 
+Các file source code liên quan đến phần search:
+====================================================
+
+    1.apps/edx/edx-platform/cms/djangoapps/contentstore/views/course.py hàm "course_search_index_handler" thực thi mỗi khi vào trong cms đánh index.
+
+        cms/djangoapps/contentstore/courseware_index.py -> do_course_reindex
+
+
+Quan trong:
+
+    Disable thu muc:
+
+    1. apps/edx/venvs/edxapp/lib/python2.7/site-packages/elasticsearch
+
+    2. apps/edx/venvs/edxapp/lib/python2.7/site-packages/urllib3
+
+
+
+
+

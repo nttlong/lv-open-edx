@@ -7,14 +7,14 @@
       "description":"Themse lacviet"
     }
   },
-  "COMPREHENSIVE_THEME_LOCALE_PATHS_1":{
+  "COMPREHENSIVE_THEME_LOCALE_PATHS":{
     "lv":{
       "name":"themes",
       "description":"Themse lacviet"
     }
   },
-  "DEFAULT_SITE_THEME":"lv02",
-  "ENABLE_COMPREHENSIVE_THEMING":false,
+  "DEFAULT_SITE_THEME":"nong_lam",
+  "ENABLE_COMPREHENSIVE_THEMING":true,
   "STATIC_ROOT_BASE_1": "lv/staticfiles",
   "SESSION_EXPIRE_AT_BROWSER_CLOSE":true,
   "SESSION_COOKIE_AGE":10,
@@ -35,6 +35,13 @@
    "EMAIL_PORT": 25,
    "EMAIL_USE_TLS": false,
 
-  "THEME_NAME": "lv02",
-  "DEFAULT_FILE_STORAGE": "django.core.files.storage.FileSystemStorage"
+  "THEME_NAME": "nong_lam",
+  "DEFAULT_FILE_STORAGE": "django.core.files.storage.FileSystemStorage",
+  "ELASTIC_SEARCH_CONFIG": [
+        {
+            "host": "172.16.7.67",
+            "port": 9200,
+            "use_ssl": false
+        }
+    ]
 }

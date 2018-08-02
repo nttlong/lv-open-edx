@@ -1,0 +1,64 @@
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from courseware.courses import get_course_about_section
+from django.conf import settings
+from edxmako.shortcuts import marketing_link
+from openedx.core.djangolib.markup import HTML
+from openedx.core.lib.courses import course_image_url
+%>
+<%
+  import donkey
+  helper=donkey.helper(request)
+  donkey.debug(request,course)
+%>
+<section>
+           <i class="fa fa-bank"></i>&nbsp;  <b>${_("Organization")}</b>:&nbsp;<i>${course.display_org_with_default | h}</i>
+</section>
+<section>
+  <i class="icon fa fa-info-circle"></i>
+    &nbsp;
+    <b>${_("Course Number")}</b><i>:&nbsp;${course.display_number_with_default}</i>
+</section>
+<section>
+  <%
+      course_start_date = course.start
+  %>
+  <i class="icon fa fa-calendar"></i>&nbsp;
+  <b class="important-dates-item-title">${_("Classes Start")}</b>:&nbsp;
+  % if isinstance(course_start_date, str):
+      <i>${course_start_date}</i>
+  % else:
+      <%
+         course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z')
+      %>
+      <i class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></i>
+
+  % endif
+</section>
+<section>
+    <i class="icon fa fa-clock-o" aria-hidden="true"></i>&nbsp;
+    <b>${_('Course Length')}</b>:&nbsp;<i>${_('{number} weeks').format(number=15)}</i>
+  </section>
+<section>
+    % if get_course_about_section(request, course, "effort"):
+        <i class="icon fa fa-pencil"></i><b>${_("Estimated Effort")}</b><i>${get_course_about_section(request, course, "effort")}</i>
+    % endif
+  </section>
+
+% if get_course_about_section(request, course, "effort"):
+    <section>
+        <i class="icon fa fa-pencil"></i>&nbsp;<b>${_("Estimated Effort")}</b>:&nbsp;<i>${get_course_about_section(request, course, "effort")}</i>
+    </section>
+
+% endif
+
+%if user.is_authenticated() and registered:
+<section>
+    <i class="fa fa-address-book"></i>&nbsp;
+    <b>${helper.get_global_res("Status")}</b>:&nbsp;${_("You are enrolled in this course")}
+</section>
+%endif
+
+
+<%include file="course_about_enroll.html" />

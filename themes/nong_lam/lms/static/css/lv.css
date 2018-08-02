@@ -1,0 +1,157 @@
+@import url("font-awesome.min.css");
+@import url('set_font.css');
+@import url('course_about.css');
+@import url('index.css');
+@import url('dashboard.css');
+
+.home>header{
+     background-image: url("images/Banner_DHNL1.png") !important;
+}
+
+.flag-icon-vn{
+    background-image:url(../images/flags/4x3/vn.svg) !important;
+}
+.flag-icon-vn.flag-icon-squared{
+    background-image:url(../images/flags/1x1/vn.svg) !important;
+}
+.flag-icon-au{
+    background-image:url(../images/flags/4x3/au.svg) !important;
+}
+.flag-icon-au.flag-icon-squared{
+    background-image:url(../images/flags/1x1/au.svg) !important;
+}
+.header-global.slim .course-header {
+    width: auto !important;
+}
+article.course div.course-info{
+        padding:0 !important;
+
+}
+article.course div.course-info * {
+
+}
+article.course section.course-info {
+
+        padding:0 !important;
+
+
+}
+article.course section.course-info * {
+
+}
+.btn.dropdown-toggle.selectpicker.btn-default{
+    border: none !important;
+    color:#0075b4 !important;
+    font-weight: 100 !important;
+}
+.nav-colophon>ol{
+    margin-left: 0px !important;
+}
+.header-global.slim .logo img {
+    height: 60px !important;
+    vertical-align: middle;
+}
+.header-global .wrapper-header {
+    height: 73px !important;
+
+}
+.course-header>span{
+    font-family: Segoe UI !important;
+}
+.wrapper-course-material .course-tabs {
+    padding: 0px;
+}
+.header-global .user {
+    float: right;
+    padding-left: 0;
+    margin: 0;
+}
+.enrollment-wrapper table tr td {
+    text-align: center;
+}
+.lv-nav{
+    width:100% !important;
+
+}
+.lv-nav .wrapper-header{
+
+        width:"100%" !important
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0;
+    padding-left: 0;
+}
+.row {
+    width: 100%;
+    display: flex;
+    max-width: none !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.navbar {
+    position: relative;
+    min-height: 60px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;;
+    z-index:20000;
+}
+.navbar-header {
+    min-height:60px;
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 4px 4px;
+    font-size: 18px;
+    line-height: 20px
+}
+.home {
+    max-width: none;
+    margin: 0 auto;
+    padding: 0px
+}
+.light-button, div.history-controls input[type="submit"], a.light-button, .gray-button, input[type="reset"], input[type="submit"], input[type="button"], button, .button, form input[type="reset"], form input[type="submit"], form input[type="button"], form button, form .button, .xmodule_display.xmodule_LTIModule div.lti .wrapper-lti-link .lti-link .link_lti_new_window {
+    border:inherit;
+    border-radius: 3px;
+    box-shadow: none;
+    color: #333;
+    display: inline-block;
+    font-size: inherit;
+    font-weight: bold;
+    background-color: #f1f1f1;
+    background-image:none;
+    background-image: none;
+    padding: 7px 18px;
+    text-decoration: none;
+    text-shadow:none;
+    background-clip: padding-box;
+
+}
+.lv-main-footer {
+    border-top: 1px solid #d5d5d5;
+    background: #e2e2e2;
+    padding: 15px 0 30px 0;
+    width: 100%;
+    font-size: 15px;
+}
+header.lv-header {
+    /*min-height:600px !important;*/
+
+}
+a.btn-primary{
+    color:#fff !important;
+}
+.action-view-course {
+    background-color:#008100 !important;
+}
+
+.debug {
+   border:solid 4px red !important;
+   margin:-4px;
+}

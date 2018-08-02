@@ -1,0 +1,97 @@
+<%page expression_filter="h"/>
+<%inherit file="/main.html" />
+<%def name="online_help_token()"><% return "profile" %></%def>
+<%namespace name='static' file='/static_content.html'/>
+<%!
+import json
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+from openedx.core.djangolib.js_utils import dump_js_escaped_json
+%>
+
+<%block name="pagetitle">${_("Learner Profile")}</%block>
+
+<%block name="bodyclass">view-profile</%block>
+<style>
+.wrapper-profile-section-one {
+        width:100% !important;
+        float:left;
+        margin:0 !important;
+        padding:0 !important;
+    }
+    .wrapper-profile-section-two {
+
+        width:100% !important;
+        float:left !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+@media screen and (min-width: 1024px) {
+    .wrapper-profile-section-one {
+        width:33.3% !important;
+        float:left;
+        margin:0 !important;
+        padding:0 !important;
+    }
+    .wrapper-profile-sections .account-settings-container {
+        margin:0 !important;
+        padding:0 !important;
+    }
+    .view-profile .wrapper-profile-sections {
+        margin:0 !important;
+        padding:8px !important;
+        min-width:none !important;
+        max-width:none !important;
+        min-height:600px;
+    }
+
+    .wrapper-profile-section-two {
+
+        width:63.7% !important;
+        float:right !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+ }
+</style>
+<div class="message-banner" aria-live="polite"></div>
+<main id="main" aria-label="Content" tabindex="-1">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        	 <div class="wrapper-profile">
+        <div class="ui-loading-indicator">
+            <p><span class="spin"><span class="icon fa fa-refresh" aria-hidden="true"></span></span> <span class="copy">${_("Loading")}</span></p>
+        </div>
+    </div>
+        </div>
+    </div>
+
+</main>
+<%block name="headextra">
+    <%static:css group='style-course'/>
+</%block>
+
+<%block name="js_extra">
+<%static:require_module module_name="js/student_profile/views/learner_profile_factory" class_name="LearnerProfileFactory">
+    var options = ${data | n, dump_js_escaped_json};
+    LearnerProfileFactory(options);
+</%static:require_module>
+</%block>
+<script>
+    $(document).ready(function(){
+        function _watch(){
+            if($(".view-profile .wrapper-profile-sections").length>0){
+                $(".view-profile .wrapper-profile-sections")
+                .css({
+                    "min-height":$(window).height()
+                });
+            }
+            else {
+                setTimeout(_watch,200);
+            }
+        }
+        _watch();
+
+
+    });
+</script>

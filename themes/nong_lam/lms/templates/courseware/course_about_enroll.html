@@ -1,0 +1,77 @@
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from courseware.courses import get_course_about_section
+from django.conf import settings
+from edxmako.shortcuts import marketing_link
+from openedx.core.djangolib.markup import HTML
+from openedx.core.lib.courses import course_image_url
+from django.utils.http import urlquote  as django_urlquote
+%>
+<%
+  import donkey
+  helper=donkey.helper(request)
+  donkey.debug(request,course)
+%>
+%if user.is_authenticated() and registered:
+    %if show_courseware_link:
+           <a class="btn btn-primary" href="${course_target}">
+                ${_("View Course")}
+           </a>
+    %endif
+%elif in_cart:
+          <span class="add-to-cart">
+            ${_('This course is in your <a href="{cart_link}">cart</a>.').format(cart_link=cart_link)}
+          </span>
+% elif is_course_full:
+              <span class="register disabled">
+                ${_("Course is full")}
+              </span>
+% elif invitation_only and not can_enroll:
+  <span class="register disabled">${_("Enrollment in this course is by invitation only")}</span>
+% elif not is_shib_course and not can_enroll:
+              <span class="register disabled">${_("Enrollment is Closed")}</span>
+%elif can_add_course_to_cart:
+            <%
+                if user.is_authenticated():
+                  reg_href = "#"
+                  reg_element_id = "add_to_cart_post"
+                else:
+                  reg_href = reg_then_add_to_cart_link
+                  reg_element_id = "reg_then_add_to_cart"
+            %>
+            <% if ecommerce_checkout:
+                reg_href = ecommerce_checkout_link
+                reg_element_id = ""
+            %>
+            <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
+              ${_("Add {course_name} to Cart <span>({price} USD)</span>")\
+                .format(course_name=course.display_number_with_default, price=course_price)}
+            </a>
+%else:
+            <%
+              if ecommerce_checkout:
+                reg_href = ecommerce_checkout_link
+              else:
+                reg_href="#"
+              if professional_mode:
+                href_class = "add-to-cart"
+              else:
+                href_class = "register"
+            %>
+            <%
+                next_url=course_target
+                #"/courses/course-v1:LV+LV-DEV-PY-001+LV-DEV-PY-001/info"
+                href_course=helper.get_abs_url()+"/login?next="+django_urlquote(next_url)
+            %>
+            <a href="${href_course}" class="btn btn-primary btn-enroll">
+                <b>
+                    ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
+                </b>
+
+            </a>
+
+%endif
+%if staff_access and studio_url is not None:
+         <a class="btn btn-info" href="${studio_url}">${_("View About Page in studio")}</a>
+% endif

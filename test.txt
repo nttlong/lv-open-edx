@@ -1,0 +1,39 @@
+curl -X PUT "localhost:9200/data/_settings" -H 'Content-Type: application/json' -d'
+{
+  "index.mapper.dynamic":false
+}
+'
+from elasticsearch import Elasticsearch
+from django.conf import settings
+index_name = "courseware_index"
+config = settings.ELASTIC_SEARCH_CONFIG
+es=Elasticsearch(config)
+
+import courseware
+
+courseware.courses.get_course_by_id
+    return :
+        display_name,
+        course_image
+        course_id
+
+doc_type = 'course_info'
+
+request_body = {
+  "template": "*",
+  "order":0,
+  "settings": {
+    "index.mapper.dynamic": False
+  },
+  "mappings": {
+    doc_type: {
+      "_source":{
+        "enabled":True
+      },
+      "properties": settings.ELASTIC_FIELD_MAPPINGS
+    }
+  }
+}
+
+es.indices.delete(index_name)
+es.indices.create(index_name,request_body)
