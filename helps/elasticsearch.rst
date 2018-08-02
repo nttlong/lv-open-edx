@@ -92,5 +92,38 @@ Quan trong:
 
 
 
+Cài phiên bản chạy trên Redhat
+==================================
+
+    1. Cài java:
+
+        sudo yum install java-1.8.0-openjdk.x86_64
+
+    2. Download Elasticsearch:
+
+        wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.noarch.rpm
+
+    3. Cài đặt:
+
+        sudo rpm -ivh elasticsearch-1.7.3.noarch.rpm
+
+    4. Tạo file elasticsearch.yaml trong thư mục /etc/elasticsearch/elasticsearch.yml
+
+        Nội dung như sau:
+
+            cluster.name: lv_elasticsearch_2018 #tên
+
+            node.name: "lacviet2018"
+
+            node.master: true
+
+            node.data: true
+
+
+
+
+
+
+
 
 
