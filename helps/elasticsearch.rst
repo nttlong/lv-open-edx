@@ -174,3 +174,16 @@ Các thông số quan trọng cần điều chỉnh:
 
     SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = False
 
+
+    ELASTIC_FIELD_MAPPINGS : {
+
+
+        "start_date": {
+
+
+            "type": "date"
+
+        }
+
+    }
+

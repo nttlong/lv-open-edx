@@ -1,10 +1,7 @@
-.. toctree::
-    :maxdepth: 2
-    :numbered:
-    :titlesonly:
-    :glob:
-    :hidden:
+Lưu ý
++++++++
 
-    intro.rst
-    chapter1.rst
-    chapter2.rst
+Các key sau đây trong mục feature là kg được phép điều chỉnh:
+
+
+
