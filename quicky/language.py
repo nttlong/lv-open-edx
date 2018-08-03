@@ -32,6 +32,18 @@ def set_config(*args,**kwargs):
 def get_language_item(schema,lan,app,view,key,value):
     global _coll
     global lock
+    if _coll == None:
+        from lv_utils import configs
+        fx = configs.get_config()
+        set_config(
+            host=fx.no_sql.host,
+            port=fx.no_sql.port,
+            name=fx.no_sql.name,
+            user=fx.no_sql.user,
+            password=fx.no_sql.password,
+            collection="sys_languages"
+        )
+
     coll=_coll
     if schema!=None:
         coll=_db.get_collection(schema+"."+_collection_name)
