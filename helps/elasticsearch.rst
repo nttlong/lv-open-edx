@@ -192,3 +192,7 @@ Cau hinh url:
 Trong file lms/urls
 
 url(r'^lv_cms/', include('lv_cms.urls'))
+
+Vào file apps/edx/edx-platform/lms/envs/common.py đặt lại:
+
+    SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = False
