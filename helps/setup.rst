@@ -4,7 +4,18 @@ Moi package nam trong thu muc "lv-packages";
 
 De python dinh vi duoc cac package trong thu muc "lv-packages" lam cac buoc sau:
     1- vao file lsm/evn/common.py tim dong sys.path.append(REPO_ROOT)
-    chen them dong sys.path.append(REPO_ROOT+"/lv-packages")
+    chen them cac dong sau:
+
+
+        sys.path.append(REPO_ROOT + "/lv-packages")
+
+        sys.path.append(REPO_ROOT + "/lv-packages/apps")
+
+        sys.path.append(PROJECT_ROOT / 'djangoapps')
+
+        sys.path.append(COMMON_ROOT / 'djangoapps')
+
+        import lv_apps
 
  * Tich hop phan Login (tuy chon):
     1- Vao trang  lms/url.py:
