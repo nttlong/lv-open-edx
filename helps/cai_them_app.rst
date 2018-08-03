@@ -18,9 +18,9 @@
 
     **Lưu ý**: **Trong file 'apps/edx/edx-platform/lms/envs/common.py' phải setup các dòng sau**:
 
-        sys.path.append(REPO_ROOT)
+        sys.path.append(REPO_ROOT + "/lv-packages")
 
-        sys.path.append(REPO_ROOT+"/lv-packages")
+        sys.path.append(REPO_ROOT + "/lv-packages/apps")
 
         sys.path.append(PROJECT_ROOT / 'djangoapps')
 
@@ -49,3 +49,6 @@
                 '',
 
                 lv_admin_app.urls,
+4. Dưới đây là danh sách các app:
+
+        lv-admin: Quản trị hệ thống
