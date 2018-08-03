@@ -13,7 +13,7 @@
    "THEME_NAME": "lv02",
   "ELASTIC_SEARCH_CONFIG": [
         {
-            "host": "172.16.7.68",
+            "host": "192.168.18.43",
             "port": 9200,
             "use_ssl": false
         }

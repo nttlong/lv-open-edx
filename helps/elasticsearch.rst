@@ -162,3 +162,15 @@ Cài phiên bản chạy trên Redhat
         url(r'^search/', include('searchdata_lv.urls'), name='course_discovery')
         mà thay vào đó
         url(r'^search/', include('search.urls')),
+
+
+Các thông số quan trọng cần điều chỉnh:
+
+    ENABLE_DASHBOARD_SEARCH:True
+
+    'ENABLE_COURSEWARE_SEARCH': True
+
+    'ENABLE_COURSE_DISCOVERY': True,
+
+    SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = False
+
