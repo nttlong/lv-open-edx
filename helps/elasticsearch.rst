@@ -187,3 +187,8 @@ Các thông số quan trọng cần điều chỉnh:
 
     }
 
+Cau hinh url:
++++++++++++++++
+Trong file lms/urls
+
+url(r'^lv_cms/', include('lv_cms.urls'))
