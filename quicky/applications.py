@@ -42,6 +42,7 @@ def get_app_by_file(file_name):
     :param file_name:
     :return:
     """
+    #lv-packages/apps/lv_admin   /opt/edx-ginkgo.2-3/apps/edx/edx-platform/lv-packages/lv_admin
     global __cache_find_path
     if __cache_find_path.has_key(file_name):
         return __cache_find_path[file_name]

@@ -1,13 +1,13 @@
 {
   "SQL":{
-    "HOST":"172.16.7.63",
+    "HOST":"192.168.18.43",
     "PORT":"3306",
     "NAME":"lv_lms",
     "USER":"root",
     "PASSWORD":"123456"
   },
   "NO_SQL":{
-    "HOST":"172.16.7.63",
+    "HOST":"192.168.18.43",
     "PORT":27017,
     "NAME":"lv_lms",
     "USER":"root",

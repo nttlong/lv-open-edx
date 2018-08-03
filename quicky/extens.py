@@ -210,24 +210,15 @@ def apply(request,template_file,app):
         # mylookup = TemplateLookup(directories=config._default_settings["TEMPLATES_DIRS"])
         if fileName != None:
             ret_res=None
-            mylookup = TemplateLookup(directories=[os.getcwd() + "/" + request.get_app().template_dir],
+            __dir =os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+            mylookup = TemplateLookup(directories=[__dir + os.sep + request.get_app().template_dir],
                                       default_filters=['decode.utf8'],
                                       input_encoding='utf-8',
                                       output_encoding='utf-8',
                                       encoding_errors='replace'
                                       )
-            try:
-                ret_res=mylookup.get_template(fileName).render(**render_model)
-
-            except exceptions.AttributeError as ex:
-                logger.debug(ex)
-                raise (ex)
-            except exceptions.MakoException as ex:
-                logger.debug(ex)
-                raise (ex)
-            except Exception as ex:
-                logger.debug(exceptions.html_error_template().render())
-                raise (Exception(exceptions.html_error_template().render()))
+            ret_res = mylookup.get_template(fileName).render(**render_model)
             return HttpResponse(ret_res)
 
 

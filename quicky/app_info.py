@@ -101,8 +101,10 @@ class app_config():
         get full server static path
         :return:
         """
+        import os
+        __dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
         _path= (self.static).replace("/",os.path.sep)
-        return os.getcwd()+os.path.sep+_path
+        return __dir+os.sep+_path
     def get_login_url(self):
         """
         get login url from settings of app in settings.py

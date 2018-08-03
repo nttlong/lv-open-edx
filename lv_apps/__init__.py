@@ -22,8 +22,9 @@ lv_admin=quicky.applications.load_app(dict(
     path= "lv-packages/apps/lv_admin",
     host="system"
 ))
-lv_cms=quicky.applications.load_app(dict(
-    name="lv-cms",
-    path= "lv-packages/apps/lv_cms",
-    host="lv_cms"
-))
+x=lv_admin
+# lv_cms=quicky.applications.load_app(dict(
+#     name="lv-cms",
+#     path= "lv-packages/apps/lv_cms",
+#     host="lv_cms"
+# ))

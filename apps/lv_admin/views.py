@@ -7,14 +7,19 @@ app=quicky.applications.get_app_by_file(__file__)
 import json
 @quicky.view.template("index.html")
 def index(request):
-    from django.http.response import HttpResponseRedirect
-    from django.shortcuts import redirect
-    if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
-        return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
+    try:
+        from django.http.response import HttpResponseRedirect
+        from django.shortcuts import redirect
+        if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
+            return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
 
-    return request.render(dict(
-        menu_items=app.settings.menu_items
-    ))
+        return request.render(dict(
+            menu_items=app.settings.menu_items
+        ))
+    except Exception as ex:
+        return request.render(dict(
+            menu_items=app.settings.menu_items
+        ))
 @quicky.view.template("dynamic.html")
 def load_page(request,path):
 
