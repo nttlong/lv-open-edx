@@ -7,41 +7,13 @@
     (function(scope){
         scope.gridOptions = {
             data: 'data.items',
-            enableCellEditOnFocus: true,
-            enableColumnResizing: true,
-            enableFiltering: true,
-            enableGridMenu: true,
-            showGridFooter: true,
-            showColumnFooter: true,
-            fastWatch: true,
-            paginationPageSizes: [25, 50, 75],
-            paginationPageSize: 25,
             useExternalPagination: true,
             useExternalSorting: true,
             columnDefs: [
               { name: 'name' },
-              { name: 'gender', enableSorting: false },
-              { name: 'company', enableSorting: false }
-            ],
-            onRegisterApi: function(gridApi) {
-              debugger;
-              scope.gridApi = gridApi;
-              scope.gridApi.core.on.sortChanged(scope, function(grid, sortColumns) {
-                if (sortColumns.length == 0) {
-                  paginationOptions.sort = null;
-                } else {
-                  paginationOptions.sort = sortColumns[0].sort.direction;
-                }
-                debugger;
-                //getPage();
-              });
-              gridApi.pagination.on.paginationChanged(scope, function (newPage, pageSize) {
-                paginationOptions.pageNumber = newPage;
-                paginationOptions.pageSize = pageSize;
-                debugger;
-                //getPage();
-              });
-            }
+              { name: 'gender'},
+              { name: 'company'}
+            ]
           };
         scope.dialog_import_excel_url="${get_app_url('pages/dialogs/excel_import')}";
         scope.dialog_export_excel_url="${get_app_url('pages/dialogs/excel_export')}";
