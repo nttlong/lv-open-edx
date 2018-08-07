@@ -15,7 +15,7 @@
 
     </main>
  <script>
-      var app=angular.module("admin",["c-ui"]);
+      var app=angular.module("admin",["c-ui","ui.grid"]);
       app.controller("admin",["$dialog","$scope",function($dialog,$scope){
           $dialog($scope)
           ws_set_url("${get_abs_url()}/${get_app_host()}/api")
