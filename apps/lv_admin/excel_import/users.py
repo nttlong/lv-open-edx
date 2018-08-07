@@ -22,8 +22,8 @@ def do_import(data):
             user.is_staff = item.get("is_staff", 0) == 1
             if item.get("first_name",None) != None:
                 user.first_name = item.get("first_name")
-            if item.get("first_name", None) != None:
-                user.last_name = item.get("first_name")
+            if item.get("last_name", None) != None:
+                user.last_name = item.get("last_name")
             if item.get("email",None) != None:
                 user.email = item.get("email",None)
             

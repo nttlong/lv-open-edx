@@ -24,9 +24,9 @@
      		 <h3 class="pull-left">${get_app_res("Danh sách thành viên")}</h3>
             <div class="pull-right">
                  <div class="input-group">
-  <input type="text" class="form-control" placeholder="${get_app_res('Tìm theo email hoặc username')}" style="min-width:300px" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" placeholder="${get_app_res('Tìm theo email hoặc username')}" style="min-width:300px" aria-describedby="basic-addon2" ng-model="txtSearch">
   <span class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
+        <button class="btn btn-outline-secondary" type="button" ng-click="load_data(txtSearch)">
             <i class="fa fa-search"></i>
         </button>
       </span>
