@@ -1,4 +1,4 @@
-<div ui-grid="gridOptions" class="myGrid"></div>
+<div ui-grid="gridOptions" ui-grid-pagination class="myGrid" style="width:100%;float:left"></div>
 
 
 
@@ -6,13 +6,35 @@
 <script>
     (function(scope){
         scope.gridOptions = {
-            enableSorting: true,
+            paginationPageSizes: [25, 50, 75],
+            paginationPageSize: 25,
+            useExternalPagination: true,
+            useExternalSorting: true,
             columnDefs: [
-            { field: 'name' },
-            { field: 'age' },
-            { field: 'location', enableSorting: false }
-            ]
-        };
+              { name: 'name' },
+              { name: 'gender', enableSorting: false },
+              { name: 'company', enableSorting: false }
+            ],
+            onRegisterApi: function(gridApi) {
+              debugger;
+              scope.gridApi = gridApi;
+              scope.gridApi.core.on.sortChanged(scope, function(grid, sortColumns) {
+                if (sortColumns.length == 0) {
+                  paginationOptions.sort = null;
+                } else {
+                  paginationOptions.sort = sortColumns[0].sort.direction;
+                }
+                debugger;
+                //getPage();
+              });
+              gridApi.pagination.on.paginationChanged(scope, function (newPage, pageSize) {
+                paginationOptions.pageNumber = newPage;
+                paginationOptions.pageSize = pageSize;
+                debugger;
+                //getPage();
+              });
+            }
+          };
         scope.dialog_import_excel_url="${get_app_url('pages/dialogs/excel_import')}";
         scope.dialog_export_excel_url="${get_app_url('pages/dialogs/excel_export')}";
         scope.view_path="${get_view_path()}";
@@ -30,6 +52,7 @@
 
                     }).done().then(function(res){
                         scope.data=res;
+                        scope.gridOptions.data=res.items;
                         console.log(res);
                         scope.$applyAsync();
                     })
