@@ -11,7 +11,10 @@
     </div>
     <div class="row">
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    		&nbsp;
+            <b>{{error.message}}</b>
+            <p id="error_msg_detail">
+
+            </p>
     	</div>
     </div>
     <div class="row">
@@ -69,7 +72,11 @@
                                     objectType:params.objectType
 
                             }).done().then(function(res){
-                                alert("Xong");
+                                if(res.error){
+                                    scope.error=res.error;
+                                    scope.$applyAsync();
+                                    scope.$element.find("#error_msg_detail").html(res.error.msg_detail)
+                                }
                             })
 
         }

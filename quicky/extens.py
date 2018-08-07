@@ -44,7 +44,7 @@ def apply(request,template_file,app):
     import api
     from django.core.context_processors import csrf
     def get_language():
-        if hasattr(request,"request.LANGUAGE_CODE"):
+        if hasattr(request,"LANGUAGE_CODE"):
             return request.LANGUAGE_CODE
         else:
             from django.utils import translation

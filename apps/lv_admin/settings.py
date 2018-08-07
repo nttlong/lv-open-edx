@@ -1,6 +1,17 @@
 # -*- coding: utf-8 -*-
 name="lv_admin"
 is_public=True
+import qexcel
+def get_db_config():
+    from django.conf import settings
+    return dict(
+        host=settings.DATABASES["default"]["HOST"],
+        engine="mysql",
+        name=settings.DATABASES["default"]["NAME"],
+        user=settings.DATABASES["default"]["USER"],
+        password=settings.DATABASES["default"]["PASSWORD"],
+        port =settings.DATABASES["default"]["PORT"]
+    )
 # SQL_DB_CONFIG=dict(
 #     host="172.16.7.63",
 #     port=3306,

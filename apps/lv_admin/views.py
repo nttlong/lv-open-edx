@@ -44,3 +44,9 @@ def download_excel(request,path):
     export_module=importlib.import_module(app.mdl.__name__+".{0}.{1}".format('excel_export',path))
 
     return export_module.do_export(request)
+@quicky.view.template("download_excel_error.html")
+def download_excel_error(request,id):
+    import qexcel
+    ret = qexcel.get_error(id)
+
+    return ret

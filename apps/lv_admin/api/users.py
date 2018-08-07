@@ -1,7 +1,10 @@
 import quicky
 import sql_models
+from quicky import applications
+app = applications.get_app_by_file(__file__)
 def get_list(param):
-    session = quicky.sql_db.begin_session(param.app.settings.SQL_DB_CONFIG)
+    from django.conf import settings
+    session = quicky.sql_db.begin_session(param.app.settings.get_db_config())
     total_items=0
     ret={}
     try:

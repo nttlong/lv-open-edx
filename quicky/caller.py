@@ -45,6 +45,8 @@ def call(request):
         if not callable(fn):
             raise (Exception("'{0}' in '{1}' is not a function".format(items[1], items[0])))
 
+    from quicky import extens
+    extens.apply(request, "", request.app)
     param=caller_param(request)
     param.language=request.LANGUAGE_CODE
     param.user=request.user
