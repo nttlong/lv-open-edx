@@ -10,8 +10,8 @@ def index(request):
     try:
         from django.http.response import HttpResponseRedirect
         from django.shortcuts import redirect
-        if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
-            return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
+        # if request.user.is_anonymous() or not request.user.is_superuser or not request.user.is_active:
+        #     return redirect(request.get_abs_url()+"/login?next=/"+request.get_app_host())
 
         return request.render(dict(
             menu_items=app.settings.menu_items
@@ -36,8 +36,49 @@ def api(request):
     setattr(request,"app",app)
     ret_data=quicky.caller.call(request)
     return HttpResponse(ret_data)
+@quicky.view.template("login.html")
+@csrf_exempt
 def login(request):
-    pass
+    if request.POST.keys().__len__()>0:
+        username = request.POST.get("username","")
+        password = request.POST.get("password", "")
+        try:
+            from django.contrib.auth.models import User
+            from django.contrib.auth import authenticate, login
+            from django.shortcuts import redirect
+
+            user = authenticate(username=username, password=password)
+            is_not_ok=user == None or user.is_superuser == False or user.is_active == False
+
+            if is_not_ok:
+                return request.render({
+                    "next": request.GET("next",request.get_app_url("")),
+                    "username": request.POST.get("username", ""),
+                    "password": request.POST.get("password", ""),
+                    "message": request.get_app_res("Login fail")
+
+                })
+            else:
+                login(request, user)
+                return redirect(request.GET.get("next",request.get_app_url("")))
+
+
+        except Exception as ex:
+            return request.render({
+                "next": request.GET["next"],
+                "username": request.POST.get("username", ""),
+                "password": request.POST.get("password", ""),
+                "message":request.get_app_res("Login fail")
+
+            })
+
+
+    return request.render({
+        "next":request.GET["next"],
+        "username":request.POST.get("username",""),
+        "password": request.POST.get("password", ""),
+
+    })
 @quicky.view.template("download_excel.html")
 def download_excel(request,path):
     import importlib

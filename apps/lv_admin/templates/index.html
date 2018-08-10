@@ -15,7 +15,8 @@
 
     </main>
  <script>
-      var app=angular.module("admin",["c-ui","ui.grid",'ui.grid.pagination','ui.grid.cellNav']);
+       agGrid.initialiseAgGridWithAngular1(angular);
+      var app=angular.module("admin",["c-ui","agGrid"]);
       app.controller("admin",["$dialog","$scope",function($dialog,$scope){
           $dialog($scope)
           ws_set_url("${get_abs_url()}/${get_app_host()}/api")

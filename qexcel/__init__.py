@@ -50,19 +50,29 @@ def get_coll_error():
 def get_error(id):
     from django.http import HttpResponse
     import openpyxl
-    from io import BytesIO
-    from bson import ObjectId
-    items =list(get_coll_error().find({"_id": ObjectId(id)}))
-    data = items[0]["data"]
-    bff = "".join(map(chr, data))
+
     wb = None
-    with open('text','r+w') as f:
-        f.write(bff)
+    import os
+    dir = os.path.dirname(os.path.dirname(__file__))+os.sep +"tmp"
+
+    if not os.path.isdir(dir):
+        os.makedirs(dir)
+    file_path =dir +os.sep+"file"+id+".xlsx"
+    if not os.path.isfile(file_path):
+        from io import BytesIO
+        from bson import ObjectId
+        items = list(get_coll_error().find({"_id": ObjectId(id)}))
+        data = items[0]["data"]
+        bff = "".join(map(chr, data))
+        with open(file_path,'wb') as f:
+            f.write(bff)
+            f.close()
+    with open(file_path,'r+w') as f:
         wb = openpyxl.load_workbook(filename=f)
 
     from openpyxl.writer.excel import save_virtual_workbook
     response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename= "{}"'.format("users.xlsx")
+    response['Content-Disposition'] = 'attachment; filename= "{}"'.format(id+".xlsx")
     return response
 
     return data

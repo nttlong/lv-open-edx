@@ -6,6 +6,7 @@ logger=logging.getLogger(__name__)
 _cache_apps={}
 __cache_find_path={}
 _settings=None
+__cache_by_host_dir ={}
 def load_app(*args,**kwargs):
     # type: (tuple) -> list
     """
@@ -74,6 +75,17 @@ def get_app_by_name(app_name):
         else:
             if _cache_apps[key].name.lower()==app_name.lower():
                 return _cache_apps[key]
+def get_app_by_host_dir(host_dir):
+    if __cache_by_host_dir.has_key(host_dir):
+        return __cache_by_host_dir[host_dir]
+
+    items = [_cache_apps[key] for key in _cache_apps.keys() if _cache_apps[key].host_dir.lower() == host_dir.lower()]
+    if items.__len__()>0:
+        __cache_by_host_dir.update({
+            host_dir:items[0]
+        })
+    return __cache_by_host_dir[host_dir]
+
 def get_settings():
     """
     get global settings in settings.py of project

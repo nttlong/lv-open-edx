@@ -2,6 +2,11 @@
 name="lv_admin"
 is_public=True
 import qexcel
+login_url = "login"
+def authenticate(request):
+    user = request.user
+    is_not_ok = user == None or user.is_anonymous() or user.is_superuser == False or user.is_active == False
+    return not is_not_ok
 def get_db_config():
     from django.conf import settings
     return dict(
@@ -30,11 +35,30 @@ def get_db_config():
 # )
 menu_items=[
     {
-        "caption" : "Phân quyền",
+        "caption" : "System",
         "items" :[
             {
-                "caption":"Quản lý tài khoản",
+                "caption":"Accounts",
                 "page":"users"
+            }
+        ]
+    },{
+        "caption":"Content",
+        "items":[
+            {
+                "caption":"Linguistics",
+                "page":"content/linguistics"
+            },{
+                "caption":"Email",
+                "page":"content/email_template"
+            }
+        ]
+    },{
+        "caption":"Courseware",
+        "items":[
+            {
+                "caption":"List of Courseware",
+                "page":"courseware/list"
             }
         ]
     }

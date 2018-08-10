@@ -38,7 +38,9 @@ def template(fn,*_path,**kwargs):
         host_dir=None
         if hasattr(settings,"HOST_DIR"):
             host_dir=settings.HOST_DIR
-        app=fn.__application__
+        app = None
+        if hasattr(fn,"__application__"):
+            app=fn.__application__
 
 
         from django.shortcuts import redirect
@@ -53,12 +55,14 @@ def template(fn,*_path,**kwargs):
         tenancy_code=tenancy.get_customer_code()
         if not not_inclue_tenancy_code and tenancy_code!=None:
             request_path=request_path[tenancy_code.__len__()+1:request_path.__len__()]
-        if app==None and request_path[request_path.__len__() - 4:request_path.__len__()]=="/api":
+        if app==None or request_path[request_path.__len__() - 4:request_path.__len__()]=="/api":
             app_name=request_path.split('/')[request_path.split('/').__len__()-2]
             if app_name==tenancy_code:
                     app_name=""
             from . import applications
             app=applications.get_app_by_name(app_name)
+            if app == None:
+                app = applications.get_app_by_host_dir(app_name)
 
         if not hasattr(app, "settings") or app.settings==None:
             raise (Exception("'settings.py' was not found in '{0}' at '{1}' or look like you forgot to place 'import settings' in '{1}/__init__.py'".format(app.name, os.getcwd()+os.sep+app.path)))

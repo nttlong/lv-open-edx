@@ -43,5 +43,6 @@
             "port": 9200,
             "use_ssl": false
         }
-    ]
+    ],
+  "LOGIN_URL":"TEST_LOGIN"
 }

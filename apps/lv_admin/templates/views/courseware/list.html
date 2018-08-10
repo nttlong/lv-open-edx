@@ -1,11 +1,11 @@
-<%inherit file="base_grid.html"/>
+<%inherit file="../base_grid.html"/>
 <script>
     (function(scope){
         scope.dialog_editor="${get_app_url('pages/users.new')}";
-        scope.url_get_list_api ="lv_admin.api.users/get_list";
-        scope.dialog_export_excel_title='${get_app_res('Export "{0}" to Excel and download').format(get_app_res("Accounts"))}';
+        scope.url_get_list_api ="lv_admin.api.courseware/get_list";
+        scope.dialog_export_excel_title='${get_app_res('Export "{0}" to Excel and download').format(get_app_res("Courseware"))}';
         scope.url_download_excel='${get_app_url("excel/download/users")}';
-        scope.title ='${get_app_res("Accounts")}';
+        scope.title ='${get_app_res("Courseware")}';
         scope.columns= [
             {headerName: "${get_app_res('Username')}", field: "username"},
             {headerName: "${get_app_res('Email')}", field: "email"},
